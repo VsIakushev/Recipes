@@ -92,7 +92,7 @@
 				5733135B2B73215B00092647 /* AppDelegate.swift */,
 				5733135D2B73215B00092647 /* SceneDelegate.swift */,
 				5722C30F2B8DBED000ED2AD2 /* MainTabBarViewController.swift */,
-				5722C3112B8DBF0B00ED2AD2 /* AuthViewController.swift */,
+				DA0B3D692B8E041A00F7DE48 /* Auth Screen */,
 				5722C3132B8DBF2A00ED2AD2 /* RecipeViewController.swift */,
 				5722C3172B8DD27100ED2AD2 /* FavoritesViewController.swift */,
 				5722C3152B8DBF4D00ED2AD2 /* ProfileViewController.swift */,
@@ -103,6 +103,14 @@
 				573313692B73215C00092647 /* Info.plist */,
 			);
 			path = Recipes;
+			sourceTree = "<group>";
+		};
+		DA0B3D692B8E041A00F7DE48 /* Auth Screen */ = {
+			isa = PBXGroup;
+			children = (
+				5722C3112B8DBF0B00ED2AD2 /* AuthViewController.swift */,
+			);
+			path = "Auth Screen";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
