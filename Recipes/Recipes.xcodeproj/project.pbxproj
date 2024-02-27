@@ -7,19 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5722C3062B8DBDDB00ED2AD2 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5722C3052B8DBDDB00ED2AD2 /* BaseCoordinator.swift */; };
+		5722C3082B8DBDEF00ED2AD2 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5722C3072B8DBDEF00ED2AD2 /* AppCoordinator.swift */; };
+		5722C30A2B8DBE0400ED2AD2 /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5722C3092B8DBE0400ED2AD2 /* AuthCoordinator.swift */; };
+		5722C30C2B8DBE1B00ED2AD2 /* RecipeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5722C30B2B8DBE1B00ED2AD2 /* RecipeCoordinator.swift */; };
+		5722C30E2B8DBE8900ED2AD2 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5722C30D2B8DBE8900ED2AD2 /* ProfileCoordinator.swift */; };
+		5722C3102B8DBED000ED2AD2 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5722C30F2B8DBED000ED2AD2 /* MainTabBarViewController.swift */; };
+		5722C3122B8DBF0B00ED2AD2 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5722C3112B8DBF0B00ED2AD2 /* AuthViewController.swift */; };
+		5722C3142B8DBF2A00ED2AD2 /* RecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5722C3132B8DBF2A00ED2AD2 /* RecipeViewController.swift */; };
+		5722C3162B8DBF4D00ED2AD2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5722C3152B8DBF4D00ED2AD2 /* ProfileViewController.swift */; };
 		5733135C2B73215B00092647 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5733135B2B73215B00092647 /* AppDelegate.swift */; };
 		5733135E2B73215B00092647 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5733135D2B73215B00092647 /* SceneDelegate.swift */; };
-		573313602B73215B00092647 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5733135F2B73215B00092647 /* ViewController.swift */; };
 		573313632B73215B00092647 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 573313612B73215B00092647 /* Main.storyboard */; };
 		573313652B73215C00092647 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 573313642B73215C00092647 /* Assets.xcassets */; };
 		573313682B73215C00092647 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 573313662B73215C00092647 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5722C3052B8DBDDB00ED2AD2 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
+		5722C3072B8DBDEF00ED2AD2 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		5722C3092B8DBE0400ED2AD2 /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
+		5722C30B2B8DBE1B00ED2AD2 /* RecipeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCoordinator.swift; sourceTree = "<group>"; };
+		5722C30D2B8DBE8900ED2AD2 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
+		5722C30F2B8DBED000ED2AD2 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
+		5722C3112B8DBF0B00ED2AD2 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		5722C3132B8DBF2A00ED2AD2 /* RecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewController.swift; sourceTree = "<group>"; };
+		5722C3152B8DBF4D00ED2AD2 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		573313582B73215B00092647 /* Recipes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recipes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5733135B2B73215B00092647 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5733135D2B73215B00092647 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		5733135F2B73215B00092647 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		573313622B73215B00092647 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		573313642B73215C00092647 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		573313672B73215C00092647 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -37,6 +53,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5722C3042B8DBDBD00ED2AD2 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				5722C3052B8DBDDB00ED2AD2 /* BaseCoordinator.swift */,
+				5722C3072B8DBDEF00ED2AD2 /* AppCoordinator.swift */,
+				5722C3092B8DBE0400ED2AD2 /* AuthCoordinator.swift */,
+				5722C30B2B8DBE1B00ED2AD2 /* RecipeCoordinator.swift */,
+				5722C30D2B8DBE8900ED2AD2 /* ProfileCoordinator.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
 		5733134F2B73215B00092647 = {
 			isa = PBXGroup;
 			children = (
@@ -58,7 +86,11 @@
 			children = (
 				5733135B2B73215B00092647 /* AppDelegate.swift */,
 				5733135D2B73215B00092647 /* SceneDelegate.swift */,
-				5733135F2B73215B00092647 /* ViewController.swift */,
+				5722C30F2B8DBED000ED2AD2 /* MainTabBarViewController.swift */,
+				5722C3112B8DBF0B00ED2AD2 /* AuthViewController.swift */,
+				5722C3132B8DBF2A00ED2AD2 /* RecipeViewController.swift */,
+				5722C3152B8DBF4D00ED2AD2 /* ProfileViewController.swift */,
+				5722C3042B8DBDBD00ED2AD2 /* Coordinators */,
 				573313612B73215B00092647 /* Main.storyboard */,
 				573313642B73215C00092647 /* Assets.xcassets */,
 				573313662B73215C00092647 /* LaunchScreen.storyboard */,
@@ -183,9 +215,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				573313602B73215B00092647 /* ViewController.swift in Sources */,
+				5722C30E2B8DBE8900ED2AD2 /* ProfileCoordinator.swift in Sources */,
+				5722C3122B8DBF0B00ED2AD2 /* AuthViewController.swift in Sources */,
 				5733135C2B73215B00092647 /* AppDelegate.swift in Sources */,
+				5722C3102B8DBED000ED2AD2 /* MainTabBarViewController.swift in Sources */,
+				5722C3142B8DBF2A00ED2AD2 /* RecipeViewController.swift in Sources */,
+				5722C3162B8DBF4D00ED2AD2 /* ProfileViewController.swift in Sources */,
+				5722C30C2B8DBE1B00ED2AD2 /* RecipeCoordinator.swift in Sources */,
+				5722C3082B8DBDEF00ED2AD2 /* AppCoordinator.swift in Sources */,
 				5733135E2B73215B00092647 /* SceneDelegate.swift in Sources */,
+				5722C30A2B8DBE0400ED2AD2 /* AuthCoordinator.swift in Sources */,
+				5722C3062B8DBDDB00ED2AD2 /* BaseCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,7 +301,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -315,7 +355,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
