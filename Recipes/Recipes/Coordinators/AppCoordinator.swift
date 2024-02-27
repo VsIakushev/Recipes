@@ -9,7 +9,23 @@ class AppBuilder {
         let view = RecipeViewController()
         let recipePresenter = RecipePresenter(view: view)
         view.presenter = recipePresenter
-        view.tabBarItem = UITabBarItem(title: "Recipe", image: UIImage(systemName: "homekit"), tag: 0)
+        view.tabBarItem = UITabBarItem(
+            title: "Recipes",
+            image: UIImage(named: "muffin"),
+            selectedImage: UIImage(named: "muffin.fill")
+        )
+        return view
+    }
+
+    func makeFavoriteModule() -> FavoritesViewController {
+        let view = FavoritesViewController()
+        let favoritesPresenter = FavoritesPresenter(view: view)
+        view.presenter = favoritesPresenter
+        view.tabBarItem = UITabBarItem(
+            title: "Favorites",
+            image: UIImage(named: "favorites"),
+            selectedImage: UIImage(named: "favorites.fill")
+        )
         return view
     }
 
@@ -17,7 +33,11 @@ class AppBuilder {
         let view = ProfileViewController()
         let profilePresenter = ProfilePresenter(view: view)
         view.presenter = profilePresenter
-        view.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "doc.plaintext"), tag: 1)
+        view.tabBarItem = UITabBarItem(
+            title: "Profile",
+            image: UIImage(named: "smile"),
+            selectedImage: UIImage(named: "smile.fill")
+        )
         return view
     }
 }
@@ -43,6 +63,12 @@ final class AppCoordinator: BaseCoodinator {
         recipeModuleView.presenter?.recipeCoordinator = recipeCoordinator
         add(coordinator: recipeCoordinator)
 
+        /// Set Favorites
+        let favoritesModuleView = appBuilder.makeFavoriteModule()
+        let favoritesCoordinator = FavoritesCoordinator(rootController: favoritesModuleView)
+        favoritesModuleView.presenter?.favoritesCoordinator = favoritesCoordinator
+        add(coordinator: favoritesCoordinator)
+
         /// Set Profile
         let profileView = appBuilder.makeProfileModule()
         let profileCoordinator = ProfileCoordinator(rootController: profileView)
@@ -51,13 +77,18 @@ final class AppCoordinator: BaseCoodinator {
 
         profileCoordinator.onFinishFlow = { [weak self] in
             self?.remove(coordinator: recipeCoordinator)
+            self?.remove(coordinator: favoritesCoordinator)
             self?.remove(coordinator: profileCoordinator)
             self?.tabBarViewController = nil
             self?.t​oAuth​()
         }
 
         tabBarViewController?.setViewControllers(
-            [recipeCoordinator.rootController, profileCoordinator.rootController],
+            [
+                recipeCoordinator.rootController,
+                favoritesCoordinator.rootController,
+                profileCoordinator.rootController
+            ],
             animated: false
         )
         setAsRoot​(​_​: tabBarViewController!)

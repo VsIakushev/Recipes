@@ -8,5 +8,7 @@ class MainTabBarViewController: UITabBarController {
         super.viewDidLoad()
 
         view.backgroundColor = .red
+        tabBar.tintColor = UIColor(named: "background01")
+        tabBar.unselectedItemTintColor = UIColor(named: "text02")
     }
 }
