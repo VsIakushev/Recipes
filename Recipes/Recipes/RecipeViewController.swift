@@ -46,7 +46,9 @@ class RecipeViewController: UIViewController {
 
         view.addSubview(button)
 
-        view.backgroundColor = .green
+        view.backgroundColor = .white
+
+        title = "Recipes"
     }
 
     @objc func onTap() {

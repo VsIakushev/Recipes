@@ -1,10 +1,10 @@
-// ProfileViewController.swift
+// FavoritesViewController.swift
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
 
-class ProfilePresenter {
-    weak var profileCoordinator: ProfileCoordinator?
+class FavoritesPresenter {
+    weak var favoritesCoordinator: FavoritesCoordinator?
 
     private weak var view: UIViewController?
 
@@ -13,16 +13,16 @@ class ProfilePresenter {
     }
 
     func onTap() {
-        profileCoordinator?.pushRecipe()
+        favoritesCoordinator?.pushRecipe()
     }
 
     func onLogOut() {
-        profileCoordinator?.logOut()
+        favoritesCoordinator?.logOut()
     }
 }
 
-final class ProfileViewController: UIViewController {
-    var presenter: ProfilePresenter?
+final class FavoritesViewController: UIViewController {
+    var presenter: FavoritesPresenter?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +71,7 @@ final class ProfileViewController: UIViewController {
 
         view.backgroundColor = .white
 
-        title = "Profile"
+        title = "Favorites"
     }
 
     @objc func onTapAction() {
