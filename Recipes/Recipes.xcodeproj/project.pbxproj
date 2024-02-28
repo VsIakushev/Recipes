@@ -23,6 +23,10 @@
 		573313632B73215B00092647 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 573313612B73215B00092647 /* Main.storyboard */; };
 		573313652B73215C00092647 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 573313642B73215C00092647 /* Assets.xcassets */; };
 		573313682B73215C00092647 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 573313662B73215C00092647 /* LaunchScreen.storyboard */; };
+		57F4EBB92B8F270B00ADA7AA /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBB82B8F270B00ADA7AA /* ProfileTableViewCell.swift */; };
+		57F4EBBB2B8F272100ADA7AA /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */; };
+		57F4EBBD2B8F273500ADA7AA /* ProfileCustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBBC2B8F273500ADA7AA /* ProfileCustomButton.swift */; };
+		57F4EBBF2B8F275500ADA7AA /* BottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBBE2B8F275500ADA7AA /* BottomSheetViewController.swift */; };
 		DAAC3F812B8F077500D3B08D /* AuthView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAC3F802B8F077500D3B08D /* AuthView + Extension.swift */; };
 		DAAC3F872B8F183200D3B08D /* AuthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAC3F862B8F183200D3B08D /* AuthPresenter.swift */; };
 /* End PBXBuildFile section */
@@ -46,6 +50,10 @@
 		573313642B73215C00092647 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		573313672B73215C00092647 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		573313692B73215C00092647 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		57F4EBB82B8F270B00ADA7AA /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
+		57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
+		57F4EBBC2B8F273500ADA7AA /* ProfileCustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCustomButton.swift; sourceTree = "<group>"; };
+		57F4EBBE2B8F275500ADA7AA /* BottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetViewController.swift; sourceTree = "<group>"; };
 		DAAC3F802B8F077500D3B08D /* AuthView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthView + Extension.swift"; sourceTree = "<group>"; };
 		DAAC3F862B8F183200D3B08D /* AuthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -99,7 +107,7 @@
 				DA0B3D692B8E041A00F7DE48 /* Auth Screen */,
 				5722C3132B8DBF2A00ED2AD2 /* RecipeViewController.swift */,
 				5722C3172B8DD27100ED2AD2 /* FavoritesViewController.swift */,
-				5722C3152B8DBF4D00ED2AD2 /* ProfileViewController.swift */,
+				57F4EBB72B8F26DD00ADA7AA /* Profile Screen */,
 				5722C3042B8DBDBD00ED2AD2 /* Coordinators */,
 				573313612B73215B00092647 /* Main.storyboard */,
 				573313642B73215C00092647 /* Assets.xcassets */,
@@ -107,6 +115,18 @@
 				573313692B73215C00092647 /* Info.plist */,
 			);
 			path = Recipes;
+			sourceTree = "<group>";
+		};
+		57F4EBB72B8F26DD00ADA7AA /* Profile Screen */ = {
+			isa = PBXGroup;
+			children = (
+				5722C3152B8DBF4D00ED2AD2 /* ProfileViewController.swift */,
+				57F4EBB82B8F270B00ADA7AA /* ProfileTableViewCell.swift */,
+				57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */,
+				57F4EBBC2B8F273500ADA7AA /* ProfileCustomButton.swift */,
+				57F4EBBE2B8F275500ADA7AA /* BottomSheetViewController.swift */,
+			);
+			path = "Profile Screen";
 			sourceTree = "<group>";
 		};
 		DA0B3D692B8E041A00F7DE48 /* Auth Screen */ = {
@@ -225,7 +245,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from //https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "
+";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -243,13 +264,17 @@
 				5722C3162B8DBF4D00ED2AD2 /* ProfileViewController.swift in Sources */,
 				5722C31A2B8DD28F00ED2AD2 /* FavoritesCoordinator.swift in Sources */,
 				DAAC3F872B8F183200D3B08D /* AuthPresenter.swift in Sources */,
+				57F4EBBD2B8F273500ADA7AA /* ProfileCustomButton.swift in Sources */,
 				5722C30C2B8DBE1B00ED2AD2 /* RecipeCoordinator.swift in Sources */,
+				57F4EBB92B8F270B00ADA7AA /* ProfileTableViewCell.swift in Sources */,
 				5722C3082B8DBDEF00ED2AD2 /* AppCoordinator.swift in Sources */,
 				DAAC3F812B8F077500D3B08D /* AuthView + Extension.swift in Sources */,
+				57F4EBBF2B8F275500ADA7AA /* BottomSheetViewController.swift in Sources */,
 				5733135E2B73215B00092647 /* SceneDelegate.swift in Sources */,
 				5722C30A2B8DBE0400ED2AD2 /* AuthCoordinator.swift in Sources */,
 				5722C3182B8DD27100ED2AD2 /* FavoritesViewController.swift in Sources */,
 				5722C3062B8DBDDB00ED2AD2 /* BaseCoordinator.swift in Sources */,
+				57F4EBBB2B8F272100ADA7AA /* ButtonTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
