@@ -55,56 +55,6 @@ final class ProfileViewController: UIViewController {
         setupTableView()
     }
 
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        let button = UIButton(frame: CGRect(
-//            x: 100,
-//            y: 100,
-//            width: 200,
-//            height: 60
-//        ))
-//        button.setTitle(
-//            "Push",
-//            for: .normal
-//        )
-//        button.setTitleColor(
-//            .systemBlue,
-//            for: .normal
-//        )
-//        button.addTarget(
-//            self,
-//            action: #selector(onTapAction),
-//            for: .touchUpInside
-//        )
-//        view.addSubview(button)
-//
-//        let logOutButton = UIButton(frame: CGRect(
-//            x: 100,
-//            y: 200,
-//            width: 200,
-//            height: 60
-//        ))
-//        logOutButton.setTitle(
-//            "LogOut",
-//            for: .normal
-//        )
-//        logOutButton.setTitleColor(
-//            .systemBlue,
-//            for: .normal
-//        )
-//        logOutButton.addTarget(
-//            self,
-//            action: #selector(onTapLogOutAction),
-//            for: .touchUpInside
-//        )
-//        view.addSubview(logOutButton)
-//
-//        view.backgroundColor = .white
-//
-//        title = "Profile"
-//    }
-
     // MARK: - Private Methods
 
     private func setupNavigation() {
