@@ -18,10 +18,11 @@ class AuthPresenter {
         authCoordinator?.onFinish()
     }
 }
-
 /// Экран авторизации
 class AuthViewController: UIViewController {
     var presenter: AuthPresenter?
+    private var loginButtonBottomConstraint: NSLayoutConstraint?
+
     // MARK: - Visual Components
     private lazy var loginButton: UIButton = {
         let button = UIButton()
@@ -68,15 +69,23 @@ class AuthViewController: UIViewController {
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
-    private lazy var emailTexField: UITextField = {
+    private lazy var emailTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Enter Email Address"
         textField.isUserInteractionEnabled = true
-        textField.addTarget(self, action: #selector(textFieldDidBeginEditing(_:)), for: .editingDidBegin)
-
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
+    private let emailWrongAddressLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Incorrect format"
+        label.font = UIFont(name: "verdana-Bold", size: 12)
+        label.textColor = UIColor(named: "background03")
+        label.isHidden = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
     private let passwordLabel: UILabel = {
         let label = UILabel()
         label.text = "Password"
@@ -105,9 +114,17 @@ class AuthViewController: UIViewController {
         let textField = UITextField()
         textField.placeholder = "Enter Password"
         textField.isSecureTextEntry = true
-//        textField.addTarget(self, action: #selector(textFieldDidBeginEditing(_:)), for: .editingDidBegin)
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
+    }()
+    private let passwordWrongLabel: UILabel = {
+        let label = UILabel()
+        label.text = "You entered the wrong password"
+        label.font = UIFont(name: "verdana-Bold", size: 12)
+        label.textColor = UIColor(named: "background03")
+        label.isHidden = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     private lazy var eyeButton: UIButton = {
         let button = UIButton()
@@ -117,13 +134,28 @@ class AuthViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    private let errorView: UIView = {
+       let view = UIView()
+        view.backgroundColor = UIColor(named: "background03")
+        view.layer.cornerRadius = 12
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    private let errorLabel: UILabel = {
+       let label = UILabel()
+        label.text = "Please check the accuracy of the entered credentials."
+        label.font = UIFont(name: "Verdana", size: 18)
+        label.textColor = .white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupKeyboardObservation()
-
+        emailTextField.delegate = self
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -132,27 +164,36 @@ class AuthViewController: UIViewController {
     // MARK: - Private Methods
         private func setupUI() {
             view.addSubview(loginButton)
-            setupConstraintsForLoginButton()
+            setupLoginButtonConstraints()
             view.addSubview(loginLabel)
             setupConstraintsForLoginLabel()
             view.addSubview(emailAddressLabel)
             setupConstraintsForEmailAddressLabel()
             view.addSubview(emailAddressView)
             setupConstraintsForEmailAddressView()
+            view.addSubview(emailWrongAddressLabel)
+            setupConstraintsForEmailWrongAddressLabel()
             emailAddressView.addSubview(envelopeImage)
             setupConstraintsForEnvelopeImage()
-            emailAddressView.addSubview(emailTexField)
+            emailAddressView.addSubview(emailTextField)
             setupConstraintsForEmailTextField()
             view.addSubview(passwordLabel)
             setupConstraintsForPasswordLabel()
             view.addSubview(passwordView)
             setupConstraintsForPasswordView()
+            view.addSubview(passwordWrongLabel)
+            setupConstraintsForPasswordWrongLabel()
             passwordView.addSubview(lockImage)
             setupConstraintsForLockImage()
             passwordView.addSubview(passwordTextField)
             setupConstraintsForPasswordTextField()
             passwordView.addSubview(eyeButton)
             setupConstraintsForEyeImage()
+            view.addSubview(errorView)
+            setupConstraintsForErrorView()
+            errorView.addSubview(errorLabel)
+            setupConstraintsForErrorLabel()
+            setGestureRecognizer()
     }
     /// установка цвета заднего фона
     private func setupBackgroundColor() {
@@ -165,13 +206,13 @@ class AuthViewController: UIViewController {
         gradientLayer.endPoint = CGPoint(x: 1, y: 1)
         view.layer.insertSublayer(gradientLayer, at: 0)
     }
-    private func setupConstraintsForLoginButton() {
-        NSLayoutConstraint.activate([
-            loginButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -71),
-            loginButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            loginButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            loginButton.heightAnchor.constraint(equalToConstant: 35)
-        ])
+
+    private func setupLoginButtonConstraints() {
+        loginButtonBottomConstraint = loginButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -71)
+        loginButtonBottomConstraint?.isActive = true
+        loginButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
+        loginButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
+        loginButton.heightAnchor.constraint(equalToConstant: 35).isActive = true
     }
     private func setupConstraintsForLoginLabel() {
         NSLayoutConstraint.activate([
@@ -207,10 +248,18 @@ class AuthViewController: UIViewController {
     }
     private func setupConstraintsForEmailTextField() {
         NSLayoutConstraint.activate([
-            emailTexField.topAnchor.constraint(equalTo: emailAddressView.topAnchor, constant: 14),
-            emailTexField.leadingAnchor.constraint(equalTo: emailAddressView.leadingAnchor, constant: 50),
-            emailTexField.widthAnchor.constraint(equalToConstant: 255),
-            emailTexField.heightAnchor.constraint(equalToConstant: 24)
+            emailTextField.topAnchor.constraint(equalTo: emailAddressView.topAnchor, constant: 14),
+            emailTextField.leadingAnchor.constraint(equalTo: emailAddressView.leadingAnchor, constant: 50),
+            emailTextField.widthAnchor.constraint(equalToConstant: 255),
+            emailTextField.heightAnchor.constraint(equalToConstant: 24)
+        ])
+    }
+    private func setupConstraintsForEmailWrongAddressLabel() {
+        NSLayoutConstraint.activate([
+            emailWrongAddressLabel.topAnchor.constraint(equalTo: emailAddressView.bottomAnchor),
+            emailWrongAddressLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            emailWrongAddressLabel.widthAnchor.constraint(equalToConstant: 230),
+            emailWrongAddressLabel.heightAnchor.constraint(equalToConstant: 19)
         ])
     }
     private func setupConstraintsForPasswordLabel() {
@@ -229,6 +278,15 @@ class AuthViewController: UIViewController {
             passwordView.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
+    private func setupConstraintsForPasswordWrongLabel() {
+        NSLayoutConstraint.activate([
+            passwordWrongLabel.topAnchor.constraint(equalTo: passwordView.bottomAnchor),
+            passwordWrongLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            passwordWrongLabel.widthAnchor.constraint(equalToConstant: 230),
+            passwordWrongLabel.heightAnchor.constraint(equalToConstant: 19)
+        ])
+    }
+
     private func setupConstraintsForLockImage() {
         NSLayoutConstraint.activate([
             lockImage.topAnchor.constraint(equalTo: passwordView.topAnchor, constant: 14),
@@ -253,34 +311,122 @@ class AuthViewController: UIViewController {
             eyeButton.heightAnchor.constraint(equalToConstant: 19)
         ])
     }
+    private func setupConstraintsForErrorView() {
+        NSLayoutConstraint.activate([
+        errorView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -83),
+        errorView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+        errorView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 20),
+        errorView.heightAnchor.constraint(equalToConstant: 87)
+        ])
+    }
+    private func setupConstraintsForErrorLabel() {
+        NSLayoutConstraint.activate([
+        errorLabel.topAnchor.constraint(equalTo: errorView.topAnchor, constant: 16),
+        errorLabel.leadingAnchor.constraint(equalTo: errorView.leadingAnchor, constant: 15),
+        errorLabel.trailingAnchor.constraint(equalTo: errorView.trailingAnchor, constant: 34),
+        errorLabel.bottomAnchor.constraint(equalTo: errorView.bottomAnchor, constant: 17)
+        ])
+    }
     private func setupKeyboardObservation() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(keyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardShow),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardHide),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
+    }
+    deinit {
+            NotificationCenter.default.removeObserver(self)
         }
     @objc private func keyboardShow(_ notification: Notification) {
-        loginButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -300).isActive = true
-        emailTexField.becomeFirstResponder()
+        loginButtonBottomConstraint?.constant = -300
+        view.layoutIfNeeded()
         print("Keyboard appeared")
-
         }
-
         @objc private func keyboardHide(_ notification: Notification) {
-            // Обработка события закрытия клавиатуры
-            loginButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -71).isActive = true
             print("Keyboard hidden")
+            loginButtonBottomConstraint?.constant = -71
+                view.layoutIfNeeded()
         }
-    @objc private func textFieldDidBeginEditing(_ textField: UITextField) {
-        // if textField == emailTexField {
-            textField.becomeFirstResponder()
-        // }
+    private func setGestureRecognizer() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+                view.addGestureRecognizer(tapGesture)
     }
     @objc func eyeButtonTapped() {
         passwordTextField.isSecureTextEntry.toggle()
         let eyeIconName = passwordTextField.isSecureTextEntry ? "eye.slash.fill" : "eye.fill"
         eyeButton.setImage(UIImage(systemName: eyeIconName), for: .normal)
     }
+    @objc func dismissKeyboard() {
+        emailTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
+        loginButtonBottomConstraint?.constant = -71
+        view.layoutIfNeeded()
+    }
 
     @objc func onTap() {
-        presenter?.onTap()
+        guard let password = passwordTextField.text, !password.isEmpty else {
+                print("Password field is empty.")
+                passwordView.layer.borderColor = UIColor(named: "background03")?.cgColor
+            passwordLabel.textColor = UIColor(named: "background03")
+            passwordWrongLabel.isHidden = false
+                return
+            }
+            if password.count < 8 {
+                print("Password is too short.")
+                passwordView.layer.borderColor = UIColor(named: "background03")?.cgColor
+            passwordLabel.textColor = UIColor(named: "background03")
+                passwordWrongLabel.isHidden = false
+                return
+            }
+        passwordView.layer.borderColor = UIColor(named: "text03")?.cgColor
+        passwordLabel.textColor = UIColor(named: "text03")
+        passwordWrongLabel.isHidden = true
+        let spinner = UIActivityIndicatorView(style: .medium)
+        spinner.color = .white
+            spinner.startAnimating()
+        self.loginButton.setTitle("", for: .normal)
+        self.loginButton.addSubview(spinner)
+            spinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.centerXAnchor.constraint(equalTo: self.loginButton.centerXAnchor).isActive = true
+        spinner.centerYAnchor.constraint(equalTo: self.loginButton.centerYAnchor).isActive = true
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            self.presenter?.onTap()
+            }
+        }
     }
-}
+extension AuthViewController: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == emailTextField {
+            validateEmail(email: textField.text)
+        }
+    }
+    func validateEmail(email: String?) {
+            guard let email = email, !email.isEmpty else {
+                print("Email field is empty.")
+                emailAddressView.layer.borderColor = UIColor(named: "background03")?.cgColor
+                emailAddressLabel.textColor = UIColor(named: "background03")
+                loginButton.isEnabled = false
+                emailWrongAddressLabel.isHidden = false
+                return
+            }
+            let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+            let emailPredicate = NSPredicate(format:"SELF MATCHES %@", emailRegex)
+            if emailPredicate.evaluate(with: email) {
+                print("Email is valid.")
+                emailAddressView.layer.borderColor = UIColor(named: "text03")?.cgColor
+                emailAddressLabel.textColor = UIColor(named: "text01")
+                loginButton.isEnabled = true
+                emailWrongAddressLabel.isHidden = true
+            } else {
+                print("Email is not valid.")
+                emailAddressView.layer.borderColor = UIColor(named: "background03")?.cgColor
+                emailAddressLabel.textColor = UIColor(named: "background03")
+                loginButton.isEnabled = false
+                emailWrongAddressLabel.isHidden = false
+            }
+        }
+    }
