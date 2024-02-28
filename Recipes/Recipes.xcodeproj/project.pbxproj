@@ -23,8 +23,8 @@
 		573313632B73215B00092647 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 573313612B73215B00092647 /* Main.storyboard */; };
 		573313652B73215C00092647 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 573313642B73215C00092647 /* Assets.xcassets */; };
 		573313682B73215C00092647 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 573313662B73215C00092647 /* LaunchScreen.storyboard */; };
-		DAAC3F812B8F077500D3B08D /* AuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAC3F802B8F077500D3B08D /* AuthModel.swift */; };
-		DAAC3F832B8F079500D3B08D /* AuthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAC3F822B8F079500D3B08D /* AuthPresenter.swift */; };
+		DAAC3F812B8F077500D3B08D /* AuthView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAC3F802B8F077500D3B08D /* AuthView + Extension.swift */; };
+		DAAC3F872B8F183200D3B08D /* AuthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAC3F862B8F183200D3B08D /* AuthPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,8 +46,8 @@
 		573313642B73215C00092647 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		573313672B73215C00092647 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		573313692B73215C00092647 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DAAC3F802B8F077500D3B08D /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
-		DAAC3F822B8F079500D3B08D /* AuthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPresenter.swift; sourceTree = "<group>"; };
+		DAAC3F802B8F077500D3B08D /* AuthView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthView + Extension.swift"; sourceTree = "<group>"; };
+		DAAC3F862B8F183200D3B08D /* AuthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,9 +112,9 @@
 		DA0B3D692B8E041A00F7DE48 /* Auth Screen */ = {
 			isa = PBXGroup;
 			children = (
-				DAAC3F802B8F077500D3B08D /* AuthModel.swift */,
+				DAAC3F802B8F077500D3B08D /* AuthView + Extension.swift */,
 				5722C3112B8DBF0B00ED2AD2 /* AuthViewController.swift */,
-				DAAC3F822B8F079500D3B08D /* AuthPresenter.swift */,
+				DAAC3F862B8F183200D3B08D /* AuthPresenter.swift */,
 			);
 			path = "Auth Screen";
 			sourceTree = "<group>";
@@ -242,10 +242,10 @@
 				5722C3142B8DBF2A00ED2AD2 /* RecipeViewController.swift in Sources */,
 				5722C3162B8DBF4D00ED2AD2 /* ProfileViewController.swift in Sources */,
 				5722C31A2B8DD28F00ED2AD2 /* FavoritesCoordinator.swift in Sources */,
+				DAAC3F872B8F183200D3B08D /* AuthPresenter.swift in Sources */,
 				5722C30C2B8DBE1B00ED2AD2 /* RecipeCoordinator.swift in Sources */,
 				5722C3082B8DBDEF00ED2AD2 /* AppCoordinator.swift in Sources */,
-				DAAC3F812B8F077500D3B08D /* AuthModel.swift in Sources */,
-				DAAC3F832B8F079500D3B08D /* AuthPresenter.swift in Sources */,
+				DAAC3F812B8F077500D3B08D /* AuthView + Extension.swift in Sources */,
 				5733135E2B73215B00092647 /* SceneDelegate.swift in Sources */,
 				5722C30A2B8DBE0400ED2AD2 /* AuthCoordinator.swift in Sources */,
 				5722C3182B8DD27100ED2AD2 /* FavoritesViewController.swift in Sources */,

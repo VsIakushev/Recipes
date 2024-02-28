@@ -6,12 +6,19 @@
 //
 
 import UIKit
-/// Презентер
-class AuthPresenter: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+class AuthPresenter {
+    // MARK: - Private Properties
+    weak var authCoordinator: AuthCoordinator?
+    private weak var view: UIViewController?
 
-        // Do any additional setup after loading the view.
+    // MARK: - Initializers
+    init(view: UIViewController) {
+        self.view = view
+    }
+
+    // MARK: - Properties
+    func onTap() {
+        authCoordinator?.onFinish()
     }
 }
