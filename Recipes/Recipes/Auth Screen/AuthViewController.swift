@@ -6,7 +6,6 @@ import UIKit
 class AuthViewController: UIViewController {
     var presenter: AuthPresenter?
     private var loginButtonBottomConstraint: NSLayoutConstraint?
-
     // MARK: - Visual Components
     lazy var loginButton: UIButton = {
         let button = UIButton()
@@ -69,7 +68,6 @@ class AuthViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
     private let passwordLabel: UILabel = {
         let label = UILabel()
         label.text = "Password"
@@ -133,7 +131,6 @@ class AuthViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -179,7 +176,6 @@ class AuthViewController: UIViewController {
 //        setupConstraintsForErrorLabel()
         setGestureRecognizer()
 }
-/// установка цвета заднего фона
 private func setupBackgroundColor() {
     view.layer.sublayers?.filter { $0 is CAGradientLayer }.forEach { $0.removeFromSuperlayer() }
     let gradientLayer = CAGradientLayer()
@@ -372,7 +368,6 @@ private func setupConstraintsForEyeImage() {
             spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.centerXAnchor.constraint(equalTo: self.loginButton.centerXAnchor).isActive = true
         spinner.centerYAnchor.constraint(equalTo: self.loginButton.centerYAnchor).isActive = true
-
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
             self.presenter?.onTap()
             }
