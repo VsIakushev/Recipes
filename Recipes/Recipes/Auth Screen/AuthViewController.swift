@@ -324,7 +324,7 @@ class AuthViewController: UIViewController {
         errorLabel.topAnchor.constraint(equalTo: errorView.topAnchor, constant: 16),
         errorLabel.leadingAnchor.constraint(equalTo: errorView.leadingAnchor, constant: 15),
         errorLabel.trailingAnchor.constraint(equalTo: errorView.trailingAnchor, constant: 34),
-        errorLabel.bottomAnchor.constraint(equalTo: errorView.bottomAnchor, constant: 17)
+        errorLabel.bottomAnchor.constraint(equalTo: errorView.bottomAnchor, constant: 17),
         ])
     }
     private func setupKeyboardObservation() {

@@ -14,4 +14,6 @@ class AuthModel: UIViewController {
 
         // Do any additional setup after loading the view.
     }
+    
+    
 }
