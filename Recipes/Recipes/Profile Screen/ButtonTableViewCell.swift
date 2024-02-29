@@ -3,7 +3,8 @@
 
 import UIKit
 
-class ButtonTableViewCell: UITableViewCell {
+/// Ячейка с кнопками в профиле пользователя
+final class ButtonTableViewCell: UITableViewCell {
     // MARK: - Constants
 
     private enum Constants {
@@ -21,7 +22,7 @@ class ButtonTableViewCell: UITableViewCell {
     private let termsButton = ProfileCustomButton()
     private let logoutButton = ProfileCustomButton()
 
-    // MARK: - Public Methods
+    // MARK: - Public Properties
 
     var bonusButtonAction: (() -> Void)?
     var logoutButtonAction: (() -> Void)?
@@ -30,10 +31,14 @@ class ButtonTableViewCell: UITableViewCell {
 
     private var userBonuses = 0
 
+    // MARK: - Public Methods
+
     func configureCell(bonuses: Int) {
         userBonuses = bonuses
         setupUI()
     }
+
+    // MARK: - Private Methods
 
     private func setupUI() {
         contentView.addSubview(bonusesButton)
@@ -72,17 +77,12 @@ class ButtonTableViewCell: UITableViewCell {
     }
 
     @objc private func bonusesButtonPressed() {
-        print("bonuses pressed")
         bonusButtonAction?()
     }
 
-    @objc private func termsButtonPressed() {
-        print("terms pressed")
-    }
+    @objc private func termsButtonPressed() {}
 
     @objc private func logoutButtonPressed() {
-        print("logout pressed")
         logoutButtonAction?()
-//        presenter?.onLogOut()
     }
 }

@@ -3,7 +3,8 @@
 
 import UIKit
 
-class ProfileTableViewCell: UITableViewCell {
+/// Ячейка профиля пользователя
+final class ProfileTableViewCell: UITableViewCell {
     // MARK: - Constants
 
     private enum Constants {

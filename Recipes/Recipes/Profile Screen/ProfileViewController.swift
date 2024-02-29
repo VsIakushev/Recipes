@@ -3,33 +3,13 @@
 
 import UIKit
 
-class ProfilePresenter {
-    weak var profileCoordinator: ProfileCoordinator?
-
-    private weak var view: UIViewController?
-
-    init(view: UIViewController) {
-        self.view = view
-    }
-
-    func onTap() {
-        profileCoordinator?.pushRecipe()
-    }
-
-    func onLogOut() {
-        profileCoordinator?.logOut()
-    }
-}
-
+/// Экран профиля
 final class ProfileViewController: UIViewController {
-    var presenter: ProfilePresenter?
-
     // MARK: - Constants
 
     private enum Constants {
         static let titleText = "Profile"
         static let titleFont = UIFont(name: "Verdana-Bold", size: 28)
-
         static let alertTitle = "Change your name and surname"
         static let alertTextFieldPlaceholder = "Name Surname"
         static let alertOkText = "Ok"
@@ -40,9 +20,13 @@ final class ProfileViewController: UIViewController {
 
     private let tableView = UITableView()
 
+    // MARK: - Public Properties
+
+    var presenter: ProfilePresenter?
+
     // MARK: - Private Properties
 
-    private let userName = "Name Lastname"
+    private let userName = "Anna Morgan"
     private let userImage = "avatar"
     private let userBonuses = 100
 
@@ -66,7 +50,6 @@ final class ProfileViewController: UIViewController {
 
     private func setupTableView() {
         view.addSubview(tableView)
-
         tableView.frame = view.bounds
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
@@ -79,7 +62,6 @@ final class ProfileViewController: UIViewController {
     private func configureProfileCell(for cell: ProfileTableViewCell) {
         cell.configureCell(imageName: userImage, userName: userName)
         cell.editButtonAction = { [weak self] in
-
             let alert = UIAlertController(title: Constants.alertTitle, message: nil, preferredStyle: .alert)
 
             alert.addTextField { textField in
@@ -130,8 +112,10 @@ final class ProfileViewController: UIViewController {
     }
 }
 
+/// ProfileViewController+UITableViewDelegate
 extension ProfileViewController: UITableViewDelegate {}
 
+/// ProfileViewController+UITableViewDataSource
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         2
