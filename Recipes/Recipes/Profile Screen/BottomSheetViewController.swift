@@ -3,7 +3,8 @@
 
 import UIKit
 
-class BottomSheetViewController: UIViewController {
+/// "Шторка" для отображения бонусов пользователя
+final class BottomSheetViewController: UIViewController {
     // MARK: - Constants
 
     private enum Constants {
@@ -24,9 +25,10 @@ class BottomSheetViewController: UIViewController {
 
     private var bonuses = 0
 
+    // MARK: - Life Cycles
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupUI()
     }
 
