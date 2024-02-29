@@ -24,8 +24,8 @@ final class ButtonTableViewCell: UITableViewCell {
 
     // MARK: - Public Properties
 
-    var bonusButtonAction: (() -> Void)?
-    var logoutButtonAction: (() -> Void)?
+    var bonusButtonAction: VoidHandler?
+    var logoutButtonAction: VoidHandler?
 
     // MARK: - Private Properties
 

@@ -22,13 +22,7 @@ final class ProfileViewController: UIViewController {
 
     // MARK: - Public Properties
 
-    var presenter: ProfilePresenter?
-
-    // MARK: - Private Properties
-
-    private let userName = "Anna Morgan"
-    private let userImage = "avatar"
-    private let userBonuses = 100
+    var presenter: ProfilePresenterProtocol?
 
     // MARK: - Life Cycles
 
@@ -59,44 +53,32 @@ final class ProfileViewController: UIViewController {
         tableView.register(ButtonTableViewCell.self, forCellReuseIdentifier: "ButtonCell")
     }
 
-    private func configureProfileCell(for cell: ProfileTableViewCell) {
-        cell.configureCell(imageName: userImage, userName: userName)
-        cell.editButtonAction = { [weak self] in
-            let alert = UIAlertController(title: Constants.alertTitle, message: nil, preferredStyle: .alert)
+    private func showAlert(completion: @escaping StringHandler) {
+        let alert = UIAlertController(title: Constants.alertTitle, message: nil, preferredStyle: .alert)
 
-            alert.addTextField { textField in
-                textField.placeholder = Constants.alertTextFieldPlaceholder
-            }
-
-            let okAction = UIAlertAction(title: Constants.alertOkText, style: .default) { [weak self] action in
-                if let textField = alert.textFields?.first, let text = textField.text {
-                    cell.configureCell(imageName: self?.userImage ?? "", userName: text)
-                }
-            }
-
-            let cancelAction = UIAlertAction(title: Constants.alertCancelText, style: .cancel)
-            alert.addAction(okAction)
-            alert.addAction(cancelAction)
-            alert.preferredAction = okAction
-
-            self?.present(alert, animated: true)
+        alert.addTextField { textField in
+            textField.placeholder = Constants.alertTextFieldPlaceholder
         }
+
+        let okAction = UIAlertAction(title: Constants.alertOkText, style: .default) { _ in
+            if let textField = alert.textFields?.first, let text = textField.text {
+                completion(text)
+            }
+        }
+
+        let cancelAction = UIAlertAction(title: Constants.alertCancelText, style: .cancel)
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        alert.preferredAction = okAction
+
+        present(alert, animated: true)
     }
 
     private func configureButtonCell(for cell: ButtonTableViewCell) {
-        cell.configureCell(bonuses: userBonuses)
+        cell.configureCell(bonuses: presenter?.profileInfo.bonuses ?? 0)
 
         cell.bonusButtonAction = { [weak self] in
-            let bottomSheet = BottomSheetViewController()
-            bottomSheet.setBonuses(bonuses: self?.userBonuses ?? 0)
-            if let sheet = bottomSheet.sheetPresentationController {
-                sheet.detents = [.custom(resolver: { context in
-                    355
-                })]
-                sheet.prefersGrabberVisible = true
-                sheet.preferredCornerRadius = 30
-            }
-            self?.present(bottomSheet, animated: true)
+            self?.presenter?.bonusButtonPressed()
         }
         cell.logoutButtonAction = {
             self.presenter?.onLogOut()
@@ -109,6 +91,20 @@ final class ProfileViewController: UIViewController {
 
     @objc func onTapLogOutAction() {
         presenter?.onLogOut()
+    }
+}
+
+// MARK: - ProfileViewController+ProfileViewProtocol
+
+extension ProfileViewController: ProfileViewProtocol {
+    func showEditAlert() {
+        showAlert { [weak self] editedName in
+            self?.presenter?.setName(newName: editedName)
+        }
+    }
+
+    func updateView() {
+        tableView.reloadData()
     }
 }
 
@@ -127,7 +123,12 @@ extension ProfileViewController: UITableViewDataSource {
                 .dequeueReusableCell(withIdentifier: "ProfileCell", for: indexPath) as? ProfileTableViewCell
             else { return UITableViewCell() }
             print("creating 1st cell")
-            configureProfileCell(for: cell)
+
+            guard let presenter = presenter else { return UITableViewCell() }
+            cell.configureCell(info: presenter.profileInfo)
+            cell.editButtonAction = { [weak self] in
+                self?.presenter?.editTapped()
+            }
             return cell
 
         } else {

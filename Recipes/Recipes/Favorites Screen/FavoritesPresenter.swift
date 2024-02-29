@@ -1,9 +1,5 @@
-//
-//  FavoritesPresenter.swift
-//  Recipes
-//
-//  Created by Vitaliy Iakushev on 28.02.2024.
-//
+// FavoritesPresenter.swift
+// Copyright © RoadMap. All rights reserved.
 
 import UIKit
 
