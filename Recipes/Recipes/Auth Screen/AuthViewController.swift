@@ -288,22 +288,22 @@ private func setupConstraintsForEyeImage() {
         eyeButton.heightAnchor.constraint(equalToConstant: 19)
     ])
 }
-//private func setupConstraintsForErrorView() {
+// private func setupConstraintsForErrorView() {
 //    NSLayoutConstraint.activate([
 //    errorView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -83),
 //    errorView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
 //    errorView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 20),
 //    errorView.heightAnchor.constraint(equalToConstant: 87)
 //    ])
-//}
-//private func setupConstraintsForErrorLabel() {
+// }
+// private func setupConstraintsForErrorLabel() {
 //    NSLayoutConstraint.activate([
 //    errorLabel.topAnchor.constraint(equalTo: errorView.topAnchor, constant: 16),
 //    errorLabel.leadingAnchor.constraint(equalTo: errorView.leadingAnchor, constant: 15),
 //    errorLabel.trailingAnchor.constraint(equalTo: errorView.trailingAnchor, constant: 34),
 //    errorLabel.bottomAnchor.constraint(equalTo: errorView.bottomAnchor, constant: 17)
 //    ])
-//}
+// }
     private func setupKeyboardObservation() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardShow),
