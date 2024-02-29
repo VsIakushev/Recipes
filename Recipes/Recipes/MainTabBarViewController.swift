@@ -3,7 +3,8 @@
 
 import UIKit
 
-class MainTabBarViewController: UITabBarController {
+/// ТабБар навигации приложения
+final class MainTabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 

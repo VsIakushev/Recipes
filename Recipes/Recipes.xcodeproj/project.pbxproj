@@ -30,7 +30,8 @@
 		57F4EBEB2B8FDF8100ADA7AA /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBEA2B8FDF8100ADA7AA /* ProfilePresenter.swift */; };
 		57F4EBED2B8FE18500ADA7AA /* AppBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBEC2B8FE18500ADA7AA /* AppBuilder.swift */; };
 		57F4EBEF2B8FEFEF00ADA7AA /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBEE2B8FEFEF00ADA7AA /* Profile.swift */; };
-		57F4EBF22B900D0B00ADA7AA /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBF12B900D0B00ADA7AA /* AppConstants.swift */; };
+		57F4EBF52B902D1300ADA7AA /* RecipePresebter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBF42B902D1300ADA7AA /* RecipePresebter.swift */; };
+		57F4EBF82B902DAA00ADA7AA /* FavoritesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBF72B902DAA00ADA7AA /* FavoritesPresenter.swift */; };
 		DAAC3F812B8F077500D3B08D /* AuthView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAC3F802B8F077500D3B08D /* AuthView + Extension.swift */; };
 		DAAC3F872B8F183200D3B08D /* AuthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAC3F862B8F183200D3B08D /* AuthPresenter.swift */; };
 /* End PBXBuildFile section */
@@ -61,7 +62,8 @@
 		57F4EBEA2B8FDF8100ADA7AA /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
 		57F4EBEC2B8FE18500ADA7AA /* AppBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBuilder.swift; sourceTree = "<group>"; };
 		57F4EBEE2B8FEFEF00ADA7AA /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
-		57F4EBF12B900D0B00ADA7AA /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
+		57F4EBF42B902D1300ADA7AA /* RecipePresebter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipePresebter.swift; sourceTree = "<group>"; };
+		57F4EBF72B902DAA00ADA7AA /* FavoritesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPresenter.swift; sourceTree = "<group>"; };
 		DAAC3F802B8F077500D3B08D /* AuthView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthView + Extension.swift"; sourceTree = "<group>"; };
 		DAAC3F862B8F183200D3B08D /* AuthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,10 +115,9 @@
 				5733135B2B73215B00092647 /* AppDelegate.swift */,
 				5733135D2B73215B00092647 /* SceneDelegate.swift */,
 				5722C30F2B8DBED000ED2AD2 /* MainTabBarViewController.swift */,
-				57F4EBF12B900D0B00ADA7AA /* AppConstants.swift */,
 				DA0B3D692B8E041A00F7DE48 /* Auth Screen */,
-				5722C3132B8DBF2A00ED2AD2 /* RecipeViewController.swift */,
-				5722C3172B8DD27100ED2AD2 /* FavoritesViewController.swift */,
+				57F4EBF32B902CEE00ADA7AA /* Recipe Screen */,
+				57F4EBF62B902D8C00ADA7AA /* Favorites Screen */,
 				57F4EBB72B8F26DD00ADA7AA /* Profile Screen */,
 				5722C3042B8DBDBD00ED2AD2 /* Coordinators */,
 				573313612B73215B00092647 /* Main.storyboard */,
@@ -147,6 +148,24 @@
 				57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */,
 			);
 			name = Cells;
+			sourceTree = "<group>";
+		};
+		57F4EBF32B902CEE00ADA7AA /* Recipe Screen */ = {
+			isa = PBXGroup;
+			children = (
+				5722C3132B8DBF2A00ED2AD2 /* RecipeViewController.swift */,
+				57F4EBF42B902D1300ADA7AA /* RecipePresebter.swift */,
+			);
+			path = "Recipe Screen";
+			sourceTree = "<group>";
+		};
+		57F4EBF62B902D8C00ADA7AA /* Favorites Screen */ = {
+			isa = PBXGroup;
+			children = (
+				5722C3172B8DD27100ED2AD2 /* FavoritesViewController.swift */,
+				57F4EBF72B902DAA00ADA7AA /* FavoritesPresenter.swift */,
+			);
+			path = "Favorites Screen";
 			sourceTree = "<group>";
 		};
 		DA0B3D692B8E041A00F7DE48 /* Auth Screen */ = {
@@ -280,16 +299,17 @@
 				5722C3122B8DBF0B00ED2AD2 /* AuthViewController.swift in Sources */,
 				5733135C2B73215B00092647 /* AppDelegate.swift in Sources */,
 				5722C3102B8DBED000ED2AD2 /* MainTabBarViewController.swift in Sources */,
-				57F4EBF22B900D0B00ADA7AA /* AppConstants.swift in Sources */,
 				5722C3142B8DBF2A00ED2AD2 /* RecipeViewController.swift in Sources */,
 				5722C3162B8DBF4D00ED2AD2 /* ProfileViewController.swift in Sources */,
 				5722C31A2B8DD28F00ED2AD2 /* FavoritesCoordinator.swift in Sources */,
+				57F4EBF52B902D1300ADA7AA /* RecipePresebter.swift in Sources */,
 				DAAC3F872B8F183200D3B08D /* AuthPresenter.swift in Sources */,
 				57F4EBBD2B8F273500ADA7AA /* ProfileCustomButton.swift in Sources */,
 				57F4EBED2B8FE18500ADA7AA /* AppBuilder.swift in Sources */,
 				5722C30C2B8DBE1B00ED2AD2 /* RecipeCoordinator.swift in Sources */,
 				57F4EBB92B8F270B00ADA7AA /* ProfileTableViewCell.swift in Sources */,
 				5722C3082B8DBDEF00ED2AD2 /* AppCoordinator.swift in Sources */,
+				57F4EBF82B902DAA00ADA7AA /* FavoritesPresenter.swift in Sources */,
 				DAAC3F812B8F077500D3B08D /* AuthView + Extension.swift in Sources */,
 				57F4EBBF2B8F275500ADA7AA /* BottomSheetViewController.swift in Sources */,
 				5733135E2B73215B00092647 /* SceneDelegate.swift in Sources */,
