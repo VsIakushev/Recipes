@@ -23,6 +23,7 @@ final class BottomSheetViewController: UIViewController {
 
     // MARK: - Public Properties
 
+    var presenter: BottomSheetPresentorProtocol?
     private var bonuses = 0
 
     // MARK: - Life Cycles
@@ -101,6 +102,8 @@ final class BottomSheetViewController: UIViewController {
     }
 
     @objc private func closeButtonTapped() {
-        dismiss(animated: true)
+        presenter?.closeButtonPressed()
     }
 }
+
+extension BottomSheetViewController: BottomSheetViewControllerProtocol {}

@@ -33,15 +33,15 @@ final class ProfileTableViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    var editButtonAction: (() -> Void)?
+    var editButtonAction: VoidHandler?
 
     func setName(newName: String) {
         userName = newName
     }
 
-    func configureCell(imageName: String, userName: String) {
-        self.userName = userName
-        userImage = imageName
+    func configureCell(info: ProfileInfo) {
+        userName = info.userName
+        userImage = info.userImage
         setupUI()
     }
 

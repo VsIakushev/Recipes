@@ -1,9 +1,5 @@
-//
-//  RecipePresebter.swift
-//  Recipes
-//
-//  Created by Vitaliy Iakushev on 28.02.2024.
-//
+// RecipePresebter.swift
+// Copyright © RoadMap. All rights reserved.
 
 import UIKit
 
