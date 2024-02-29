@@ -32,7 +32,6 @@
 		57F4EBEF2B8FEFEF00ADA7AA /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBEE2B8FEFEF00ADA7AA /* Profile.swift */; };
 		57F4EBF52B902D1300ADA7AA /* RecipePresebter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBF42B902D1300ADA7AA /* RecipePresebter.swift */; };
 		57F4EBF82B902DAA00ADA7AA /* FavoritesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBF72B902DAA00ADA7AA /* FavoritesPresenter.swift */; };
-		DAAC3F812B8F077500D3B08D /* AuthView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAC3F802B8F077500D3B08D /* AuthView + Extension.swift */; };
 		DAAC3F872B8F183200D3B08D /* AuthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAC3F862B8F183200D3B08D /* AuthPresenter.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,7 +63,6 @@
 		57F4EBEE2B8FEFEF00ADA7AA /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		57F4EBF42B902D1300ADA7AA /* RecipePresebter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipePresebter.swift; sourceTree = "<group>"; };
 		57F4EBF72B902DAA00ADA7AA /* FavoritesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPresenter.swift; sourceTree = "<group>"; };
-		DAAC3F802B8F077500D3B08D /* AuthView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthView + Extension.swift"; sourceTree = "<group>"; };
 		DAAC3F862B8F183200D3B08D /* AuthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -171,7 +169,6 @@
 		DA0B3D692B8E041A00F7DE48 /* Auth Screen */ = {
 			isa = PBXGroup;
 			children = (
-				DAAC3F802B8F077500D3B08D /* AuthView + Extension.swift */,
 				5722C3112B8DBF0B00ED2AD2 /* AuthViewController.swift */,
 				DAAC3F862B8F183200D3B08D /* AuthPresenter.swift */,
 			);
@@ -310,7 +307,6 @@
 				57F4EBB92B8F270B00ADA7AA /* ProfileTableViewCell.swift in Sources */,
 				5722C3082B8DBDEF00ED2AD2 /* AppCoordinator.swift in Sources */,
 				57F4EBF82B902DAA00ADA7AA /* FavoritesPresenter.swift in Sources */,
-				DAAC3F812B8F077500D3B08D /* AuthView + Extension.swift in Sources */,
 				57F4EBBF2B8F275500ADA7AA /* BottomSheetViewController.swift in Sources */,
 				5733135E2B73215B00092647 /* SceneDelegate.swift in Sources */,
 				5722C30A2B8DBE0400ED2AD2 /* AuthCoordinator.swift in Sources */,
