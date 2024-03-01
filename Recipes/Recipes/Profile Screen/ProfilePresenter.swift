@@ -1,45 +1,44 @@
 // ProfilePresenter.swift
 // Copyright © RoadMap. All rights reserved.
 
-import UIKit
-
 /// Протокол экрана Профиля пользователя
 protocol ProfileViewProtocol: AnyObject {
+    /// Обновление экрана после получения новых данных
     func updateView()
+    /// показать алерт для ввода нового имени
     func showEditAlert()
 }
 
 /// Протокол Презентера Профиля пользователя
 protocol ProfilePresenterProtocol {
+    /// данные пользователя
     var profileInfo: ProfileInfo { get set }
-    var profileCoordinator: ProfileCoordinator? { get set }
-
-    func onTap()
+    /// выход на экран логина
     func onLogOut()
+    /// обработка нажатия кнопки изменения пользовательских данных
     func editTapped()
+    /// установка нового имени пользователя
     func setName(newName: String)
+    /// обработка нажатия на кнопку бонусов
     func bonusButtonPressed()
 }
 
 /// Презентер для экрана Профиля пользователя
 final class ProfilePresenter: ProfilePresenterProtocol {
-    func editTapped() {
-        view?.showEditAlert()
-    }
-
     // MARK: - Public Properties
 
-    weak var profileCoordinator: ProfileCoordinator?
     var profileInfo = ProfileInfo(userName: "Anna", userImage: "avatar", bonuses: 99)
 
     // MARK: - Private Properties
 
+    private weak var profileCoordinator: ProfileCoordinator?
     private weak var view: ProfileViewProtocol?
 
     // MARK: - Initializers
 
-    init(view: ProfileViewProtocol) {
+    init(view: ProfileViewProtocol, coordinator: ProfileCoordinator) {
         self.view = view
+        profileCoordinator = coordinator
     }
 
     // MARK: - Public Methods
@@ -53,11 +52,11 @@ final class ProfilePresenter: ProfilePresenterProtocol {
         view?.updateView()
     }
 
-    func onTap() {
-        profileCoordinator?.pushRecipe()
-    }
-
     func onLogOut() {
         profileCoordinator?.logOut()
+    }
+
+    func editTapped() {
+        view?.showEditAlert()
     }
 }

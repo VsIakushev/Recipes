@@ -22,9 +22,9 @@ final class ProfileTableViewCell: UITableViewCell {
 
     // MARK: - Visual Components
 
-    let userImageView = UIImageView()
-    let userNameLabel = UILabel()
-    let editButton = UIButton()
+    private let userImageView = UIImageView()
+    private let userNameLabel = UILabel()
+    private let editButton = UIButton()
 
     // MARK: - Private Properties
 
@@ -42,15 +42,20 @@ final class ProfileTableViewCell: UITableViewCell {
     func configureCell(info: ProfileInfo) {
         userName = info.userName
         userImage = info.userImage
+        addViews()
         setupUI()
+        setConstraints()
     }
 
     // MARK: - Private Methods
 
-    private func setupUI() {
+    private func addViews() {
         contentView.addSubview(userImageView)
         contentView.addSubview(userNameLabel)
         contentView.addSubview(editButton)
+    }
+
+    private func setupUI() {
         userImageView.translatesAutoresizingMaskIntoConstraints = false
         userNameLabel.translatesAutoresizingMaskIntoConstraints = false
         editButton.translatesAutoresizingMaskIntoConstraints = false
@@ -67,7 +72,9 @@ final class ProfileTableViewCell: UITableViewCell {
         editButton.setImage(UIImage(named: "pencil"), for: .normal)
         editButton.addTarget(self, action: #selector(editButtonPressed), for: .touchUpInside)
         editButton.tintColor = UIColor(named: "text02")
+    }
 
+    private func setConstraints() {
         NSLayoutConstraint.activate([
             contentView.heightAnchor.constraint(equalToConstant: 280),
             contentView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),

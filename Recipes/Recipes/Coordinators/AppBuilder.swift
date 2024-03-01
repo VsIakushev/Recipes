@@ -9,11 +9,7 @@ class AppBuilder {
         let view = RecipeViewController()
         let recipePresenter = RecipePresenter(view: view)
         view.presenter = recipePresenter
-        view.tabBarItem = UITabBarItem(
-            title: "Recipes",
-            image: UIImage(named: "muffin"),
-            selectedImage: UIImage(named: "muffin.fill")
-        )
+        view.setupUI()
         return view
     }
 
@@ -21,23 +17,15 @@ class AppBuilder {
         let view = FavoritesViewController()
         let favoritesPresenter = FavoritesPresenter(view: view)
         view.presenter = favoritesPresenter
-        view.tabBarItem = UITabBarItem(
-            title: "Favorites",
-            image: UIImage(named: "favorites"),
-            selectedImage: UIImage(named: "favorites.fill")
-        )
+        view.setupUI()
         return view
     }
 
-    func makeProfileModule() -> ProfileViewController {
+    func makeProfileModule(coordinator: ProfileCoordinator) -> ProfileViewController {
         let view = ProfileViewController()
-        let profilePresenter = ProfilePresenter(view: view)
+        let profilePresenter = ProfilePresenter(view: view, coordinator: coordinator)
         view.presenter = profilePresenter
-        view.tabBarItem = UITabBarItem(
-            title: "Profile",
-            image: UIImage(named: "smile"),
-            selectedImage: UIImage(named: "smile.fill")
-        )
+        view.setupUI()
         return view
     }
 }

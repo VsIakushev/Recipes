@@ -1,10 +1,8 @@
 // ProfileInfo.swift
 // Copyright © RoadMap. All rights reserved.
 
-import Foundation
-
 /// Профиль пользователя
-class ProfileInfo {
+struct ProfileInfo {
     /// Имя пользователя
     var userName: String
     /// Название изображения аватарки пользователя

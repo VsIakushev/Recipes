@@ -5,7 +5,11 @@ import UIKit
 
 /// Координатор базовый
 class BaseCoodinator {
+    // MARK: - Public Properties
+
     var childCoordinators: [BaseCoodinator] = []
+
+    // MARK: - Public Methods
 
     func start() {
         fatalError("child должен быть реализован")

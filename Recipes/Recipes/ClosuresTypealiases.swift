@@ -1,4 +1,4 @@
-// lintSetup.swift
+// ClosuresTypealiases.swift
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
