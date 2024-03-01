@@ -5,9 +5,9 @@ import UIKit
 
 /// Контейнер для проставления зависимостей и сборки модуля
 class AppBuilder {
-    func makeRecipeModule() -> RecipeViewController {
+    func makeRecipeModule(coordinator: RecipeCoordinator) -> RecipeViewController {
         let view = RecipeViewController()
-        let recipePresenter = RecipePresenter(view: view)
+        let recipePresenter = RecipePresenter(view: view, coordinator: coordinator)
         view.presenter = recipePresenter
         view.setupUI()
         return view

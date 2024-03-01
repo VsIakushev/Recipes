@@ -5,11 +5,15 @@ import UIKit
 
 /// Координатор рецептов
 final class RecipeCoordinator: BaseCoodinator {
-    var rootController: UINavigationController
+    var rootController: UINavigationController!
     var onFinishFlow: (() -> Void)?
 
-    init(rootController: UIViewController) {
-        self.rootController = UINavigationController(rootViewController: rootController)
+//    init(rootController: UIViewController) {
+//
+//    }
+
+    func setRootViewController(view: UIViewController) {
+        rootController = UINavigationController(rootViewController: view)
     }
 
     func pushCategoryDetails(for category: String) {

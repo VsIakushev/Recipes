@@ -16,21 +16,24 @@ protocol RecipePresenterProtocol {
 
 /// Презентер экрана Рецептов
 final class RecipePresenter: RecipePresenterProtocol {
-    
     // MARK: - Public Properties
+
     var categories = RecipeCategory.createCategories()
 
+    // MARK: - Private Properties
+
+    private weak var view: RecipeViewControllerProtocol?
     weak var recipeCoordinator: RecipeCoordinator?
 
-    // MARK: - Private Properties
-    private weak var view: RecipeViewControllerProtocol?
-
     // MARK: - Initializers
-    init(view: RecipeViewControllerProtocol) {
+
+    init(view: RecipeViewControllerProtocol, coordinator: RecipeCoordinator) {
         self.view = view
+        recipeCoordinator = coordinator
     }
 
     // MARK: - Public Methods
+
     func goToCategoryListScreen(for category: String) {
         recipeCoordinator?.pushCategoryDetails(for: category)
     }

@@ -24,6 +24,7 @@ final class RecipeViewController: UIViewController {
     var presenter: RecipePresenterProtocol?
 
     // MARK: - Life Cycles
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigation()
@@ -31,17 +32,19 @@ final class RecipeViewController: UIViewController {
         collectionView.delegate = self
         navigationController?.navigationBar.isHidden = true
     }
-    
+
     // MARK: - Public Methods
+
     func setupUI() {
         view.backgroundColor = .white
-        
+
         tabBarItem = UITabBarItem(
             title: Constants.titleText,
             image: UIImage(named: Constants.tabBarImage),
             selectedImage: UIImage(named: Constants.tabBarImageFill)
         )
     }
+
     // MARK: - Private Methods
 
     private func setupNavigation() {
@@ -58,6 +61,7 @@ final class RecipeViewController: UIViewController {
         collectionView.delegate = self
         collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         collectionView.backgroundColor = .white
+        collectionView.showsVerticalScrollIndicator = false
 
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -70,11 +74,12 @@ final class RecipeViewController: UIViewController {
     }
 }
 
-
 // MARK: - RecipeViewController + RecipeViewControllerProtocol
+
 extension RecipeViewController: RecipeViewControllerProtocol {}
 
 // MARK: - RecipeViewController + UICollectionViewDelegate
+
 extension RecipeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         presenter?.goToCategoryListScreen(for: presenter?.categories[indexPath.row].title ?? "")
@@ -82,6 +87,7 @@ extension RecipeViewController: UICollectionViewDelegate {
 }
 
 // MARK: - RecipeViewController + UICollectionViewDataSource
+
 extension RecipeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         presenter?.categories.count ?? 0
@@ -104,9 +110,9 @@ extension RecipeViewController: UICollectionViewDataSource {
             let cornerRadius = min(cell.bounds.width, cell.bounds.height) / 10
             cell.updateCornerRaduis(with: cornerRadius)
 
-            cell.layer.shadowColor = UIColor.black.cgColor
-            cell.layer.shadowOffset = CGSizeMake(0, 4.0)
-            cell.layer.shadowRadius = 4.0
+            cell.layer.shadowColor = UIColor.darkGray.cgColor
+            cell.layer.shadowOffset = CGSizeMake(1, 4.0)
+            cell.layer.shadowRadius = 3.0
             cell.layer.shadowOpacity = 0.5
             cell.layer.masksToBounds = false
 
@@ -117,6 +123,7 @@ extension RecipeViewController: UICollectionViewDataSource {
 }
 
 // MARK: - RecipeViewController + UICollectionViewDelegateFlowLayout
+
 extension RecipeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(
         _ collectionView: UICollectionView,

@@ -12,9 +12,11 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
     }
 
     // MARK: - Public Properties
+
     var cornerRadius: CGFloat = 0
 
     // MARK: - Visual Components
+
     private let imageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
@@ -25,7 +27,7 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
 
     private let overlayView = {
         let view = UIView()
-        view.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
+        view.backgroundColor = UIColor.gray.withAlphaComponent(0.8)
         return view
     }()
 
@@ -56,15 +58,16 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
         imageView.image = UIImage(named: image)
     }
 
-    
     // MARK: - Public Methods
+
     func updateCornerRaduis(with radius: CGFloat) {
         imageView.layer.cornerRadius = radius
         overlayView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         overlayView.layer.cornerRadius = radius
     }
-    
+
     // MARK: - Private Methods
+
     private func setupView() {
         contentView.addSubview(imageView)
         contentView.addSubview(overlayView)
