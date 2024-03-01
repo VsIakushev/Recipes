@@ -12,6 +12,13 @@ final class RecipeCoordinator: BaseCoodinator {
         self.rootController = UINavigationController(rootViewController: rootController)
     }
 
+    func pushCategoryDetails(for category: String) {
+        print("Переход на экран категории: \(category)")
+        // TODO: Расскомментировать когда Евгений реализует экран categoryDetailViewController
+        // let categoryViewController = categoryDetailViewController(for category: category)
+        // rootController.pushViewController(categoryViewController, animated: true)
+    }
+
     func pushProfile() {
         let profileVC = ProfileViewController()
         rootController.pushViewController(profileVC, animated: true)

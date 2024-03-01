@@ -25,6 +25,8 @@
 		573313632B73215B00092647 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 573313612B73215B00092647 /* Main.storyboard */; };
 		573313652B73215C00092647 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 573313642B73215C00092647 /* Assets.xcassets */; };
 		573313682B73215C00092647 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 573313662B73215C00092647 /* LaunchScreen.storyboard */; };
+		5744196C2B91A90300A8A41F /* RecipeCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5744196B2B91A90300A8A41F /* RecipeCategory.swift */; };
+		574419712B91A95B00A8A41F /* CategotyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574419702B91A95B00A8A41F /* CategotyCollectionViewCell.swift */; };
 		57F4EBB92B8F270B00ADA7AA /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBB82B8F270B00ADA7AA /* ProfileTableViewCell.swift */; };
 		57F4EBBB2B8F272100ADA7AA /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */; };
 		57F4EBBD2B8F273500ADA7AA /* ProfileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBBC2B8F273500ADA7AA /* ProfileButton.swift */; };
@@ -58,6 +60,8 @@
 		573313642B73215C00092647 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		573313672B73215C00092647 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		573313692B73215C00092647 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5744196B2B91A90300A8A41F /* RecipeCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCategory.swift; sourceTree = "<group>"; };
+		574419702B91A95B00A8A41F /* CategotyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategotyCollectionViewCell.swift; sourceTree = "<group>"; };
 		57F4EBB82B8F270B00ADA7AA /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
 		57F4EBBC2B8F273500ADA7AA /* ProfileButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileButton.swift; sourceTree = "<group>"; };
@@ -158,6 +162,30 @@
 			path = Recipes;
 			sourceTree = "<group>";
 		};
+		5744196D2B91A91700A8A41F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5744196B2B91A90300A8A41F /* RecipeCategory.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		5744196E2B91A92700A8A41F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5722C3132B8DBF2A00ED2AD2 /* RecipeViewController.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		5744196F2B91A92F00A8A41F /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				57F4EBF42B902D1300ADA7AA /* RecipePresenter.swift */,
+			);
+			name = Presenter;
+			sourceTree = "<group>";
+		};
 		57F4EBB72B8F26DD00ADA7AA /* Profile Screen */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,8 +209,10 @@
 		57F4EBF32B902CEE00ADA7AA /* Recipe Screen */ = {
 			isa = PBXGroup;
 			children = (
-				5722C3132B8DBF2A00ED2AD2 /* RecipeViewController.swift */,
-				57F4EBF42B902D1300ADA7AA /* RecipePresenter.swift */,
+				5744196D2B91A91700A8A41F /* Model */,
+				5744196E2B91A92700A8A41F /* View */,
+				5744196F2B91A92F00A8A41F /* Presenter */,
+				574419702B91A95B00A8A41F /* CategotyCollectionViewCell.swift */,
 			);
 			path = "Recipe Screen";
 			sourceTree = "<group>";
@@ -335,6 +365,7 @@
 				57F4EBED2B8FE18500ADA7AA /* AppBuilder.swift in Sources */,
 				5722C30C2B8DBE1B00ED2AD2 /* RecipeCoordinator.swift in Sources */,
 				57F4EBB92B8F270B00ADA7AA /* ProfileTableViewCell.swift in Sources */,
+				574419712B91A95B00A8A41F /* CategotyCollectionViewCell.swift in Sources */,
 				5722C3082B8DBDEF00ED2AD2 /* AppCoordinator.swift in Sources */,
 				57F4EBF82B902DAA00ADA7AA /* FavoritesPresenter.swift in Sources */,
 				57F4EBBF2B8F275500ADA7AA /* BottomSheetViewController.swift in Sources */,
@@ -343,6 +374,7 @@
 				57071C762B90952F00425D68 /* BottomSheetPresenter.swift in Sources */,
 				5722C3182B8DD27100ED2AD2 /* FavoritesViewController.swift in Sources */,
 				5722C3062B8DBDDB00ED2AD2 /* BaseCoordinator.swift in Sources */,
+				5744196C2B91A90300A8A41F /* RecipeCategory.swift in Sources */,
 				57071C7B2B90A1CD00425D68 /* ClosuresTypealiases.swift in Sources */,
 				57F4EBEF2B8FEFEF00ADA7AA /* ProfileInfo.swift in Sources */,
 				57F4EBEB2B8FDF8100ADA7AA /* ProfilePresenter.swift in Sources */,
