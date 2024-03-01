@@ -15,11 +15,11 @@ final class BottomSheetViewController: UIViewController {
 
     // MARK: - Visual Components
 
-    let closeButton = UIButton()
-    let bonusTitleLabel = UILabel()
-    let bonusImageView = UIImageView()
-    let starImageView = UIImageView()
-    let bonusesLabel = UILabel()
+    private let closeButton = UIButton()
+    private let bonusTitleLabel = UILabel()
+    private let bonusImageView = UIImageView()
+    private let starImageView = UIImageView()
+    private let bonusesLabel = UILabel()
 
     // MARK: - Public Properties
 
@@ -30,7 +30,9 @@ final class BottomSheetViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        addViews()
         setupUI()
+        setConstraints()
     }
 
     // MARK: - Public Methods
@@ -41,13 +43,16 @@ final class BottomSheetViewController: UIViewController {
 
     // MARK: - Private Methods
 
-    private func setupUI() {
-        view.backgroundColor = .white
+    private func addViews() {
         view.addSubview(closeButton)
         view.addSubview(bonusTitleLabel)
         view.addSubview(bonusImageView)
         view.addSubview(starImageView)
         view.addSubview(bonusesLabel)
+    }
+
+    private func setupUI() {
+        view.backgroundColor = .white
 
         closeButton.setImage(UIImage(systemName: "xmark"), for: .normal)
         closeButton.tintColor = UIColor(named: "text02")
@@ -66,7 +71,9 @@ final class BottomSheetViewController: UIViewController {
         bonusesLabel.textAlignment = .left
         bonusesLabel.font = Constants.bonusesFont
         bonusesLabel.textColor = UIColor(named: "text02")
+    }
 
+    private func setConstraints() {
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         bonusTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         bonusImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -102,7 +109,7 @@ final class BottomSheetViewController: UIViewController {
     }
 
     @objc private func closeButtonTapped() {
-        presenter?.closeButtonPressed()
+        presenter?.closeBottomSheet()
     }
 }
 

@@ -18,9 +18,9 @@ final class ButtonTableViewCell: UITableViewCell {
 
     // MARK: - Visual Components
 
-    private let bonusesButton = ProfileCustomButton()
-    private let termsButton = ProfileCustomButton()
-    private let logoutButton = ProfileCustomButton()
+    private let bonusesButton = ProfileButton()
+    private let termsButton = ProfileButton()
+    private let logoutButton = ProfileButton()
 
     // MARK: - Public Properties
 
@@ -35,22 +35,29 @@ final class ButtonTableViewCell: UITableViewCell {
 
     func configureCell(bonuses: Int) {
         userBonuses = bonuses
+        addViews()
         setupUI()
+        setConstraints()
     }
 
     // MARK: - Private Methods
 
-    private func setupUI() {
+    private func addViews() {
         contentView.addSubview(bonusesButton)
         contentView.addSubview(termsButton)
         contentView.addSubview(logoutButton)
+    }
+
+    private func setupUI() {
         bonusesButton.configure(image: UIImage(named: Constants.bonusesButtonImage), text: Constants.bonusesButtonText)
         termsButton.configure(image: UIImage(named: Constants.termsButtonImage), text: Constants.termsButtonText)
         logoutButton.configure(image: UIImage(named: Constants.logoutButtonImage), text: Constants.logoutButtonText)
         bonusesButton.addTarget(self, action: #selector(bonusesButtonPressed), for: .touchUpInside)
         termsButton.addTarget(self, action: #selector(termsButtonPressed), for: .touchUpInside)
         logoutButton.addTarget(self, action: #selector(logoutButtonPressed), for: .touchUpInside)
+    }
 
+    private func setConstraints() {
         bonusesButton.translatesAutoresizingMaskIntoConstraints = false
         termsButton.translatesAutoresizingMaskIntoConstraints = false
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
@@ -80,6 +87,7 @@ final class ButtonTableViewCell: UITableViewCell {
         bonusButtonAction?()
     }
 
+    // реализация в следующем задании
     @objc private func termsButtonPressed() {}
 
     @objc private func logoutButtonPressed() {

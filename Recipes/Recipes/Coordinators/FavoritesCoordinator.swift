@@ -5,12 +5,18 @@ import UIKit
 
 /// Координатор избранных рецептов
 final class FavoritesCoordinator: BaseCoodinator {
+    // MARK: - Public Properties
+
     var rootController: UINavigationController
     var onFinishFlow: (() -> Void)?
+
+    // MARK: - Initializers
 
     init(rootController: UIViewController) {
         self.rootController = UINavigationController(rootViewController: rootController)
     }
+
+    // MARK: - Public Methods
 
     func logOut() {
         onFinishFlow?()

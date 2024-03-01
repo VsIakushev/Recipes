@@ -8,6 +8,8 @@ final class AppCoordinator: BaseCoodinator {
     private var tabBarViewController: MainTabBarViewController?
     private var appBuilder = AppBuilder()
 
+    // MARK: - Life Cycles
+
     override func start() {
         if "admin" == "admin" {
             toMain​()
@@ -15,6 +17,8 @@ final class AppCoordinator: BaseCoodinator {
             t​oAuth​()
         }
     }
+
+    // MARK: - Private Methods
 
     private func toMain​() {
         tabBarViewController = MainTabBarViewController()
@@ -31,9 +35,11 @@ final class AppCoordinator: BaseCoodinator {
         add(coordinator: favoritesCoordinator)
 
         /// Set Profile
-        let profileView = appBuilder.makeProfileModule()
-        let profileCoordinator = ProfileCoordinator(rootController: profileView)
-        profileView.presenter?.profileCoordinator = profileCoordinator
+        let profileCoordinator = ProfileCoordinator()
+        let profileView = appBuilder.makeProfileModule(coordinator: profileCoordinator)
+        profileCoordinator.setRootViewController(view: profileView)
+
+//        profileView.presenter?.profileCoordinator = profileCoordinator
         add(coordinator: profileCoordinator)
 
         profileCoordinator.onFinishFlow = { [weak self] in

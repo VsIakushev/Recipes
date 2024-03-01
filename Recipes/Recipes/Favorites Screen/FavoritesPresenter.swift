@@ -1,15 +1,19 @@
 // FavoritesPresenter.swift
 // Copyright © RoadMap. All rights reserved.
 
-import UIKit
+protocol FavoritesViewControllerProtocol: AnyObject {}
+
+protocol FavoritesPresenterProtocol {
+    var favoritesCoordinator: FavoritesCoordinator? { get set }
+}
 
 /// Презентер экрана Избранных рецептов
-final class FavoritesPresenter {
+final class FavoritesPresenter: FavoritesPresenterProtocol {
     weak var favoritesCoordinator: FavoritesCoordinator?
 
-    private weak var view: UIViewController?
+    private weak var view: FavoritesViewControllerProtocol?
 
-    init(view: UIViewController) {
+    init(view: FavoritesViewControllerProtocol) {
         self.view = view
     }
 

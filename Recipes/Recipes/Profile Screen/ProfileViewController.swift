@@ -33,6 +33,16 @@ final class ProfileViewController: UIViewController {
         setupTableView()
     }
 
+    // MARK: - Public Methods
+
+    func setupUI() {
+        tabBarItem = UITabBarItem(
+            title: "Profile",
+            image: UIImage(named: "smile"),
+            selectedImage: UIImage(named: "smile.fill")
+        )
+    }
+
     // MARK: - Private Methods
 
     private func setupNavigation() {
@@ -47,7 +57,6 @@ final class ProfileViewController: UIViewController {
         tableView.frame = view.bounds
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
-        tableView.delegate = self
         tableView.dataSource = self
         tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: "ProfileCell")
         tableView.register(ButtonTableViewCell.self, forCellReuseIdentifier: "ButtonCell")
@@ -80,16 +89,12 @@ final class ProfileViewController: UIViewController {
         cell.bonusButtonAction = { [weak self] in
             self?.presenter?.bonusButtonPressed()
         }
-        cell.logoutButtonAction = {
-            self.presenter?.onLogOut()
+        cell.logoutButtonAction = { [weak self] in
+            self?.presenter?.onLogOut()
         }
     }
 
-    @objc func onTapAction() {
-        presenter?.onTap()
-    }
-
-    @objc func onTapLogOutAction() {
+    @objc private func onTapLogOutAction() {
         presenter?.onLogOut()
     }
 }
@@ -108,9 +113,6 @@ extension ProfileViewController: ProfileViewProtocol {
     }
 }
 
-/// ProfileViewController+UITableViewDelegate
-extension ProfileViewController: UITableViewDelegate {}
-
 /// ProfileViewController+UITableViewDataSource
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -120,11 +122,10 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             guard let cell = tableView
-                .dequeueReusableCell(withIdentifier: "ProfileCell", for: indexPath) as? ProfileTableViewCell
+                .dequeueReusableCell(withIdentifier: "ProfileCell", for: indexPath) as? ProfileTableViewCell,
+                let presenter = presenter
             else { return UITableViewCell() }
-            print("creating 1st cell")
 
-            guard let presenter = presenter else { return UITableViewCell() }
             cell.configureCell(info: presenter.profileInfo)
             cell.editButtonAction = { [weak self] in
                 self?.presenter?.editTapped()
@@ -135,7 +136,6 @@ extension ProfileViewController: UITableViewDataSource {
             guard let cell = tableView
                 .dequeueReusableCell(withIdentifier: "ButtonCell", for: indexPath) as? ButtonTableViewCell
             else { return UITableViewCell() }
-            print("creating 2nd cell")
             configureButtonCell(for: cell)
             return cell
         }

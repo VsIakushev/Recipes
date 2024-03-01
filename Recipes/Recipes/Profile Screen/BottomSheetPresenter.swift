@@ -1,4 +1,4 @@
-// BottomSheetPresentor.swift
+// BottomSheetPresenter.swift
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
@@ -8,20 +8,28 @@ protocol BottomSheetViewControllerProtocol: AnyObject {}
 
 // Протокол Презентора нижней шторки
 protocol BottomSheetPresentorProtocol {
-    func closeButtonPressed()
+    /// закрытие шторки кнопкой
+    func closeBottomSheet()
 }
 
 // Презентор нижней шторки
-class BottomSheetPresentor: BottomSheetPresentorProtocol {
+final class BottomSheetPresenter: BottomSheetPresentorProtocol {
+    // MARK: - Public Properties
+
     weak var view: BottomSheetViewControllerProtocol?
-    weak var coordinator: ProfileCoordinator?
+
+    private weak var coordinator: ProfileCoordinator?
+
+    // MARK: - Initializers
 
     init(view: BottomSheetViewController, coordinator: ProfileCoordinator) {
         self.view = view
         self.coordinator = coordinator
     }
 
-    func closeButtonPressed() {
+    // MARK: - Public Methods
+
+    func closeBottomSheet() {
         coordinator?.closeBottomSheet()
     }
 }

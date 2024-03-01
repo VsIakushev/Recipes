@@ -6,11 +6,15 @@ import UIKit
 /// Координатор авторизации
 final class AuthCoordinator: BaseCoodinator {
     var rootController: UINavigationController?
-    var onFinishFlow: (() -> Void)?
+    var onFinishFlow: VoidHandler?
+
+    // MARK: - Life Cycles
 
     override func start() {
         showLogin()
     }
+
+    // MARK: - Public Methods
 
     func onFinish() {
         onFinishFlow?()
