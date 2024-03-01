@@ -5,7 +5,7 @@
 //  Created by Vermut xxx on 28.02.2024.
 //
 
-import UIKit
+import Foundation
 
 /// Протокол авторизации
 protocol AuthorizationProtocol: AnyObject {
@@ -13,26 +13,31 @@ protocol AuthorizationProtocol: AnyObject {
     func validateEmail(email: String?)
     /// Проверка пароля
     func checkPassword(password: String?)
+    /// проверка авторизации
+    func checkAuthorization(email: String, password: String)
 }
 
 /// Протокол авторизации экрана
 protocol AuthorizationViewControllerProtocol: AnyObject {
+    
+    /// устанавливает цвет названия заголовка почты при неправильном вводе
     func setWrongMailLabelColor(color: String, isValidateMail: Bool)
-    
+    /// устанавливает цвет названия заголовка почты при правильном вводе
     func setCorrectMailLabelColor(color: String, isValidateMail: Bool)
-    
+    /// устанавливает цвет названия заголовка пароля при неправильном вводе
     func setWrongPasswordLabelColor(color: String, isValidatePassword: Bool)
-    
+    /// устанавливает цвет названия заголовка почты при правильном вводе
     func setCorrectPasswordLabelColor(color: String, isValidatePassword: Bool)
-        
+    /// запуск спиннера
     func startSpinner()
-    
+    /// стоп спиннера
     func stopSpinner()
-    
+    /// показывает всплывающее окно с ошибкой
     func showErrorView()
 }
 
-class AuthPresenter {
+///  презентер экрана авторизации
+final class AuthPresenter {
     
     //MARK: - Constants
     
@@ -41,6 +46,7 @@ class AuthPresenter {
         static let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         static let selfMatches = "SELF MATCHES %@"
         static let text03 = "text03"
+        static let minPasswordCount = 8
         
     }
     // MARK: - Private Properties
@@ -55,10 +61,29 @@ class AuthPresenter {
     }
 
     // MARK: - Properties
-    var isValidateMail = Bool()
-    var isValidatePassword = Bool()
+   private var isValidateMail = Bool()
+   private var isValidatePassword = Bool()
     
-    func loginButtonPressed(email: String, password: String) {
+//    func checkAuthorization(email: String, password: String) {
+//        validateEmail(email: email)
+//        checkPassword(password: password)
+//
+//        if isValidateMail && isValidatePassword {
+//            self.view?.startSpinner()
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+//                self.authCoordinator?.onFinish()
+//            }
+//        }
+//        else {
+//            self.view?.showErrorView()
+//        }
+//    }
+}
+
+// MARK: - AuthPresenter + AuthorizationProtocol
+
+extension AuthPresenter: AuthorizationProtocol {
+    func checkAuthorization(email: String, password: String) {
         validateEmail(email: email)
         checkPassword(password: password)
         
@@ -72,15 +97,11 @@ class AuthPresenter {
             self.view?.showErrorView()
         }
     }
-}
-
-// MARK: - AuthorizationProtocol
-
-extension AuthPresenter: AuthorizationProtocol {
+    
     
     func validateEmail(email: String?) {
         guard let email = email, !email.isEmpty else {
-            self.isValidateMail = false
+            isValidateMail = false
             view?.setWrongMailLabelColor(color: Constants.background03, isValidateMail: false)
             return
         }
@@ -89,10 +110,10 @@ extension AuthPresenter: AuthorizationProtocol {
         let emailPredicate = NSPredicate(format:Constants.selfMatches, emailRegex)
         if emailPredicate.evaluate(with: email) {
             view?.setCorrectMailLabelColor(color: Constants.text03, isValidateMail: true)
-            self.isValidateMail = true
+            isValidateMail = true
         } else {
             view?.setWrongMailLabelColor(color: Constants.background03, isValidateMail: false)
-            self.isValidateMail = false
+            isValidateMail = false
         }
     }
     
@@ -103,7 +124,7 @@ extension AuthPresenter: AuthorizationProtocol {
             return
         }
         
-        if password.count < 8 {
+        if password.count < Constants.minPasswordCount {
             view?.setWrongPasswordLabelColor(color: Constants.background03, isValidatePassword: false)
             self.isValidatePassword = false
             return

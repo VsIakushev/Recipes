@@ -20,7 +20,8 @@ final class AuthCoordinator: BaseCoodinator {
         onFinishFlow?()
     }
 
-    func showLogin() {
+    //func showLogin() {
+        func showLogin() {
         let authViewController = AuthViewController()
         let authPresenter = AuthPresenter(view: authViewController)
         authViewController.presenter = authPresenter
