@@ -145,7 +145,11 @@ extension RecipeDetailsViewController: UITableViewDataSource {
                 ) as? CaloriesTableViewCell,
                 let presenter = presenter
             else { return UITableViewCell() }
-            print(presenter.recipe.title)
+            cell.configureCell(kcal: presenter.recipe.energicKcal,
+                               carbohydrates: presenter.recipe.carbohydrates,
+                               fats: presenter.recipe.fats,
+                               proteins: presenter.recipe.proteins
+            )
             return cell
 
         } else {

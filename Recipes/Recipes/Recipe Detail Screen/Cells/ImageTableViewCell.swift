@@ -116,7 +116,7 @@ class ImageTableViewCell: UITableViewCell {
             recipeImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 45),
             recipeImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -45),
             recipeImageView.heightAnchor.constraint(equalTo: recipeImageView.widthAnchor),
-            recipeImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
+            recipeImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             
             roundView.topAnchor.constraint(equalTo: recipeImageView.topAnchor, constant: 8),
             roundView.trailingAnchor.constraint(equalTo: recipeImageView.trailingAnchor, constant: -6),

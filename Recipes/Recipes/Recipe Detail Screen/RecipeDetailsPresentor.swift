@@ -46,6 +46,5 @@ final class RecipeDetailsPresenter: RecipeDetailsPresenterProtocol {
     
     func closeDetailsScreen() {
         recipeCoordinator?.closeRecipeDetails()
-        print(recipeCoordinator)
     }
 }
