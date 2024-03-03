@@ -19,9 +19,11 @@ final class RecipeCoordinator: BaseCoodinator {
     }
 
     func pushCategoryDetails(for category: String) {
+        
         // временный переход на RecipeDetailView, пока делаю этот экран
-        let recipeDetailVC = appBuilder.makeRecipeDetailsModule(coordinator: self)
-        rootController.pushViewController(recipeDetailVC, animated: true)
+        // TODO: Этот переход должен быть с экрана категорий, при нжатии на конкретное блюдо
+        // let recipeDetailVC = appBuilder.makeRecipeDetailsModule(coordinator: self)
+        // rootController.pushViewController(recipeDetailVC, animated: true)
 
         print("Переход на экран категории: \(category)")
         // TODO: Расскомментировать когда Евгений реализует экран categoryDetailViewController

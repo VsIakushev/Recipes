@@ -9,7 +9,6 @@ class ImageTableViewCell: UITableViewCell {
     private enum Constants {
         static let titleFont = UIFont(name: "Verdana-Bold", size: 20)
         static let smallFont = UIFont(name: "Verdana", size: 10)
-        static let recipeFont = UIFont(name: "Verdana", size: 14)
         static let cookingTime = "Cooking time "
         static let min = " min"
         static let potIcon = "pot"

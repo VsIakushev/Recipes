@@ -3,31 +3,37 @@
 
 import UIKit
 
-class RecipeDetailsViewController: UIViewController {
+/// Экран детального описания рецепта
+final class RecipeDetailsViewController: UIViewController {
     // MARK: - Constants
-
     private enum Constants {
         static let imageCellIdentifier = "ImageCell"
         static let caloriesCellIdentifier = "CaloriesCell"
         static let recipeCellIdentifier = "RecipeCell"
+        static let numberOfSections = 3
     }
-
-    private lazy var tableView = UITableView()
-
+    
+    // MARK: - Public Properties
     var presenter: RecipeDetailsPresenterProtocol?
-
+    
+    // MARK: - Private Properties
+    private lazy var tableView = UITableView()
+    
+    // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupTableView()
         setupNavigation()
     }
-
+    
+    // MARK: - Public Methods
     func setupUI() {
         view.backgroundColor = .cyan
     }
-
-    func setupNavigation() {
+    
+    // MARK: - Private Methods
+    private func setupNavigation() {
         let backButton = UIBarButtonItem(
             image: UIImage(systemName: "arrow.backward"),
             style: .plain,
@@ -35,9 +41,9 @@ class RecipeDetailsViewController: UIViewController {
             action: #selector(backButtonTapped)
         )
         backButton.tintColor = .black
-
+        
         navigationItem.leftBarButtonItem = backButton
-
+        
         let shareButton = UIBarButtonItem(
             image: UIImage(named: "telegram"),
             style: .plain,
@@ -45,7 +51,7 @@ class RecipeDetailsViewController: UIViewController {
             action: #selector(shareViaTelegramButtonTapped)
         )
         shareButton.tintColor = .black
-
+        
         let addToFavoritesButton = UIBarButtonItem(
             image: UIImage(named: "addfavorites"),
             style: .plain,
@@ -53,26 +59,22 @@ class RecipeDetailsViewController: UIViewController {
             action: #selector(addToFavoritesTaped)
         )
         addToFavoritesButton.tintColor = .black
-
+        
         navigationItem.rightBarButtonItems = [addToFavoritesButton, shareButton]
     }
-
-    func setupTableView() {
+    
+    private func setupTableView() {
         view.addSubview(tableView)
         tableView.frame = view.bounds
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.dataSource = self
-
-
+        
         tableView.register(ImageTableViewCell.self, forCellReuseIdentifier: Constants.imageCellIdentifier)
         tableView.register(CaloriesTableViewCell.self, forCellReuseIdentifier: Constants.caloriesCellIdentifier)
         tableView.register(RecipeDescriptionTableViewCell.self, forCellReuseIdentifier: Constants.recipeCellIdentifier)
-
-//        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        tableView.delegate = self
         tableView.dataSource = self
-
+        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -81,7 +83,7 @@ class RecipeDetailsViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
     }
-
+    
 }
 
 extension RecipeDetailsViewController: RecipeDetailsViewControllerProtocol {
@@ -94,39 +96,33 @@ extension RecipeDetailsViewController: RecipeDetailsViewControllerProtocol {
         
     }
     
-   
+    
     @objc func backButtonTapped() {
         print("go back")
         presenter?.closeDetailsScreen()
-//        navigationController?.popViewController(animated: true)
     }
-
+    
     @objc func shareViaTelegramButtonTapped() {
-        print("shareButtonTapped")
+        /// для реализации в дальнейшем
     }
-
+    
     @objc func addToFavoritesTaped() {
         presenter?.addToFavorites()
-        print("addToFavoritesButtonTapped")
     }
-
+    
 }
-
-extension RecipeDetailsViewController: UITableViewDelegate {}
 
 extension RecipeDetailsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        3
+        Constants.numberOfSections
     }
-
-
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             guard let cell = tableView
                 .dequeueReusableCell(
                     withIdentifier: Constants.imageCellIdentifier, for: indexPath ) as? ImageTableViewCell,
-                let presenter = presenter
+                  let presenter = presenter
             else { return UITableViewCell() }
             cell.configureCell(
                 title: presenter.recipe.title,
@@ -134,16 +130,16 @@ extension RecipeDetailsViewController: UITableViewDataSource {
                 weight: presenter.recipe.weight,
                 cookingTime: presenter.recipe.cookintTime
             )
-
+            
             return cell
-
+            
         } else if indexPath.row == 1 {
             guard let cell = tableView
                 .dequeueReusableCell(
                     withIdentifier: Constants.caloriesCellIdentifier,
                     for: indexPath
                 ) as? CaloriesTableViewCell,
-                let presenter = presenter
+                  let presenter = presenter
             else { return UITableViewCell() }
             cell.configureCell(kcal: presenter.recipe.energicKcal,
                                carbohydrates: presenter.recipe.carbohydrates,
@@ -151,17 +147,17 @@ extension RecipeDetailsViewController: UITableViewDataSource {
                                proteins: presenter.recipe.proteins
             )
             return cell
-
+            
         } else {
             guard let cell = tableView
                 .dequeueReusableCell(
                     withIdentifier: Constants.recipeCellIdentifier,
                     for: indexPath
                 ) as? RecipeDescriptionTableViewCell,
-                let presenter = presenter
+                  let presenter = presenter
             else { return UITableViewCell() }
-            cell.configureCell()
-
+            cell.configureCell(text: presenter.recipe.recipeDescription)
+            
             return cell
         }
     }

@@ -1,17 +1,28 @@
 // Recipe.swift
 // Copyright © RoadMap. All rights reserved.
 
+/// Данные рецепта
 struct Recipe {
+    /// Название рецепта
     let title: String
+    /// Изображение для рецепта
     let image: String
+    /// Вес блюда
     let weight: Int
+    /// Время приготовления
     let cookintTime: Int
+    /// Калорийность блюда
     let energicKcal: Int
+    /// Углеводы на 100гр блюда
     let carbohydrates: Double
+    /// Жиры на 100гр блюда
     let fats: Double
+    /// Белки на 100гр блюда
     let proteins: Double
+    /// Текст с подробным описанием рецепта
     let recipeDescription: String
 
+    /// Создание примера рецепта
     static func recipeExample() -> Recipe {
         Recipe(
             title: "Simple Fish and Corn",

@@ -33,7 +33,6 @@
 		5744197D2B92752800A8A41F /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5744197C2B92752800A8A41F /* ImageTableViewCell.swift */; };
 		5744197F2B92754D00A8A41F /* CaloriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5744197E2B92754D00A8A41F /* CaloriesTableViewCell.swift */; };
 		574419812B92756D00A8A41F /* RecipeDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574419802B92756D00A8A41F /* RecipeDescriptionTableViewCell.swift */; };
-		574419A52B92FAB700A8A41F /* CaloriesCellElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574419A42B92FAB700A8A41F /* CaloriesCellElement.swift */; };
 		57F4EBB92B8F270B00ADA7AA /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBB82B8F270B00ADA7AA /* ProfileTableViewCell.swift */; };
 		57F4EBBB2B8F272100ADA7AA /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */; };
 		57F4EBBD2B8F273500ADA7AA /* ProfileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBBC2B8F273500ADA7AA /* ProfileButton.swift */; };
@@ -75,7 +74,6 @@
 		5744197C2B92752800A8A41F /* ImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
 		5744197E2B92754D00A8A41F /* CaloriesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaloriesTableViewCell.swift; sourceTree = "<group>"; };
 		574419802B92756D00A8A41F /* RecipeDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDescriptionTableViewCell.swift; sourceTree = "<group>"; };
-		574419A42B92FAB700A8A41F /* CaloriesCellElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaloriesCellElement.swift; sourceTree = "<group>"; };
 		57F4EBB82B8F270B00ADA7AA /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
 		57F4EBBC2B8F273500ADA7AA /* ProfileButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileButton.swift; sourceTree = "<group>"; };
@@ -217,7 +215,6 @@
 			children = (
 				5744197C2B92752800A8A41F /* ImageTableViewCell.swift */,
 				5744197E2B92754D00A8A41F /* CaloriesTableViewCell.swift */,
-				574419A42B92FAB700A8A41F /* CaloriesCellElement.swift */,
 				574419802B92756D00A8A41F /* RecipeDescriptionTableViewCell.swift */,
 			);
 			path = Cells;
@@ -392,7 +389,6 @@
 			files = (
 				5722C30E2B8DBE8900ED2AD2 /* ProfileCoordinator.swift in Sources */,
 				5722C3122B8DBF0B00ED2AD2 /* AuthViewController.swift in Sources */,
-				574419A52B92FAB700A8A41F /* CaloriesCellElement.swift in Sources */,
 				574419742B92646500A8A41F /* RecipeDetailsViewController.swift in Sources */,
 				5733135C2B73215B00092647 /* AppDelegate.swift in Sources */,
 				5722C3102B8DBED000ED2AD2 /* MainTabBarViewController.swift in Sources */,
