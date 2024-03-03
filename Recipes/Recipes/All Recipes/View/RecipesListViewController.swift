@@ -152,7 +152,17 @@ extension RecipesListViewController {
 
 // MARK: - UITableViewDelegate
 
-extension RecipesListViewController: UITableViewDelegate {}
+extension RecipesListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            tableView.deselectRow(at: indexPath, animated: true)
+            
+            let recipe = recipes[indexPath.row]
+            let detailsViewController = RecipeDetailsViewController()
+        detailsViewController.presenter?.recipe = Recipe.recipeExample()
+            
+            navigationController?.pushViewController(detailsViewController, animated: true)
+        }
+}
 
 // MARK: - UITableViewDataSource
 
