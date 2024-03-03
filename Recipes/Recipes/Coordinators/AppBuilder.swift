@@ -12,6 +12,14 @@ class AppBuilder {
         view.setupUI()
         return view
     }
+    
+    func makeRecipeDetailsModule(coordinator: RecipeCoordinator) -> RecipeDetailsViewController {
+        let view = RecipeDetailsViewController()
+        let recipeDetailsPresenter = RecipeDetailsPresenter(view: view, coordinator: coordinator)
+        view.presenter = recipeDetailsPresenter
+        view.setupUI()
+        return view
+    }
 
     func makeFavoriteModule() -> FavoritesViewController {
         let view = FavoritesViewController()

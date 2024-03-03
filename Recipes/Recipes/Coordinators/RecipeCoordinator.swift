@@ -7,6 +7,8 @@ import UIKit
 final class RecipeCoordinator: BaseCoodinator {
     var rootController: UINavigationController!
     var onFinishFlow: (() -> Void)?
+    
+    private var appBuilder = AppBuilder()
 
 //    init(rootController: UIViewController) {
 //
@@ -17,10 +19,20 @@ final class RecipeCoordinator: BaseCoodinator {
     }
 
     func pushCategoryDetails(for category: String) {
+        
+        // временный переход на RecipeDetailView, пока делаю этот экран
+        // TODO: Этот переход должен быть с экрана категорий, при нжатии на конкретное блюдо
+        // let recipeDetailVC = appBuilder.makeRecipeDetailsModule(coordinator: self)
+        // rootController.pushViewController(recipeDetailVC, animated: true)
+
         print("Переход на экран категории: \(category)")
         // TODO: Расскомментировать когда Евгений реализует экран categoryDetailViewController
         // let categoryViewController = categoryDetailViewController(for category: category)
         // rootController.pushViewController(categoryViewController, animated: true)
+    }
+    
+    func closeRecipeDetails() {
+        rootController.popViewController(animated: true)
     }
 
     func pushProfile() {
