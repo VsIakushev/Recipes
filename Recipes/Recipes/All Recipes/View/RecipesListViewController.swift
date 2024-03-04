@@ -49,21 +49,22 @@ final class RecipesListViewController: UIViewController {
 
     // MARK: - Private Methods
 
-    var recipePresenter: AllRecipesPresenter?
+    var presenter: AllRecipesPresenter?
 
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let proto = AllRecipesPresenter(view: self)
-        recipePresenter = proto
-        recipePresenter?.getUser()
-        configureUI()
+        //let proto = AllRecipesPresenter(view: self)
+//        presenter = proto
+        setupUI()
+//        self.hidesBottomBarWhenPushed = true
     }
 
     // MARK: - Private Methods
 
-    private func configureUI() {
+    func setupUI() {
+        presenter?.getReceipts()
         //addTapGestureToHideKeyboard()
         view.backgroundColor = .white
         view.addSubview(searchBar)
@@ -72,7 +73,9 @@ final class RecipesListViewController: UIViewController {
         makeFilterButton(button: timeButton, title: Constants.timeButtonTitle)
         configureNavigation()
         makeAnchor()
+        
     }
+    
 
     private func configureNavigation() {
         let backButton = UIBarButtonItem(image: Constants.backBarButtonImage, style: .done, target: self, action: nil)
@@ -130,7 +133,7 @@ extension RecipesListViewController {
         recipesTableView.topAnchor.constraint(equalTo: timeButton.bottomAnchor, constant: 10).isActive = true
         recipesTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         recipesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        recipesTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        recipesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
 
     private func setupAnchorsCaloriesButton() {
@@ -156,11 +159,12 @@ extension RecipesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             tableView.deselectRow(at: indexPath, animated: true)
             
-            let recipe = recipes[indexPath.row]
-            let detailsViewController = RecipeDetailsViewController()
-        detailsViewController.presenter?.recipe = Recipe.recipeExample()
-            
-            navigationController?.pushViewController(detailsViewController, animated: true)
+//            let recipe = recipes[indexPath.row]
+//            let detailsViewController = RecipeDetailsViewController()
+//        detailsViewController.presenter?.recipe = Recipe.recipeExample()
+//
+//            navigationController?.pushViewController(detailsViewController, animated: true)
+        presenter?.goToRecipeDetails()
         }
 }
 

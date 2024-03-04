@@ -12,22 +12,28 @@ protocol RecipesViewProtocol: AnyObject {
 }
 
 protocol RecipeProtocol: AnyObject {
-    func getUser()
+    func getReceipts()
+    func goToRecipeDetails()
 }
 /// презентер всех рецептов
 final class AllRecipesPresenter {
     private weak var view: RecipesViewProtocol?
-    private weak var recipesCoordinator: RecipeCoordinator?
+     weak var recipesCoordinator: RecipeCoordinator?
     private var user: Recipes?
 
-    init(view: RecipesViewProtocol) {
+    init(view: RecipesViewProtocol, coordinator: RecipeCoordinator) {
         self.view = view
+        self.recipesCoordinator = coordinator
     }
 }
 
 extension AllRecipesPresenter: RecipeProtocol {
-    func getUser() {
+    func getReceipts() {
         let storage = Storage()
         view?.getRecipes(recipes: storage.fish)
+    }
+    
+    func goToRecipeDetails() {
+        recipesCoordinator?.pushReceiptDetails()
     }
 }

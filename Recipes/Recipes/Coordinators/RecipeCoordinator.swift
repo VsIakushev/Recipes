@@ -27,7 +27,7 @@ final class RecipeCoordinator: BaseCoodinator {
 
         print("Переход на экран категории: \(category)")
         // TODO: Расскомментировать когда Евгений реализует экран categoryDetailViewController
-         let categoryViewController = RecipesListViewController()
+        let categoryViewController = appBuilder.makeRecipesListModule(coordinator: self)
          rootController.pushViewController(categoryViewController, animated: true)
     }
     
@@ -38,5 +38,10 @@ final class RecipeCoordinator: BaseCoodinator {
     func pushProfile() {
         let profileVC = ProfileViewController()
         rootController.pushViewController(profileVC, animated: true)
+    }
+    
+    func pushReceiptDetails() {
+        let recipeDetailVC = appBuilder.makeRecipeDetailsModule(coordinator: self)
+        rootController.pushViewController(recipeDetailVC, animated: true)
     }
 }
