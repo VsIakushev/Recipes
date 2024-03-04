@@ -25,5 +25,21 @@ final class MainTabBarViewController: UITabBarController {
         view.backgroundColor = .white
         tabBar.tintColor = UIColor(named: Constants.background01Color)
         tabBar.unselectedItemTintColor = UIColor(named: Constants.text02Color)
+//
+//        let navigationBarAppearance = UINavigationBarAppearance()
+//        navigationBarAppearance.configureWithOpaqueBackground()
+//        navigationBarAppearance.titleTextAttributes = [
+//            NSAttributedString.Key.foregroundColor: UIColor.white
+//        ]
+//        navigationBarAppearance.backgroundColor = UIColor.white
+//        UINavigationBar.appearance().standardAppearance = navigationBarAppearance
+//        UINavigationBar.appearance().compactAppearance = navigationBarAppearance
+//        UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
+//
+//        let tabBarAppearance = UITabBarAppearance()
+//        tabBarAppearance.configureWithOpaqueBackground()
+//        tabBarAppearance.backgroundColor = UIColor.white
+//        UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+//        UITabBar.appearance().standardAppearance = tabBarAppearance
     }
 }
