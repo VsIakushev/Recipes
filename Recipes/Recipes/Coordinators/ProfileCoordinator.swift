@@ -24,6 +24,16 @@ final class ProfileCoordinator: BaseCoodinator {
     func closeBottomSheet() {
         rootController?.dismiss(animated: true)
     }
+    
+    func closeTermsAndPolicyView() {
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        if let window = windowScene?.windows.last {
+            if let lastSubview = window.subviews.last {
+                lastSubview.removeFromSuperview()
+            }
+        }
+    }
 
     func showBonusBottomSheet(bonuses: Int) {
         let bottomSheet = BottomSheetViewController()
@@ -40,12 +50,11 @@ final class ProfileCoordinator: BaseCoodinator {
         rootController.present(bottomSheet, animated: true)
     }
     
-    func showTermsAndPolicySheet() {
-        
-        let termsAndPrivacySheet = TermsAndPolicyViewController()
+    func showTermsAndPolicySheet(profileViewController: ProfileViewProtocol) {
+        let termsAndPrivacySheet = TermsAndPolicyView()
         let presenter = TermsAndPolicyPresenter(view: termsAndPrivacySheet, coordinator: self)
         termsAndPrivacySheet.presenter = presenter
-        
-        rootController.present(termsAndPrivacySheet, animated: true)
+        profileViewController.termsView = termsAndPrivacySheet
+        profileViewController.showTermsAndPolicy()
     }
 }

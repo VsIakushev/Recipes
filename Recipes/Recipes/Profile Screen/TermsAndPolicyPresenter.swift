@@ -4,7 +4,7 @@
 import Foundation
 
 // Протокол экрана Условий и Политики конфиденциальности
-protocol TermsAndPolicyPresenterViewControllerProtocol: AnyObject {}
+protocol TermsAndPolicyPresenterViewProtocol: AnyObject { }
 
 // Протокол Презентора экрана Условий и Политики конфиденциальности
 protocol TermsAndPolicyPresenterProtocol {
@@ -16,13 +16,13 @@ protocol TermsAndPolicyPresenterProtocol {
 final class TermsAndPolicyPresenter: TermsAndPolicyPresenterProtocol {
     // MARK: - Public Properties
 
-    weak var view: TermsAndPolicyPresenterViewControllerProtocol?
+    weak var view: TermsAndPolicyPresenterViewProtocol?
 
     private weak var coordinator: ProfileCoordinator?
 
     // MARK: - Initializers
 
-    init(view: TermsAndPolicyPresenterViewControllerProtocol, coordinator: ProfileCoordinator) {
+    init(view: TermsAndPolicyPresenterViewProtocol, coordinator: ProfileCoordinator) {
         self.view = view
         self.coordinator = coordinator
     }
@@ -30,6 +30,6 @@ final class TermsAndPolicyPresenter: TermsAndPolicyPresenterProtocol {
     // MARK: - Public Methods
 
     func closeTermsSheet() {
-        coordinator?.closeBottomSheet()
+        coordinator?.closeTermsAndPolicyView()
     }
 }

@@ -33,7 +33,7 @@
 		5744197D2B92752800A8A41F /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5744197C2B92752800A8A41F /* ImageTableViewCell.swift */; };
 		5744197F2B92754D00A8A41F /* CaloriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5744197E2B92754D00A8A41F /* CaloriesTableViewCell.swift */; };
 		574419812B92756D00A8A41F /* RecipeDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574419802B92756D00A8A41F /* RecipeDescriptionTableViewCell.swift */; };
-		574419EF2B96AB8100A8A41F /* TermsAndPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574419EE2B96AB8100A8A41F /* TermsAndPolicyViewController.swift */; };
+		574419EF2B96AB8100A8A41F /* TermsAndPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574419EE2B96AB8100A8A41F /* TermsAndPolicyView.swift */; };
 		574419F12B96AD5000A8A41F /* TermsAndPolicyPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574419F02B96AD5000A8A41F /* TermsAndPolicyPresenter.swift */; };
 		57F4EBB92B8F270B00ADA7AA /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBB82B8F270B00ADA7AA /* ProfileTableViewCell.swift */; };
 		57F4EBBB2B8F272100ADA7AA /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */; };
@@ -82,7 +82,7 @@
 		5744197C2B92752800A8A41F /* ImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
 		5744197E2B92754D00A8A41F /* CaloriesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaloriesTableViewCell.swift; sourceTree = "<group>"; };
 		574419802B92756D00A8A41F /* RecipeDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDescriptionTableViewCell.swift; sourceTree = "<group>"; };
-		574419EE2B96AB8100A8A41F /* TermsAndPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndPolicyViewController.swift; sourceTree = "<group>"; };
+		574419EE2B96AB8100A8A41F /* TermsAndPolicyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndPolicyView.swift; sourceTree = "<group>"; };
 		574419F02B96AD5000A8A41F /* TermsAndPolicyPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndPolicyPresenter.swift; sourceTree = "<group>"; };
 		57F4EBB82B8F270B00ADA7AA /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
@@ -127,7 +127,7 @@
 			children = (
 				5722C3152B8DBF4D00ED2AD2 /* ProfileViewController.swift */,
 				57F4EBBE2B8F275500ADA7AA /* BottomSheetViewController.swift */,
-				574419EE2B96AB8100A8A41F /* TermsAndPolicyViewController.swift */,
+				574419EE2B96AB8100A8A41F /* TermsAndPolicyView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -461,7 +461,7 @@
 				574419782B92648000A8A41F /* Recipe.swift in Sources */,
 				57F4EBF52B902D1300ADA7AA /* RecipePresenter.swift in Sources */,
 				5744197F2B92754D00A8A41F /* CaloriesTableViewCell.swift in Sources */,
-				574419EF2B96AB8100A8A41F /* TermsAndPolicyViewController.swift in Sources */,
+				574419EF2B96AB8100A8A41F /* TermsAndPolicyView.swift in Sources */,
 				DAAC3F872B8F183200D3B08D /* AuthPresenter.swift in Sources */,
 				57F4EBBD2B8F273500ADA7AA /* ProfileButton.swift in Sources */,
 				57F4EBED2B8FE18500ADA7AA /* AppBuilder.swift in Sources */,

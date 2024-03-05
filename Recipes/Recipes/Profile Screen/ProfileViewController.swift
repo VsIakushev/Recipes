@@ -6,6 +6,14 @@ import UIKit
 /// Экран профиля
 final class ProfileViewController: UIViewController {
     
+    /// Состояние всплывающего окна с Условиями и Политикой Конфиденциальности
+    private enum TermsScreenState {
+        /// Окно развернуто
+        case expanded
+        /// Окно закрыто
+        case collapsed
+    }
+    
     // MARK: - Constants
     private enum Constants {
         static let titleText = "Profile"
@@ -18,12 +26,26 @@ final class ProfileViewController: UIViewController {
 
     // MARK: - Visual Components
 
+    var termsView = TermsAndPolicyView()
     private let tableView = UITableView()
-
+    
     // MARK: - Public Properties
 
     var presenter: ProfilePresenterProtocol?
-
+    
+    // MARK: - Private Properties
+    private var visualEffectView: UIVisualEffectView!
+    private let termsScreenHeight: CGFloat = 700
+    private let termsScreenHandleAreaHight: CGFloat = 0
+    private var cardVisible = false
+    
+    private var nextState: TermsScreenState {
+        return cardVisible ? .collapsed : .expanded
+    }
+    
+    private var runningAnimations = [UIViewPropertyAnimator]()
+    private var animationProgressWhenInterrupted: CGFloat = 0
+    
     // MARK: - Life Cycles
 
     override func viewDidLoad() {
@@ -31,11 +53,6 @@ final class ProfileViewController: UIViewController {
         view.backgroundColor = .lightGray
         setupNavigation()
         setupTableView()
-        
-        // TODO: Temporary
-        setupTermsScreen()
-        
-        
     }
 
     // MARK: - Public Methods
@@ -46,6 +63,19 @@ final class ProfileViewController: UIViewController {
             image: UIImage(named: "smile"),
             selectedImage: UIImage(named: "smile.fill")
         )
+    }
+    
+    func showTermsAndPolicy() {
+        termsView = TermsAndPolicyView()
+        setupTermsScreen()
+        
+        termsView.frame.origin.y = view.frame.height
+        visualEffectView.frame.origin.y = 0
+        animateTransitionIfNeeded(state: .expanded, duration: 0.9)
+        
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        windowScene?.windows.last?.addSubview(termsView)
     }
 
     // MARK: - Private Methods
@@ -98,158 +128,48 @@ final class ProfileViewController: UIViewController {
             self?.presenter?.onLogOut()
         }
         cell.termsAndPolicyButtonAction = { [weak self] in
-//            self?.presenter?.termsAndPolictPressed()
-            self?.toggleTermsScreenVisibility()
-            
+            self?.presenter?.termsAndPolictPressed(profileViewController: self!)
         }
     }
 
-    @objc private func onTapLogOutAction() {
-        presenter?.onLogOut()
-    }
+   
     
-    
-    // MARK: - Temporary Animation code below
-    
-    
-    // Additional functions
-    
-    private func hideTermScreen() {
-        termsViewController.view.isHidden = true
-        visualEffectView.isHidden = true
-    }
-    
-    private func toggleTermsScreenVisibility() {
-//        termsViewController.view.isHidden = !termsViewController.view.isHidden
-//        visualEffectView.isHidden = !visualEffectView.isHidden
-        
-        // Это работает:
-        if termsViewController.view.isHidden {
-                // Show terms screen and visual effect view
-                termsViewController.view.isHidden = false
-                visualEffectView.isHidden = false
-            self.tabBarController?.tabBar.isHidden = true
-                
-                // Position terms screen and visual effect view at the top
-                termsViewController.view.frame.origin.y = view.frame.height
-                visualEffectView.frame.origin.y = 0
-                
-                // Optionally, you can also start the animation here if needed
-                animateTransitionIfNeeded(state: .expanded, duration: 0.9)
-            } else {
-                // Hide terms screen and visual effect view
-                termsViewController.view.isHidden = true
-                visualEffectView.isHidden = true
-                self.tabBarController?.tabBar.isHidden = false
-                // Optionally, you can also start the animation here if needed
-                animateTransitionIfNeeded(state: .collapsed, duration: 0.9)
-            }
-        
-        
-    }
-    
-    // _____________
-    
-    enum TermsScreenState {
-        case expanded
-        case collapsed
-    }
-    
-    var termsViewController : TermsAndPolicyViewController!
-    var visualEffectView: UIVisualEffectView!
-    
-    let termsScreenHeight: CGFloat = 700
-    let termsScreenHandleAreaHight: CGFloat = 125
-    
-    var cardVisible = false
-    
-    var nextState: TermsScreenState {
-        return cardVisible ? .collapsed : .expanded
-    }
-    
-    var runningAnimations = [UIViewPropertyAnimator]()
-    
-    var animationProgressWhenInterrupted: CGFloat = 0
-
-    
-    func setupTermsScreen() {
+    private func setupTermsScreen() {
         
         visualEffectView = UIVisualEffectView()
         visualEffectView.frame = self.view.frame
         self.view.addSubview(visualEffectView)
         
-        termsViewController = TermsAndPolicyViewController()
-        
-        self.addChild(termsViewController)
-        view.addSubview(termsViewController.view)
-        
-        termsViewController.view.frame = CGRect(x: 0, y: self.view.frame.height - termsScreenHandleAreaHight - 150, width: self.view.bounds.width, height: termsScreenHeight)
-        
-        termsViewController.view.clipsToBounds = true
-//        termsViewController.view.translatesAutoresizingMaskIntoConstraints = true
-//        
-//        NSLayoutConstraint.activate([
-//            termsViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
-//            termsViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            termsViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            termsViewController.view.heightAnchor.constraint(equalToConstant: 600),
-//        ])
+        termsView.frame = CGRect(x: 0, y: self.view.frame.height - termsScreenHandleAreaHight, width: self.view.bounds.width, height: termsScreenHeight)
+  
+        termsView.clipsToBounds = true
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleCardTap(recognizer:)))
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleCardPan(recognizer: )))
         
-        termsViewController.handleArea.addGestureRecognizer(tapGestureRecognizer)
-        termsViewController.handleArea.addGestureRecognizer(panGestureRecognizer)
-        hideTermScreen()
+        termsView.handleArea.addGestureRecognizer(tapGestureRecognizer)
+        termsView.handleArea.addGestureRecognizer(panGestureRecognizer)
     }
     
-    @objc func handleCardTap(recognizer: UITapGestureRecognizer) {
-        switch recognizer.state {
-        case .ended:
-            animateTransitionIfNeeded(state: nextState, duration: 0.9)
-        default:
-            break
-        }
-    }
     
-    @objc func handleCardPan(recognizer: UIPanGestureRecognizer) {
-        
-        switch recognizer.state {
-        case .began :
-            startInteractiveTransition(state: nextState, duration: 0.9)
-        case .changed:
-            let trastlation = recognizer.translation(in: self.termsViewController.handleArea)
-            var fractionComplete = trastlation.y / termsScreenHeight
-            fractionComplete = cardVisible ? fractionComplete : -fractionComplete
-            updateInteractiveTransition(fractionCompleted: fractionComplete)
-        case .ended :
-            continueInteractiveTransition()
-        default : break
-        }
-    }
     
-    func animateTransitionIfNeeded(state: TermsScreenState, duration: TimeInterval) {
+    private func animateTransitionIfNeeded(state: TermsScreenState, duration: TimeInterval) {
         if runningAnimations.isEmpty {
             let frameAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
                 switch state {
                 case .expanded:
-                    self.termsViewController.view.frame.origin.y = self.view.frame.height - self.termsScreenHeight
-                case .collapsed: self.termsViewController.view.frame.origin.y = self.view.frame.height - self.termsScreenHandleAreaHight
+                    self.termsView.frame.origin.y = self.view.frame.height - self.termsScreenHeight
+                case .collapsed: self.termsView.frame.origin.y = self.view.frame.height - self.termsScreenHandleAreaHight
                 }
             }
             
             frameAnimator.addCompletion { _ in
                 self.cardVisible = !self.cardVisible
-                self.termsViewController.dismiss(animated: true)
-//                self.visualEffectView.isHidden = true
-//                self.termsViewController.view.isHidden = true
-//                self.tabBarController?.tabBar.isHidden = false
                 self.runningAnimations.removeAll()
                 
                 if !self.cardVisible {
-                    self.tabBarController?.tabBar.isHidden = false
+                    self.termsView.isHidden = true
                     self.visualEffectView.isHidden = true
-                    self.termsViewController.view.isHidden = true
                 }
             }
             
@@ -259,9 +179,9 @@ final class ProfileViewController: UIViewController {
             let cornerRadiusAnimator = UIViewPropertyAnimator(duration: duration, curve: .linear) {
                 switch state {
                 case .expanded :
-                    self.termsViewController.view.layer.cornerRadius = 25
+                    self.termsView.layer.cornerRadius = 25
                 case .collapsed:
-                    self.termsViewController.view.layer.cornerRadius = 0
+                    self.termsView.layer.cornerRadius = 0
                 }
             }
             cornerRadiusAnimator.startAnimation()
@@ -281,7 +201,7 @@ final class ProfileViewController: UIViewController {
         
     }
     
-    func startInteractiveTransition(state: TermsScreenState, duration: TimeInterval) {
+    private func startInteractiveTransition(state: TermsScreenState, duration: TimeInterval) {
         if runningAnimations.isEmpty {
                 animateTransitionIfNeeded(state: state, duration: duration)
         }
@@ -291,18 +211,46 @@ final class ProfileViewController: UIViewController {
         }
     }
     
-    func updateInteractiveTransition(fractionCompleted: CGFloat) {
+    private func updateInteractiveTransition(fractionCompleted: CGFloat) {
         for animator in runningAnimations {
             animator.fractionComplete = fractionCompleted + animationProgressWhenInterrupted
         }
     }
     
-    func continueInteractiveTransition() {
+    private func continueInteractiveTransition() {
         for animator in runningAnimations {
             animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
         }
     }
     
+    @objc private func onTapLogOutAction() {
+        presenter?.onLogOut()
+    }
+    
+    @objc private func handleCardTap(recognizer: UITapGestureRecognizer) {
+        switch recognizer.state {
+        case .ended:
+            animateTransitionIfNeeded(state: nextState, duration: 0.9)
+        default:
+            break
+        }
+    }
+    
+    @objc private func handleCardPan(recognizer: UIPanGestureRecognizer) {
+        
+        switch recognizer.state {
+        case .began :
+            startInteractiveTransition(state: nextState, duration: 0.9)
+        case .changed:
+            let trastlation = recognizer.translation(in: self.termsView.handleArea)
+            var fractionComplete = trastlation.y / termsScreenHeight
+            fractionComplete = cardVisible ? fractionComplete : -fractionComplete
+            updateInteractiveTransition(fractionCompleted: fractionComplete)
+        case .ended :
+            continueInteractiveTransition()
+        default : break
+        }
+    }
 }
 
 // MARK: - ProfileViewController+ProfileViewProtocol
