@@ -49,8 +49,10 @@ class TermsAndPolicyViewController: UIViewController {
     private let termsLabel = UILabel()
     private let scrollView = UIScrollView()
     
+    // MARK: - Public Properties
     var presenter: TermsAndPolicyPresenterProtocol?
     
+    // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
         addViews()
@@ -121,11 +123,11 @@ class TermsAndPolicyViewController: UIViewController {
         ])
     }
     
-    
     @objc private func closeButtonTapped() {
         presenter?.closeTermsSheet()
     }
 
 }
 
+// MARK: - TermsAndPolicyViewController + TermsAndPolicyPresenterViewControllerProtocol
 extension TermsAndPolicyViewController: TermsAndPolicyPresenterViewControllerProtocol {}

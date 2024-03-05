@@ -117,7 +117,7 @@ extension ProfileViewController: ProfileViewProtocol {
     }
 }
 
-/// ProfileViewController+UITableViewDataSource
+/// MARK: - ProfileViewController+UITableViewDataSource
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         2

@@ -29,7 +29,6 @@ final class TermsAndPolicyPresenter: TermsAndPolicyPresenterProtocol {
 
     // MARK: - Public Methods
 
-    // TODO: Проверить. По идее эта же функция должна закрывать и этот экран
     func closeTermsSheet() {
         coordinator?.closeBottomSheet()
     }
