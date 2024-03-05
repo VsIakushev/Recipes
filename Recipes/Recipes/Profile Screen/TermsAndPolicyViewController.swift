@@ -44,6 +44,8 @@ class TermsAndPolicyViewController: UIViewController {
 
     // MARK: - Visual Components
 
+    let handleArea = UIView()
+    private let barLine = UIView()
     private let closeButton = UIButton()
     private let termsTitleLabel = UILabel()
     private let termsLabel = UILabel()
@@ -63,6 +65,8 @@ class TermsAndPolicyViewController: UIViewController {
     // MARK: - Private Methods
 
     private func addViews() {
+        view.addSubview(handleArea)
+        handleArea.addSubview(barLine)
         view.addSubview(closeButton)
         view.addSubview(termsTitleLabel)
         view.addSubview(scrollView)
@@ -71,6 +75,10 @@ class TermsAndPolicyViewController: UIViewController {
 
     private func setupUI() {
         view.backgroundColor = .white
+        view.layer.cornerRadius = 25
+
+        barLine.layer.cornerRadius = 3
+        barLine.backgroundColor = .lightGray
         
         scrollView.showsVerticalScrollIndicator = false
         scrollView.isScrollEnabled = true
@@ -92,12 +100,24 @@ class TermsAndPolicyViewController: UIViewController {
     }
 
     private func setConstraints() {
+        handleArea.translatesAutoresizingMaskIntoConstraints = false
+        barLine.translatesAutoresizingMaskIntoConstraints = false
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         termsTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         termsLabel.translatesAutoresizingMaskIntoConstraints = false
         scrollView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
+            handleArea.topAnchor.constraint(equalTo: view.topAnchor),
+            handleArea.heightAnchor.constraint(equalToConstant: 40),
+            handleArea.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
+            handleArea.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35),
+            
+            barLine.centerXAnchor.constraint(equalTo: handleArea.centerXAnchor),
+            barLine.topAnchor.constraint(equalTo: handleArea.topAnchor, constant: 10),
+            barLine.widthAnchor.constraint(equalToConstant: 50),
+            barLine.heightAnchor.constraint(equalToConstant: 5),
+            
             closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 25),
             closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25),
             closeButton.widthAnchor.constraint(equalToConstant: 13),
@@ -106,7 +126,7 @@ class TermsAndPolicyViewController: UIViewController {
             termsTitleLabel.widthAnchor.constraint(equalToConstant: 170),
             termsTitleLabel.heightAnchor.constraint(equalToConstant: 20),
             termsTitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
-            termsTitleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 45),
+            termsTitleLabel.topAnchor.constraint(equalTo: handleArea.bottomAnchor, constant: 5),
 
             
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),

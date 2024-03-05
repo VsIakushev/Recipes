@@ -8,10 +8,6 @@ final class ProfileCoordinator: BaseCoodinator {
     var rootController: UINavigationController!
     var onFinishFlow: (() -> Void)?
 
-//    init(rootController: UIViewController) {
-//
-//    }
-
     func setRootViewController(view: UIViewController) {
         rootController = UINavigationController(rootViewController: view)
     }
