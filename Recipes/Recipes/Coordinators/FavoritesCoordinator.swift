@@ -9,6 +9,8 @@ final class FavoritesCoordinator: BaseCoodinator {
 
     var rootController: UINavigationController
     var onFinishFlow: (() -> Void)?
+    
+    private var appBuilder = AppBuilder()
 
     // MARK: - Initializers
 
@@ -26,4 +28,9 @@ final class FavoritesCoordinator: BaseCoodinator {
         let recipeViewController = RecipeViewController()
         rootController.pushViewController(recipeViewController, animated: true)
     }
+    
+//    func pushReceiptDetails() {
+//        let recipeDetailVC = appBuilder.makeRecipeDetailsModule(coordinator: self)
+//        rootController.pushViewController(recipeDetailVC, animated: true)
+//    }
 }

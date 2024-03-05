@@ -9,6 +9,7 @@ import Foundation
 /// протокол всех рецептов
 protocol RecipesViewProtocol: AnyObject {
     func getRecipes(recipes: [Recipes])
+    func setScreenTitle(_ title: String)
 }
 
 protocol RecipeProtocol: AnyObject {

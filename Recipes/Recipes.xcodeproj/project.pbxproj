@@ -48,6 +48,7 @@
 		DA3F295A2B951D840004CFAE /* RecipesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3F29592B951D840004CFAE /* RecipesListViewController.swift */; };
 		DA3F295C2B951DB60004CFAE /* RecipesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3F295B2B951DB60004CFAE /* RecipesCell.swift */; };
 		DA3F295E2B951DD00004CFAE /* AllRecipesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3F295D2B951DD00004CFAE /* AllRecipesPresenter.swift */; };
+		DA98ACF22B9696AC00125CBD /* RecipesCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA98ACF12B9696AC00125CBD /* RecipesCategory.swift */; };
 		DAAC3F872B8F183200D3B08D /* AuthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAC3F862B8F183200D3B08D /* AuthPresenter.swift */; };
 /* End PBXBuildFile section */
 
@@ -95,6 +96,7 @@
 		DA3F29592B951D840004CFAE /* RecipesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesListViewController.swift; sourceTree = "<group>"; };
 		DA3F295B2B951DB60004CFAE /* RecipesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesCell.swift; sourceTree = "<group>"; };
 		DA3F295D2B951DD00004CFAE /* AllRecipesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllRecipesPresenter.swift; sourceTree = "<group>"; };
+		DA98ACF12B9696AC00125CBD /* RecipesCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesCategory.swift; sourceTree = "<group>"; };
 		DAAC3F862B8F183200D3B08D /* AuthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -315,6 +317,7 @@
 				DA3F29532B951D360004CFAE /* Recipes.swift */,
 				DA3F29552B951D4A0004CFAE /* Category.swift */,
 				DA3F29572B951D650004CFAE /* Storage.swift */,
+				DA98ACF12B9696AC00125CBD /* RecipesCategory.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -450,6 +453,7 @@
 				DA3F295E2B951DD00004CFAE /* AllRecipesPresenter.swift in Sources */,
 				574419762B92647400A8A41F /* RecipeDetailsPresentor.swift in Sources */,
 				574419812B92756D00A8A41F /* RecipeDescriptionTableViewCell.swift in Sources */,
+				DA98ACF22B9696AC00125CBD /* RecipesCategory.swift in Sources */,
 				5722C3162B8DBF4D00ED2AD2 /* ProfileViewController.swift in Sources */,
 				5722C31A2B8DD28F00ED2AD2 /* FavoritesCoordinator.swift in Sources */,
 				574419782B92648000A8A41F /* Recipe.swift in Sources */,

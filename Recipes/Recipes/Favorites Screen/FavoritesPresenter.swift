@@ -24,4 +24,9 @@ final class FavoritesPresenter: FavoritesPresenterProtocol {
     func onLogOut() {
         favoritesCoordinator?.logOut()
     }
+    
+//    func goToRecipeDetails() {
+//        favoritesCoordinator?.pushReceiptDetails()
+//    }
+
 }
