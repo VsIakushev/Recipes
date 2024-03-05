@@ -9,7 +9,7 @@ final class BottomSheetViewController: UIViewController {
 
     private enum Constants {
         static let titleText = "Your bonuses"
-        static let titleFons = UIFont(name: "Verdana-Bold", size: 20)
+        static let titleFont = UIFont(name: "Verdana-Bold", size: 20)
         static let bonusesFont = UIFont(name: "Verdana-Bold", size: 30)
     }
 
@@ -59,7 +59,7 @@ final class BottomSheetViewController: UIViewController {
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
 
         bonusTitleLabel.text = Constants.titleText
-        bonusTitleLabel.font = Constants.titleFons
+        bonusTitleLabel.font = Constants.titleFont
         bonusTitleLabel.textAlignment = .center
         bonusTitleLabel.textColor = UIColor(named: "text02")
 
@@ -113,4 +113,5 @@ final class BottomSheetViewController: UIViewController {
     }
 }
 
+// MARK: - BottomSheetViewController + BottomSheetViewControllerProtocol
 extension BottomSheetViewController: BottomSheetViewControllerProtocol {}

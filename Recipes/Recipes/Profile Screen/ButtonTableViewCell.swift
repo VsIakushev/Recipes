@@ -26,6 +26,7 @@ final class ButtonTableViewCell: UITableViewCell {
 
     var bonusButtonAction: VoidHandler?
     var logoutButtonAction: VoidHandler?
+    var termsAndPolicyButtonAction: VoidHandler?
 
     // MARK: - Private Properties
 
@@ -88,7 +89,9 @@ final class ButtonTableViewCell: UITableViewCell {
     }
 
     // реализация в следующем задании
-    @objc private func termsButtonPressed() {}
+    @objc private func termsButtonPressed() {
+        termsAndPolicyButtonAction?()
+    }
 
     @objc private func logoutButtonPressed() {
         logoutButtonAction?()
