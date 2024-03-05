@@ -21,6 +21,8 @@ protocol ProfilePresenterProtocol {
     func setName(newName: String)
     /// обработка нажатия на кнопку бонусов
     func bonusButtonPressed()
+    /// обработка нажатия на Terms and Privacy Policy
+    func termsAndPolictPressed()
 }
 
 /// Презентер для экрана Профиля пользователя
@@ -45,6 +47,11 @@ final class ProfilePresenter: ProfilePresenterProtocol {
 
     func bonusButtonPressed() {
         profileCoordinator?.showBonusBottomSheet(bonuses: profileInfo.bonuses)
+    }
+    
+    func termsAndPolictPressed() {
+        profileCoordinator?.showTermsAndPolicySheet()
+        
     }
 
     func setName(newName: String) {

@@ -43,4 +43,13 @@ final class ProfileCoordinator: BaseCoodinator {
         }
         rootController.present(bottomSheet, animated: true)
     }
+    
+    func showTermsAndPolicySheet() {
+        
+        let termsAndPrivacySheet = TermsAndPolicyViewController()
+        let presenter = TermsAndPolicyPresenter(view: termsAndPrivacySheet, coordinator: self)
+        termsAndPrivacySheet.presenter = presenter
+        
+        rootController.present(termsAndPrivacySheet, animated: true)
+    }
 }

@@ -92,6 +92,10 @@ final class ProfileViewController: UIViewController {
         cell.logoutButtonAction = { [weak self] in
             self?.presenter?.onLogOut()
         }
+        cell.termsAndPolicyButtonAction = { [weak self] in
+            self?.presenter?.termsAndPolictPressed()
+            
+        }
     }
 
     @objc private func onTapLogOutAction() {
