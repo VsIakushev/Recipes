@@ -8,7 +8,7 @@
 import Foundation
 
 /// Рецепт
-struct Recipes {
+struct Recipes: Equatable {
     /// Аватар рецепта
     var avatarRecipie: String
     /// Название рецепта
@@ -17,6 +17,8 @@ struct Recipes {
     var cookingTimeTitle: String
     /// Калории блюда
     var caloriesTitle: String
+    
+    var isFavorite: Bool = false
     
     static func exampleRecipe() -> [Recipes] {
         [
@@ -57,4 +59,25 @@ struct Recipes {
             caloriesTitle: "174"
         )]
     }
+    
+    static let allRecipes: [Recipes] = exampleRecipe()
+        /// свойство типа с избранными рецептами
+        static var favoritesRecipes = [Recipes(
+            avatarRecipie: "fish_1",
+            titleRecipies: "Simple Fish And Corn",
+            cookingTimeTitle: "60",
+            caloriesTitle: "274"
+        ),
+        Recipes(
+            avatarRecipie: "fish_2",
+            titleRecipies: "Baked Fish with Lemon Herb Sauce",
+            cookingTimeTitle: "90",
+            caloriesTitle: "616"
+        )]
+
+//        /// метод типа для получения данных
+//        static func getRecipes(category: DishCategory) -> [RecipeDescription] {
+//            RecipeDescription.allRecipes.filter { $0.type == category.type }
+//        }
+
 }

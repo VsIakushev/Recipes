@@ -10,12 +10,13 @@ final class FavoritesViewController: UIViewController {
         static let cellIdendefire = "CellRecipes"
         static let titleText = "Favorites"
         static let titleFont = UIFont(name: "Verdana-Bold", size: 28)
-
+        static let emptyLabelText = "There's nothing here yet"
+        static let additionalEmptyLabelText = "Add interesting recipes to make ordering products convenient"
     }
     
     // MARK: - Public Properties
     
-    var recipes: [Recipes] = Recipes.exampleRecipe()
+    var recipes: [Recipes] = []
     var presenter: FavoritesPresenterProtocol?
     
     // MARK: - Public Methods
@@ -38,6 +39,51 @@ final class FavoritesViewController: UIViewController {
         return table
     }()
     
+    private let emptyMessageView: UIView = {
+            let view = UIView()
+            view.translatesAutoresizingMaskIntoConstraints = false
+            return view
+        }()
+
+        private let iconView: UIView = {
+            let view = UIView()
+            view.layer.cornerRadius = 12
+            view.clipsToBounds = true
+            view.backgroundColor = UIColor(named: "background08")
+            view.translatesAutoresizingMaskIntoConstraints = false
+            return view
+        }()
+
+        private let iconImageView: UIImageView = {
+            let imageView = UIImageView()
+            imageView.image = UIImage(named: "addfavorites")
+            imageView.contentMode = .scaleAspectFit
+            imageView.tintColor = .black
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            return imageView
+        }()
+
+        private let emptyLabel: UILabel = {
+            let label = UILabel()
+            label.text = Constants.emptyLabelText
+            label.font = UIFont(name: "Verdana-Bold", size: 18)
+            label.textAlignment = .center
+            label.translatesAutoresizingMaskIntoConstraints = false
+            return label
+        }()
+
+        private let additionalEmptyLabel: UILabel = {
+            let label = UILabel()
+            label.text = Constants.additionalEmptyLabelText
+            label.font = UIFont(name: "Verdana", size: 14)
+            label.textColor = .lightGray
+            label.numberOfLines = 2
+            label.textAlignment = .center
+            label.translatesAutoresizingMaskIntoConstraints = false
+            return label
+        }()
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -45,13 +91,18 @@ final class FavoritesViewController: UIViewController {
     }
     
     func configureUI() {
-        //        presenter?.getReceipts()
+        getFavRecipes()
         view.backgroundColor = .white
-        view.addSubview(recipesTableView)
+        view.addSubview(emptyMessageView)
+        emptyMessageView.addSubview(iconView)
+        emptyMessageView.addSubview(iconImageView)
+        emptyMessageView.addSubview(emptyLabel)
+        emptyMessageView.addSubview(additionalEmptyLabel)
         setupTitleLabel()
+        view.addSubview(recipesTableView)
         makeAnchor()
     }
-        
+    
     private func setupTitleLabel() {
         let titleLabel = UILabel()
         titleLabel.font = Constants.titleFont
@@ -61,6 +112,11 @@ final class FavoritesViewController: UIViewController {
 
     private func makeAnchor() {
         makeTableViewAnchor()
+        setEmptyMessageViewConstraints()
+        setIconViewConstraints()
+        setIconImageViewConstraints()
+        setEmptyLabelConstraints()
+        setAdditionalEmptyLabelConstraints()
     }
 }
     extension FavoritesViewController {
@@ -71,6 +127,41 @@ final class FavoritesViewController: UIViewController {
             recipesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
             recipesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         }
+        
+        private func setEmptyMessageViewConstraints() {
+                emptyMessageView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
+                    .isActive = true
+                emptyMessageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+                emptyMessageView.heightAnchor.constraint(equalToConstant: 132).isActive = true
+                emptyMessageView.widthAnchor.constraint(equalToConstant: 350).isActive = true
+            }
+
+            private func setIconViewConstraints() {
+                iconView.centerXAnchor.constraint(equalTo: emptyMessageView.centerXAnchor).isActive = true
+                iconView.topAnchor.constraint(equalTo: emptyMessageView.topAnchor).isActive = true
+                iconView.heightAnchor.constraint(equalToConstant: 48).isActive = true
+                iconView.widthAnchor.constraint(equalTo: iconView.heightAnchor).isActive = true
+            }
+
+            private func setIconImageViewConstraints() {
+                iconImageView.centerYAnchor.constraint(equalTo: iconView.centerYAnchor).isActive = true
+                iconImageView.centerXAnchor.constraint(equalTo: iconView.centerXAnchor).isActive = true
+                iconImageView.heightAnchor.constraint(equalToConstant: 18).isActive = true
+                iconImageView.widthAnchor.constraint(equalToConstant: 14).isActive = true
+            }
+
+            private func setEmptyLabelConstraints() {
+                emptyLabel.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 16).isActive = true
+                emptyLabel.centerXAnchor.constraint(equalTo: emptyMessageView.centerXAnchor).isActive = true
+            }
+
+            private func setAdditionalEmptyLabelConstraints() {
+                additionalEmptyLabel.topAnchor.constraint(equalTo: emptyLabel.bottomAnchor, constant: 8).isActive = true
+                additionalEmptyLabel.leadingAnchor.constraint(equalTo: emptyMessageView.leadingAnchor, constant: 16)
+                    .isActive = true
+                additionalEmptyLabel.trailingAnchor.constraint(equalTo: emptyMessageView.trailingAnchor, constant: -16)
+                    .isActive = true
+            }
     }
     
 // MARK: - UITableViewDelegate
@@ -78,13 +169,15 @@ final class FavoritesViewController: UIViewController {
     extension FavoritesViewController: UITableViewDelegate {
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             tableView.deselectRow(at: indexPath, animated: true)
-            //presenter?.goToRecipeDetails()
+//            presenter?.goToRecipeDetails()
         }
         
         func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
             if editingStyle == .delete {
-                recipes.remove(at: indexPath.row)
+                presenter?.removeFromFavourites(recipeIndex: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .fade)
+                tableView.reloadData()
+                presenter?.checkIfFavouritesEmpty()
             }
         }
     }
@@ -92,21 +185,19 @@ final class FavoritesViewController: UIViewController {
     // MARK: - UITableViewDataSource
     
     extension FavoritesViewController: UITableViewDataSource {
-        func numberOfSections(in tableView: UITableView) -> Int {
-            1
-        }
-        
+
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            recipes.count
+            return presenter?.getFavouritesCount() ?? 0
         }
         
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: Constants.cellIdendefire,
                 for: indexPath
-            ) as? RecipesCell
+            ) as? RecipesCell,
+                  let favorites = presenter?.getFavourites()
             else { return UITableViewCell() }
-            cell.configure(with: recipes[indexPath.row])
+            cell.configure(with: favorites[indexPath.row])
             return cell
         }
         
@@ -118,15 +209,37 @@ final class FavoritesViewController: UIViewController {
 
 // MARK: - FavoritesViewController + FavoritesViewControllerProtocol
 
-extension FavoritesViewController: FavoritesViewControllerProtocol {}
+extension FavoritesViewController: FavoritesViewControllerProtocol {
+    func setEmptyState() {
+        recipesTableView.isHidden = true
+    }
+    
+    func setNonEmptyState() {
+        recipesTableView.isHidden = false
+    }
+    
+    func getFavRecipes() {
+        recipes = presenter?.getFavourites() ?? []
+        recipesTableView.reloadData()
+    }
+}
 
 extension FavoritesViewController: RecipesViewProtocol {
-    func setScreenTitle(_ title: String) {
+    func getRecipes(recipes: [Recipes]) {
         
     }
     
-    func getRecipes(recipes: [Recipes]) {
-        self.recipes = recipes
-        recipesTableView.reloadData()
+    
+    func goToTheCategory() {
     }
+    
+    func setTitle(_ title: String) {
+        
+    }
+    
+    func getRecipes() {
+        //recipes = presenter?.getFavourites() ?? []
+//        recipesTableView.reloadData()
+    }
+    
 }

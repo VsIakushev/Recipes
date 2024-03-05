@@ -40,12 +40,13 @@ final class RecipesListViewController: UIViewController {
             return label
         }()
 
-    private lazy var backButton = UIBarButtonItem(
-            image: UIImage(named: "arrowBack"),
-            style: .plain,
-            target: self,
-            action: #selector(closeCategory)
-        )
+    private lazy var backButton: UIButton = {
+        let view = UIView()
+        let button = UIButton()
+        button.setImage(UIImage(named: "arrowBack"), for: .normal)
+        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        return button
+    }()
 
 
     private let searchBar: UISearchBar = {
@@ -61,6 +62,8 @@ final class RecipesListViewController: UIViewController {
     // MARK: - Public Properties
 
     var recipes: [Recipes] = []
+    
+    var categoryTitle: String = ""
 
     // MARK: - Private Methods
 
@@ -72,6 +75,12 @@ final class RecipesListViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         self.hidesBottomBarWhenPushed = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        titleLabel.text = categoryTitle
+
     }
 
     // MARK: - Private Methods
@@ -87,18 +96,11 @@ final class RecipesListViewController: UIViewController {
 //        configureNavigation()
         makeAnchor()
         
+        navigationItem.leftBarButtonItems = [
+                    UIBarButtonItem(customView: backButton),
+                    UIBarButtonItem(customView: titleLabel)
+                ]
     }
-
-//    private func configureNavigation() {
-//        let backButton = UIBarButtonItem(image: Constants.backBarButtonImage, style: .done, target: self, action: nil)
-//        let titleNavigation = UIBarButtonItem(
-//            title: Constants.titleNavigation,
-//            style: .plain,
-//            target: self,
-//            action: nil
-//        )
-//        navigationController?.navigationItem.leftBarButtonItems = [backButton, titleNavigation]
-//    }
 
     private func makeFilterButton(button: UIButton, title: String) {
         button.setTitle(title, for: .normal)
@@ -128,8 +130,8 @@ final class RecipesListViewController: UIViewController {
         seder.setTitleColor(.black, for: .normal)
     }
     
-    @objc private func closeCategory() {
-//            presenter?.closeCategory()
+    @objc private func backButtonTapped() {
+        presenter?.goToCategory()
         }
 
 }
@@ -206,15 +208,18 @@ extension RecipesListViewController: UITableViewDataSource {
 }
 
 extension RecipesListViewController: RecipesViewProtocol {
+    func goToTheCategory() {
+        navigationController?.popViewController(animated: true)
+
+    }
+    
     func getRecipes(recipes: [Recipes]) {
         self.recipes = recipes
         recipesTableView.reloadData()
     }
     
-    func setScreenTitle(_ title: String) {
-        titleLabel.text = title
-        let titleBarItem = UIBarButtonItem(customView: titleLabel)
-        navigationItem.setLeftBarButtonItems([backButton, titleBarItem], animated: false)
+    func setTitle(_ title: String) {
+        titleLabel.text = categoryTitle
     }
 
 }
