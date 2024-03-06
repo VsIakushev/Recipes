@@ -239,21 +239,22 @@ extension FavoritesViewController: FavoritesViewControllerProtocol {
 }
 
 extension FavoritesViewController: RecipesViewProtocol {
+    func buttonTimeState(color: String, image: String) {}
+    
+    func buttonCaloriesState(color: String, image: String) {}
+    
+    func sortViewRecipes(recipes: [Recipes]) {}
+    
     func reloadTableView() {
         recipesTableView.reloadData()
     }
     
-    func getRecipes(recipes: [Recipes]) {
-        
-    }
+    func getRecipes(recipes: [Recipes]) {}
     
     
-    func goToTheCategory() {
-    }
+    func goToTheCategory() {}
     
-    func setTitle(_ title: String) {
-        
-    }
+    func setTitle(_ title: String) {}
     
     func getRecipes() {
         //recipes = presenter?.getFavourites() ?? []

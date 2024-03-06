@@ -53,6 +53,7 @@
 		DA3F295C2B951DB60004CFAE /* RecipesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3F295B2B951DB60004CFAE /* RecipesCell.swift */; };
 		DA3F295E2B951DD00004CFAE /* AllRecipesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3F295D2B951DD00004CFAE /* AllRecipesPresenter.swift */; };
 		DA98ACF22B9696AC00125CBD /* RecipesCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA98ACF12B9696AC00125CBD /* RecipesCategory.swift */; };
+		DA98ACF42B98465400125CBD /* Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA98ACF32B98465400125CBD /* Sort.swift */; };
 		DAAC3F872B8F183200D3B08D /* AuthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAC3F862B8F183200D3B08D /* AuthPresenter.swift */; };
 /* End PBXBuildFile section */
 
@@ -105,6 +106,7 @@
 		DA3F295B2B951DB60004CFAE /* RecipesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesCell.swift; sourceTree = "<group>"; };
 		DA3F295D2B951DD00004CFAE /* AllRecipesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllRecipesPresenter.swift; sourceTree = "<group>"; };
 		DA98ACF12B9696AC00125CBD /* RecipesCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesCategory.swift; sourceTree = "<group>"; };
+		DA98ACF32B98465400125CBD /* Sort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sort.swift; sourceTree = "<group>"; };
 		DAAC3F862B8F183200D3B08D /* AuthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -338,6 +340,7 @@
 				DA3F29552B951D4A0004CFAE /* Category.swift */,
 				DA3F29572B951D650004CFAE /* Storage.swift */,
 				DA98ACF12B9696AC00125CBD /* RecipesCategory.swift */,
+				DA98ACF32B98465400125CBD /* Sort.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -498,6 +501,7 @@
 				5722C3182B8DD27100ED2AD2 /* FavoritesViewController.swift in Sources */,
 				5722C3062B8DBDDB00ED2AD2 /* BaseCoordinator.swift in Sources */,
 				DA3F295A2B951D840004CFAE /* RecipesListViewController.swift in Sources */,
+				DA98ACF42B98465400125CBD /* Sort.swift in Sources */,
 				5744196C2B91A90300A8A41F /* RecipeCategory.swift in Sources */,
 				57071C7B2B90A1CD00425D68 /* ClosuresTypealiases.swift in Sources */,
 				5744197D2B92752800A8A41F /* ImageTableViewCell.swift in Sources */,

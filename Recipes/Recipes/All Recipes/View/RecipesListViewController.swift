@@ -20,7 +20,6 @@ final class RecipesListViewController: UIViewController {
         static let caloriesButtonTitle = "Calories"
         static let timeButtonTitle = "Time"
     }
-
     
     // MARK: - Visual Components
 
@@ -82,14 +81,13 @@ final class RecipesListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         titleLabel.text = categoryTitle
-
+        recipesTableView.reloadData()
     }
 
     // MARK: - Private Methods
 
     func setupUI() {
         presenter?.getReceipts()
-        //addTapGestureToHideKeyboard()
         view.backgroundColor = .white
         view.addSubview(searchBar)
         view.addSubview(recipesTableView)
@@ -97,11 +95,10 @@ final class RecipesListViewController: UIViewController {
         makeFilterButton(button: timeButton, title: Constants.timeButtonTitle)
         makeAnchor()
 
-        
         navigationItem.leftBarButtonItems = [
-                    UIBarButtonItem(customView: backButton),
-                    UIBarButtonItem(customView: titleLabel)
-                ]
+            UIBarButtonItem(customView: backButton),
+            UIBarButtonItem(customView: titleLabel)
+        ]
     }
 
     private func makeFilterButton(button: UIButton, title: String) {
@@ -114,7 +111,8 @@ final class RecipesListViewController: UIViewController {
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: -30, bottom: 0, right: 10)
         timeButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 60, bottom: 0, right: 10)
         caloriesButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 80, bottom: 0, right: 10)
-        button.addTarget(self, action: #selector(timeButtonTapped), for: .touchUpInside)
+        timeButton.addTarget(self, action: #selector(timeButtonTapped), for: .touchUpInside)
+        caloriesButton.addTarget(self, action: #selector(caloriesButtonTapped), for: .touchUpInside)
         view.addSubview(button)
     }
 
@@ -125,17 +123,18 @@ final class RecipesListViewController: UIViewController {
         makeTableViewAnchor()
     }
 
-    @objc private func timeButtonTapped(seder: UIButton) {
-        seder.backgroundColor = UIColor(red: 112 / 255, green: 185 / 255, blue: 190 / 255, alpha: 1.0)
-        seder.setTitleColor(.white, for: .normal)
-        seder.imageView?.transform = seder.imageView?.transform.rotated(by: .pi) ?? CGAffineTransform()
-        seder.setTitleColor(.black, for: .normal)
+    @objc private func caloriesButtonTapped() {
+        presenter?.buttonCaloriesChange(category: Recipes.allRecipes)
     }
+    
+    @objc private func timeButtonTapped() {
+        presenter?.buttonTimeChange(category: Recipes.allRecipes)
+    }
+
     
     @objc private func backButtonTapped() {
         presenter?.goToCategory()
         }
-
 }
 
 // MARK: - Extension
@@ -186,9 +185,7 @@ extension RecipesListViewController: UITableViewDelegate {
 // MARK: - UITableViewDataSource
 
 extension RecipesListViewController: UITableViewDataSource {
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        1
-//    }
+
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        recipes.count
@@ -197,13 +194,6 @@ extension RecipesListViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        guard let cell = tableView.dequeueReusableCell(
-//            withIdentifier: Constants.cellIdendefire,
-//            for: indexPath
-//        ) as? RecipesCell
-//        else { return UITableViewCell() }
-//        cell.configure(with: recipes[indexPath.row])
-//        return cell
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: Constants.cellIdendefire,
             for: indexPath
@@ -220,9 +210,29 @@ extension RecipesListViewController: UITableViewDataSource {
     }
 }
 
-
-
 extension RecipesListViewController: RecipesViewProtocol {
+    
+    func buttonTimeState(color: String, image: String) {
+        timeButton.backgroundColor = UIColor(named: color)
+        timeButton.setTitleColor(.white, for: .normal)
+        timeButton.setImage(UIImage(named: image), for: .normal)
+        timeButton.setTitleColor(.black, for: .normal)
+    }
+    
+    func buttonCaloriesState(color: String, image: String) {
+        caloriesButton.backgroundColor = UIColor(named: color)
+        caloriesButton.setTitleColor(.white, for: .normal)
+        caloriesButton.setImage(UIImage(named: image), for: .normal)
+        caloriesButton.setTitleColor(.black, for: .normal)
+    }
+    
+    func sortViewRecipes(recipes: [Recipes]) {
+        self.recipes = recipes
+        print(recipes)
+        print(self.recipes)
+        recipesTableView.reloadData()
+    }
+    
     func reloadTableView() {
         recipesTableView.reloadData()
     }
