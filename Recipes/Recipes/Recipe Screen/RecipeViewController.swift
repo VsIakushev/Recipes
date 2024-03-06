@@ -9,7 +9,6 @@ final class RecipeViewController: UIViewController {
 
     private enum Constants {
         static let titleText = "Recipes"
-        static let titleFont = UIFont(name: "Verdana-Bold", size: 28)
         static let cellSpacing: CGFloat = 15
         static let tabBarImage = "muffin"
         static let tabBarImageFill = "muffin.fill"
@@ -49,7 +48,7 @@ final class RecipeViewController: UIViewController {
 
     private func setupNavigation() {
         let titleLabel = UILabel()
-        titleLabel.font = Constants.titleFont
+        titleLabel.font = UIFont.verdanaBold28()
         titleLabel.text = Constants.titleText
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
     }

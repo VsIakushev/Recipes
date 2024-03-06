@@ -6,11 +6,6 @@ import UIKit
 /// Ячейка с подробным текстом рецепта
 final class RecipeDescriptionTableViewCell: UITableViewCell {
     // MARK: - Constants
-    private enum Constants {
-        static let recipeFont = UIFont(name: "Verdana", size: 14)
-        static let backgroundColor = UIColor(named: "background04")
-    }
-    
     
     // MARK: - Visual Components
     private let background = UIView()
@@ -34,7 +29,7 @@ final class RecipeDescriptionTableViewCell: UITableViewCell {
         contentView.addSubview(background)
         background.addSubview(recipeLabel)
         
-        gradientLayer.colors = [Constants.backgroundColor?.cgColor ?? UIColor.white.cgColor, UIColor.white.cgColor]
+        gradientLayer.colors = [UIColor.background04().cgColor , UIColor.white.cgColor]
         gradientLayer.frame = contentView.bounds
         background.layer.insertSublayer(gradientLayer, at: 0)
 
@@ -43,7 +38,7 @@ final class RecipeDescriptionTableViewCell: UITableViewCell {
         background.clipsToBounds = true
 
         recipeLabel.numberOfLines = 0
-        recipeLabel.font = Constants.recipeFont
+        recipeLabel.font = UIFont.verdana14()
         
         background.translatesAutoresizingMaskIntoConstraints = false
         recipeLabel.translatesAutoresizingMaskIntoConstraints = false

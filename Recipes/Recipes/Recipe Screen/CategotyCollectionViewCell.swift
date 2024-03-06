@@ -5,12 +5,7 @@ import UIKit
 
 /// Ячейка Категории рецепта для главного экрана рецептов
 final class CategoryCollectionViewCell: UICollectionViewCell {
-    // MARK: - Constants
-
-    private enum Constants {
-        static let font = UIFont(name: "Verdana", size: 20)
-    }
-
+    
     // MARK: - Public Properties
 
     var cornerRadius: CGFloat = 0
@@ -35,7 +30,7 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .white
         label.textAlignment = .center
-        label.font = Constants.font
+        label.font = UIFont.verdana20()
         return label
     }()
 
@@ -48,7 +43,8 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        setupView()
     }
 
     // MARK: - Public Methods
