@@ -13,6 +13,7 @@ final class RecipesListViewController: UIViewController {
 
     private enum Constants {
         static let cellIdendefire = "CellRecipes"
+        static let skeletonCellIdIdentifier = "CellSkeleton"
         static let backBarButtonImage = UIImage(systemName: "arrow.backward")
         static let filterIconImage = UIImage(named: "filterIcon")
         static let titleNavigation = "Fish"
@@ -29,6 +30,7 @@ final class RecipesListViewController: UIViewController {
         table.dataSource = self
         table.separatorStyle = .none
         table.register(RecipesCell.self, forCellReuseIdentifier: Constants.cellIdendefire)
+        table.register(ShimmerRecipesCell.self, forCellReuseIdentifier: Constants.skeletonCellIdIdentifier)
         table.showsVerticalScrollIndicator = false
         return table
     }()
@@ -66,15 +68,18 @@ final class RecipesListViewController: UIViewController {
     
     var categoryTitle: String = ""
 
-    // MARK: - Private Methods
-
     var presenter: AllRecipesPresenter?
+    
+    // MARK: - Private Properties
+    
+    private var stateShimer = StateShimer.loading
 
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        showSkeleton()
         self.hidesBottomBarWhenPushed = true
     }
     
@@ -104,7 +109,7 @@ final class RecipesListViewController: UIViewController {
     private func makeFilterButton(button: UIButton, title: String) {
         button.setTitle(title, for: .normal)
         button.setImage(Constants.filterIconImage, for: .normal)
-        button.backgroundColor = UIColor(red: 242 / 255, green: 245 / 255, blue: 250 / 255, alpha: 1.0)
+        button.backgroundColor = UIColor.background06()
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 20
@@ -171,6 +176,13 @@ extension RecipesListViewController {
         timeButton.widthAnchor.constraint(equalToConstant: 90).isActive = true
         timeButton.heightAnchor.constraint(equalToConstant: 36).isActive = true
     }
+    
+    private func showSkeleton() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.stateShimer = .done
+            self.recipesTableView.reloadData()
+        }
+    }
 }
 
 // MARK: - UITableViewDelegate
@@ -194,15 +206,18 @@ extension RecipesListViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: Constants.cellIdendefire,
-            for: indexPath
-        ) as? RecipesCell,
-              let searchNames = presenter?.checkSearch()
-        else { return UITableViewCell() }
-        cell.configure(with: searchNames[indexPath.row])
-        return cell
-
+        switch stateShimer {
+        case .loading:
+            return ShimmerRecipesCell()
+        case .done:
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: Constants.cellIdendefire,
+                for: indexPath
+            ) as? RecipesCell
+            else { return UITableViewCell() }
+            cell.configure(with: recipes[indexPath.row])
+            return cell
+        }
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

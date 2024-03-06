@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// LightWeight для Шрифтов
 extension UIFont {
     static func verdanaBold28() -> UIFont {
         return UIFont(name: "Verdana-Bold", size: 28) ?? UIFont.systemFont(ofSize: 28, weight: .bold)

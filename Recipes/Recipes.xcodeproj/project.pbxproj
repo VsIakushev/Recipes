@@ -37,6 +37,9 @@
 		574419F12B96AD5000A8A41F /* TermsAndPolicyPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574419F02B96AD5000A8A41F /* TermsAndPolicyPresenter.swift */; };
 		574419F42B97E46B00A8A41F /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574419F32B97E46B00A8A41F /* Fonts.swift */; };
 		574419F62B97E47300A8A41F /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574419F52B97E47300A8A41F /* Colors.swift */; };
+		57441A1E2B982B9E00A8A41F /* ShimmerRecipesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441A1D2B982B9D00A8A41F /* ShimmerRecipesCell.swift */; };
+		57441A202B982BF800A8A41F /* ShimmerLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441A1F2B982BF800A8A41F /* ShimmerLoadable.swift */; };
+		57441A262B98706000A8A41F /* StateShimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441A252B98706000A8A41F /* StateShimmer.swift */; };
 		57F4EBB92B8F270B00ADA7AA /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBB82B8F270B00ADA7AA /* ProfileTableViewCell.swift */; };
 		57F4EBBB2B8F272100ADA7AA /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */; };
 		57F4EBBD2B8F273500ADA7AA /* ProfileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBBC2B8F273500ADA7AA /* ProfileButton.swift */; };
@@ -90,6 +93,9 @@
 		574419F02B96AD5000A8A41F /* TermsAndPolicyPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndPolicyPresenter.swift; sourceTree = "<group>"; };
 		574419F32B97E46B00A8A41F /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		574419F52B97E47300A8A41F /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		57441A1D2B982B9D00A8A41F /* ShimmerRecipesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerRecipesCell.swift; sourceTree = "<group>"; };
+		57441A1F2B982BF800A8A41F /* ShimmerLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerLoadable.swift; sourceTree = "<group>"; };
+		57441A252B98706000A8A41F /* StateShimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateShimmer.swift; sourceTree = "<group>"; };
 		57F4EBB82B8F270B00ADA7AA /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
 		57F4EBBC2B8F273500ADA7AA /* ProfileButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileButton.swift; sourceTree = "<group>"; };
@@ -251,8 +257,10 @@
 			isa = PBXGroup;
 			children = (
 				57071C7A2B90A1CD00425D68 /* ClosuresTypealiases.swift */,
+				57441A1F2B982BF800A8A41F /* ShimmerLoadable.swift */,
 				574419F32B97E46B00A8A41F /* Fonts.swift */,
 				574419F52B97E47300A8A41F /* Colors.swift */,
+				57441A252B98706000A8A41F /* StateShimmer.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -329,6 +337,7 @@
 			children = (
 				DA3F29592B951D840004CFAE /* RecipesListViewController.swift */,
 				DA3F295B2B951DB60004CFAE /* RecipesCell.swift */,
+				57441A1D2B982B9D00A8A41F /* ShimmerRecipesCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -463,9 +472,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57441A202B982BF800A8A41F /* ShimmerLoadable.swift in Sources */,
 				5722C30E2B8DBE8900ED2AD2 /* ProfileCoordinator.swift in Sources */,
 				5722C3122B8DBF0B00ED2AD2 /* AuthViewController.swift in Sources */,
 				574419742B92646500A8A41F /* RecipeDetailsViewController.swift in Sources */,
+				57441A262B98706000A8A41F /* StateShimmer.swift in Sources */,
 				DA3F29542B951D360004CFAE /* Recipes.swift in Sources */,
 				5733135C2B73215B00092647 /* AppDelegate.swift in Sources */,
 				DA3F29582B951D650004CFAE /* Storage.swift in Sources */,
@@ -488,6 +499,7 @@
 				57F4EBED2B8FE18500ADA7AA /* AppBuilder.swift in Sources */,
 				5722C30C2B8DBE1B00ED2AD2 /* RecipeCoordinator.swift in Sources */,
 				57F4EBB92B8F270B00ADA7AA /* ProfileTableViewCell.swift in Sources */,
+				57441A1E2B982B9E00A8A41F /* ShimmerRecipesCell.swift in Sources */,
 				574419712B91A95B00A8A41F /* CategotyCollectionViewCell.swift in Sources */,
 				5722C3082B8DBDEF00ED2AD2 /* AppCoordinator.swift in Sources */,
 				574419F12B96AD5000A8A41F /* TermsAndPolicyPresenter.swift in Sources */,
