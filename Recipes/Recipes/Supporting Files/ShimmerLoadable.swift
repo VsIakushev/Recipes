@@ -7,9 +7,10 @@
 
 import UIKit
 
-protocol SkeletonLoadable { }
+/// Протокол для хранения функционала Шиммеров
+protocol ShimmerLoadable { }
 
-extension SkeletonLoadable {
+extension ShimmerLoadable {
     
     func makeAnimationGroup() -> CAAnimationGroup {
         let animationDuration: CFTimeInterval = 1.5
@@ -31,9 +32,7 @@ extension SkeletonLoadable {
         group.duration = animationTwo.beginTime + animationTwo.duration
         group.isRemovedOnCompletion = false
         
-       
         return group
         
     }
-    
 }

@@ -8,11 +8,13 @@
 import UIKit
 
 /// Ячейка Шиммера, для отображения в момент загрузки данных
-final class SkeletonRecipesCell: UITableViewCell {
+final class ShimmerRecipesCell: UITableViewCell {
     
+    // MARK: - Visual Components
     private let shimmerView = UIView()
     private let shimmerLayer = CAGradientLayer()
     
+    // MARK: - Initializers
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
@@ -25,12 +27,14 @@ final class SkeletonRecipesCell: UITableViewCell {
         layout()
     }
     
+    // MARK: - Life Cycles
     override func layoutSubviews() {
         super.layoutSubviews()
         shimmerLayer.frame = shimmerView.bounds
         shimmerLayer.cornerRadius = 12
     }
     
+    // MARK: - Private Methods
     private func setup() {
         
         shimmerLayer.startPoint = CGPoint(x: 0, y: 0.5)
@@ -58,5 +62,6 @@ final class SkeletonRecipesCell: UITableViewCell {
     }
 }
 
-extension SkeletonRecipesCell: SkeletonLoadable {}
+// MARK: - ShimmerRecipesCell  + ShimmerLoadable
+extension ShimmerRecipesCell: ShimmerLoadable {}
 

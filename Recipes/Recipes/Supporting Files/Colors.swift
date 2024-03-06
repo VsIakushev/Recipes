@@ -6,6 +6,7 @@
 //
 import UIKit
 
+/// LightWeight для Цветов
 extension UIColor {
     static func background01() -> UIColor {
         return UIColor(named: "background01") ?? UIColor.gray

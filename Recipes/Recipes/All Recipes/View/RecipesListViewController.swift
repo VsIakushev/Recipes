@@ -30,7 +30,7 @@ final class RecipesListViewController: UIViewController {
         table.dataSource = self
         table.separatorStyle = .none
         table.register(RecipesCell.self, forCellReuseIdentifier: Constants.cellIdendefire)
-        table.register(SkeletonRecipesCell.self, forCellReuseIdentifier: Constants.skeletonCellIdIdentifier)
+        table.register(ShimmerRecipesCell.self, forCellReuseIdentifier: Constants.skeletonCellIdIdentifier)
         table.showsVerticalScrollIndicator = false
         return table
     }()
@@ -207,7 +207,7 @@ extension RecipesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch stateShimer {
         case .loading:
-            return SkeletonRecipesCell()
+            return ShimmerRecipesCell()
         case .done:
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: Constants.cellIdendefire,
