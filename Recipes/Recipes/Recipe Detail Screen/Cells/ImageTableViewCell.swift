@@ -7,13 +7,11 @@ class ImageTableViewCell: UITableViewCell {
     // MARK: - Constants
 
     private enum Constants {
-        static let titleFont = UIFont(name: "Verdana-Bold", size: 20)
-        static let smallFont = UIFont(name: "Verdana", size: 10)
+       
         static let cookingTime = "Cooking time "
         static let min = " min"
         static let potIcon = "pot"
         static let timerIcon = "timer1"
-        static let backgroundColor = UIColor(named: "background01")
     }
 
     // MARK: - Public Properties
@@ -63,14 +61,14 @@ class ImageTableViewCell: UITableViewCell {
 
     private func setupUI() {
         recipeTitleLabel.text = title
-        recipeTitleLabel.font = Constants.titleFont
+        recipeTitleLabel.font = UIFont.verdanaBold20()
         recipeTitleLabel.textAlignment = .center
 
         recipeImageView.image = UIImage(named: image)
         recipeImageView.layer.cornerRadius = 24
         recipeImageView.contentMode = .scaleAspectFit
 
-        roundView.backgroundColor = Constants.backgroundColor?.withAlphaComponent(0.6)
+        roundView.backgroundColor = UIColor.background01().withAlphaComponent(0.6)
         roundView.layer.cornerRadius = 24
         
         potImageView.image = UIImage(named: Constants.potIcon)
@@ -78,10 +76,10 @@ class ImageTableViewCell: UITableViewCell {
         
         weightLabel.text = "\(weight) g"
         weightLabel.textColor = .white
-        weightLabel.font = Constants.smallFont
+        weightLabel.font = UIFont.verdana10()
         weightLabel.textAlignment = .center
         
-        timerBackgroundView.backgroundColor = Constants.backgroundColor?.withAlphaComponent(0.6)
+        timerBackgroundView.backgroundColor = UIColor.background01().withAlphaComponent(0.6)
         timerBackgroundView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner, .layerMinXMinYCorner]
         timerBackgroundView.layer.cornerRadius = 24
         
@@ -91,7 +89,7 @@ class ImageTableViewCell: UITableViewCell {
         timerLabel.numberOfLines = 2
         timerLabel.text = Constants.cookingTime + String(cookingTime) + Constants.min
         timerLabel.textColor = .white
-        timerLabel.font = Constants.smallFont
+        timerLabel.font = UIFont.verdana10()
         timerLabel.textAlignment = .center
     }
 

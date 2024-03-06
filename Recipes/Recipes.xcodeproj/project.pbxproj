@@ -35,6 +35,8 @@
 		574419812B92756D00A8A41F /* RecipeDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574419802B92756D00A8A41F /* RecipeDescriptionTableViewCell.swift */; };
 		574419EF2B96AB8100A8A41F /* TermsAndPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574419EE2B96AB8100A8A41F /* TermsAndPolicyView.swift */; };
 		574419F12B96AD5000A8A41F /* TermsAndPolicyPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574419F02B96AD5000A8A41F /* TermsAndPolicyPresenter.swift */; };
+		574419F42B97E46B00A8A41F /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574419F32B97E46B00A8A41F /* Fonts.swift */; };
+		574419F62B97E47300A8A41F /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574419F52B97E47300A8A41F /* Colors.swift */; };
 		57F4EBB92B8F270B00ADA7AA /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBB82B8F270B00ADA7AA /* ProfileTableViewCell.swift */; };
 		57F4EBBB2B8F272100ADA7AA /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */; };
 		57F4EBBD2B8F273500ADA7AA /* ProfileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBBC2B8F273500ADA7AA /* ProfileButton.swift */; };
@@ -84,6 +86,8 @@
 		574419802B92756D00A8A41F /* RecipeDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		574419EE2B96AB8100A8A41F /* TermsAndPolicyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndPolicyView.swift; sourceTree = "<group>"; };
 		574419F02B96AD5000A8A41F /* TermsAndPolicyPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndPolicyPresenter.swift; sourceTree = "<group>"; };
+		574419F32B97E46B00A8A41F /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		574419F52B97E47300A8A41F /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		57F4EBB82B8F270B00ADA7AA /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
 		57F4EBBC2B8F273500ADA7AA /* ProfileButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileButton.swift; sourceTree = "<group>"; };
@@ -178,7 +182,7 @@
 				5733135B2B73215B00092647 /* AppDelegate.swift */,
 				5733135D2B73215B00092647 /* SceneDelegate.swift */,
 				5722C30F2B8DBED000ED2AD2 /* MainTabBarViewController.swift */,
-				57071C7A2B90A1CD00425D68 /* ClosuresTypealiases.swift */,
+				574419F22B97E43D00A8A41F /* Supporting Files */,
 				DA0B3D692B8E041A00F7DE48 /* Auth Screen */,
 				57F4EBF32B902CEE00ADA7AA /* Recipe Screen */,
 				574419722B92644300A8A41F /* Recipe Detail Screen */,
@@ -237,6 +241,16 @@
 				574419802B92756D00A8A41F /* RecipeDescriptionTableViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		574419F22B97E43D00A8A41F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				57071C7A2B90A1CD00425D68 /* ClosuresTypealiases.swift */,
+				574419F32B97E46B00A8A41F /* Fonts.swift */,
+				574419F52B97E47300A8A41F /* Colors.swift */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		57F4EBB72B8F26DD00ADA7AA /* Profile Screen */ = {
@@ -471,8 +485,10 @@
 				5722C3082B8DBDEF00ED2AD2 /* AppCoordinator.swift in Sources */,
 				574419F12B96AD5000A8A41F /* TermsAndPolicyPresenter.swift in Sources */,
 				57F4EBF82B902DAA00ADA7AA /* FavoritesPresenter.swift in Sources */,
+				574419F42B97E46B00A8A41F /* Fonts.swift in Sources */,
 				57F4EBBF2B8F275500ADA7AA /* BottomSheetViewController.swift in Sources */,
 				5733135E2B73215B00092647 /* SceneDelegate.swift in Sources */,
+				574419F62B97E47300A8A41F /* Colors.swift in Sources */,
 				5722C30A2B8DBE0400ED2AD2 /* AuthCoordinator.swift in Sources */,
 				57071C762B90952F00425D68 /* BottomSheetPresenter.swift in Sources */,
 				5722C3182B8DD27100ED2AD2 /* FavoritesViewController.swift in Sources */,

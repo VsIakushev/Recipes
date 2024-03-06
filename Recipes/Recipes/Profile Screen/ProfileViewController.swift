@@ -17,7 +17,6 @@ final class ProfileViewController: UIViewController {
     // MARK: - Constants
     private enum Constants {
         static let titleText = "Profile"
-        static let titleFont = UIFont(name: "Verdana-Bold", size: 28)
         static let alertTitle = "Change your name and surname"
         static let alertTextFieldPlaceholder = "Name Surname"
         static let alertOkText = "Ok"
@@ -82,7 +81,7 @@ final class ProfileViewController: UIViewController {
 
     private func setupNavigation() {
         let titleLabel = UILabel()
-        titleLabel.font = Constants.titleFont
+        titleLabel.font = UIFont.verdanaBold28()
         titleLabel.text = Constants.titleText
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
     }

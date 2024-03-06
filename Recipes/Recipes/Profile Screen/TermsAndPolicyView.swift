@@ -13,8 +13,7 @@ final class TermsAndPolicyView: UIView {
 
     private enum Constants {
         static let titleText = "Terms of Use"
-        static let titleFont = UIFont(name: "Verdana-Bold", size: 20)
-        static let termsFont = UIFont(name: "Verdana", size: 14)
+       
         static let termsText = """
         Welcome to our recipe app! We're thrilled to have you on board. To ensure a delightful experience for everyone, please take a moment to familiarize yourself with our rules:
         User Accounts:
@@ -93,18 +92,18 @@ final class TermsAndPolicyView: UIView {
         scrollView.isScrollEnabled = true
 
         closeButton.setImage(UIImage(systemName: "xmark"), for: .normal)
-        closeButton.tintColor = UIColor(named: "text02")
+        closeButton.tintColor = UIColor.text02()
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
 
         termsTitleLabel.text = Constants.titleText
-        termsTitleLabel.font = Constants.titleFont
+        termsTitleLabel.font = UIFont.verdanaBold20()
         termsTitleLabel.textAlignment = .left
         termsTitleLabel.textColor = .black
 
         termsLabel.text = "\(Constants.termsText)"
         termsLabel.numberOfLines = 0
         termsLabel.textAlignment = .left
-        termsLabel.font = Constants.termsFont
+        termsLabel.font = UIFont.verdana14()
         termsLabel.textColor = .black
     }
 

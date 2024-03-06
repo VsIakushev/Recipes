@@ -12,8 +12,6 @@ final class CaloriesTableViewCell: UITableViewCell {
         static let carbohydrates = "Carbohydrates"
         static let fats = "Fats"
         static let proteins = "Proteins"
-        static let smallFont = UIFont(name: "Verdana", size: 10)
-        static let backgroundColor = UIColor(named: "background01")
     }
     
     // MARK: - Visual Components
@@ -64,22 +62,22 @@ final class CaloriesTableViewCell: UITableViewCell {
         
         cellElementView.layer.cornerRadius = 16
         cellElementView.layer.borderWidth = 2
-        cellElementView.layer.borderColor = Constants.backgroundColor?.cgColor
+        cellElementView.layer.borderColor = UIColor.background01().cgColor
         
-        blueTopView.backgroundColor = Constants.backgroundColor
+        blueTopView.backgroundColor = UIColor.background01()
         blueTopView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         blueTopView.layer.cornerRadius = 16
         
         titleLabel.text = title
         titleLabel.textColor = .white
         titleLabel.textAlignment = .center
-        titleLabel.font = Constants.smallFont
+        titleLabel.font = UIFont.verdana10()
         titleLabel.adjustsFontSizeToFitWidth = true
         
         parameterLabel.text = parameter
-        parameterLabel.textColor = Constants.backgroundColor
+        parameterLabel.textColor = UIColor.background01()
         parameterLabel.textAlignment = .center
-        parameterLabel.font = Constants.smallFont
+        parameterLabel.font = UIFont.verdana10()
         parameterLabel.adjustsFontSizeToFitWidth = true
         
         cellElementView.translatesAutoresizingMaskIntoConstraints = false

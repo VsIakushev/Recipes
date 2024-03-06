@@ -10,7 +10,6 @@ import UIKit
 /// Ячейка с рецептами
 final class RecipesCell: UITableViewCell {
     private enum Constants {
-        static let fontVerdana = "Verdana"
         static let timerImageViewName = "timer"
         static let pizzaImageViewName = "pizza"
         static let nextButtonImageName = "chevron.right"
@@ -38,7 +37,7 @@ final class RecipesCell: UITableViewCell {
         let label = UILabel()
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
-        label.font = UIFont(name: Constants.fontVerdana, size: 14)
+        label.font = UIFont.verdana14()
         label.sizeToFit()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -46,7 +45,7 @@ final class RecipesCell: UITableViewCell {
 
     private let timeLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: Constants.fontVerdana, size: 12)
+        label.font = UIFont.verdana12()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -67,7 +66,7 @@ final class RecipesCell: UITableViewCell {
 
     private let pizzaLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: Constants.fontVerdana, size: 12)
+        label.font = UIFont.verdana12()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
