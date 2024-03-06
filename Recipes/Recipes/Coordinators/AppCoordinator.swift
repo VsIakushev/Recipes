@@ -10,11 +10,18 @@ final class AppCoordinator: BaseCoodinator {
 
     // MARK: - Life Cycles
 
+//    override func start() {
+//        if "admin" == "admin" {
+//            toMain​()
+//        } else {
+//            t​oAuth​()
+//        }
+//    }
     override func start() {
         if "admin" == "admin" {
-            toMain​()
-        } else {
             t​oAuth​()
+        } else {
+            toMain​()
         }
     }
 

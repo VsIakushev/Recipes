@@ -61,7 +61,8 @@ struct Recipes: Equatable {
     }
     
     static let allRecipes: [Recipes] = exampleRecipe()
-        /// свойство типа с избранными рецептами
+        
+    /// свойство типа с избранными рецептами
         static var favoritesRecipes = [Recipes(
             avatarRecipie: "fish_1",
             titleRecipies: "Simple Fish And Corn",

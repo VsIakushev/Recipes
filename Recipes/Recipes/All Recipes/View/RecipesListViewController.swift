@@ -21,7 +21,7 @@ final class RecipesListViewController: UIViewController {
         static let caloriesButtonTitle = "Calories"
         static let timeButtonTitle = "Time"
     }
-
+    
     // MARK: - Visual Components
 
     private lazy var recipesTableView: UITableView = {
@@ -51,10 +51,11 @@ final class RecipesListViewController: UIViewController {
     }()
 
 
-    private let searchBar: UISearchBar = {
+    private lazy var searchBar: UISearchBar = {
         let search = UISearchBar()
         search.placeholder = Constants.serchPlaceholder
         search.backgroundImage = UIImage()
+        search.delegate = self
         return search
     }()
 
@@ -85,26 +86,24 @@ final class RecipesListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         titleLabel.text = categoryTitle
-
+        recipesTableView.reloadData()
     }
 
     // MARK: - Private Methods
 
     func setupUI() {
         presenter?.getReceipts()
-        //addTapGestureToHideKeyboard()
         view.backgroundColor = .white
         view.addSubview(searchBar)
         view.addSubview(recipesTableView)
         makeFilterButton(button: caloriesButton, title: Constants.caloriesButtonTitle)
         makeFilterButton(button: timeButton, title: Constants.timeButtonTitle)
-//        configureNavigation()
         makeAnchor()
-        
+
         navigationItem.leftBarButtonItems = [
-                    UIBarButtonItem(customView: backButton),
-                    UIBarButtonItem(customView: titleLabel)
-                ]
+            UIBarButtonItem(customView: backButton),
+            UIBarButtonItem(customView: titleLabel)
+        ]
     }
 
     private func makeFilterButton(button: UIButton, title: String) {
@@ -117,7 +116,8 @@ final class RecipesListViewController: UIViewController {
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: -30, bottom: 0, right: 10)
         timeButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 60, bottom: 0, right: 10)
         caloriesButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 80, bottom: 0, right: 10)
-        button.addTarget(self, action: #selector(timeButtonTapped), for: .touchUpInside)
+        timeButton.addTarget(self, action: #selector(timeButtonTapped), for: .touchUpInside)
+        caloriesButton.addTarget(self, action: #selector(caloriesButtonTapped), for: .touchUpInside)
         view.addSubview(button)
     }
 
@@ -128,17 +128,18 @@ final class RecipesListViewController: UIViewController {
         makeTableViewAnchor()
     }
 
-    @objc private func timeButtonTapped(seder: UIButton) {
-        seder.backgroundColor = UIColor.background01()
-        seder.setTitleColor(.white, for: .normal)
-        seder.imageView?.transform = seder.imageView?.transform.rotated(by: .pi) ?? CGAffineTransform()
-        seder.setTitleColor(.black, for: .normal)
+    @objc private func caloriesButtonTapped() {
+        presenter?.buttonCaloriesChange(category: Recipes.allRecipes)
     }
+    
+    @objc private func timeButtonTapped() {
+        presenter?.buttonTimeChange(category: Recipes.allRecipes)
+    }
+
     
     @objc private func backButtonTapped() {
         presenter?.goToCategory()
         }
-
 }
 
 // MARK: - Extension
@@ -196,12 +197,12 @@ extension RecipesListViewController: UITableViewDelegate {
 // MARK: - UITableViewDataSource
 
 extension RecipesListViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        1
-    }
+
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        recipes.count
+//        recipes.count
+        guard let searchNames = presenter?.checkSearch() else { return 0 }
+                return searchNames.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -225,6 +226,32 @@ extension RecipesListViewController: UITableViewDataSource {
 }
 
 extension RecipesListViewController: RecipesViewProtocol {
+    
+    func buttonTimeState(color: String, image: String) {
+        timeButton.backgroundColor = UIColor(named: color)
+        timeButton.setTitleColor(.white, for: .normal)
+        timeButton.setImage(UIImage(named: image), for: .normal)
+        timeButton.setTitleColor(.black, for: .normal)
+    }
+    
+    func buttonCaloriesState(color: String, image: String) {
+        caloriesButton.backgroundColor = UIColor(named: color)
+        caloriesButton.setTitleColor(.white, for: .normal)
+        caloriesButton.setImage(UIImage(named: image), for: .normal)
+        caloriesButton.setTitleColor(.black, for: .normal)
+    }
+    
+    func sortViewRecipes(recipes: [Recipes]) {
+        self.recipes = recipes
+        print(recipes)
+        print(self.recipes)
+        recipesTableView.reloadData()
+    }
+    
+    func reloadTableView() {
+        recipesTableView.reloadData()
+    }
+    
     func goToTheCategory() {
         navigationController?.popViewController(animated: true)
 
@@ -238,5 +265,19 @@ extension RecipesListViewController: RecipesViewProtocol {
     func setTitle(_ title: String) {
         titleLabel.text = categoryTitle
     }
+}
 
+extension RecipesListViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.count >= 3 {
+            presenter?.searchRecipes(text: searchText)
+        } else {
+            presenter?.searchRecipes(text: "")
+        }
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+            presenter?.startSearch()
+            recipesTableView.reloadData()
+        }
 }
