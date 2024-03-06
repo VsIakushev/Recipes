@@ -6,13 +6,13 @@
 //
 
 import Foundation
-/// протокол всех рецептов
+/// протокол вью  всех рецептов
 protocol RecipesViewProtocol: AnyObject {
     func getRecipes(recipes: [Recipes])
     func setTitle(_ title: String)
     func goToTheCategory()
 }
-
+///протокол презентера
 protocol RecipeProtocol: AnyObject {
     func getReceipts()
     func goToRecipeDetails()

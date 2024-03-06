@@ -136,7 +136,7 @@ final class RecipesListViewController: UIViewController {
 
 }
 
-// MARK: - Layoyt
+// MARK: - Extension
 
 extension RecipesListViewController {
     private func makeAnchorsSearchBar() {

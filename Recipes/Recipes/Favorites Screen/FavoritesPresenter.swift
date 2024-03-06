@@ -1,50 +1,61 @@
 // FavoritesPresenter.swift
 // Copyright © RoadMap. All rights reserved.
 
+///протокол вью
 protocol FavoritesViewControllerProtocol: AnyObject {
-    /// метод установки вью в состояние - нет избранных рецептов
+    /// показать плашку нет избранных
     func setEmptyState()
-    /// метод установки вью в состояние - есть избранные рецепты
+    /// показать таблицу
     func setNonEmptyState()
-    
+    /// получить избранные рецепты
     func getFavRecipes()
-    
+    /// рецепты
     var recipes: [Recipes] { get set }
 }
-
+///протокол презентера
 protocol FavoritesPresenterProtocol {
     var favoritesCoordinator: FavoritesCoordinator? { get set }
-    
+    /// проверка на сустой массив избранных
     func checkIfFavouritesEmpty()
-    
+    /// получить количество избранных в масиве
     func getFavouritesCount() -> Int
-
+    /// получить избранные рецепты
     func getFavourites() -> [Recipes]
-    
+    /// удаление из избранных
     func removeFromFavourites(recipeIndex: Int)
-    
+    /// переход к экрану детального рецепта
     func goToRecipeDetails()
 
 }
 
 /// Презентер экрана Избранных рецептов
-final class FavoritesPresenter: FavoritesPresenterProtocol {
+final class FavoritesPresenter {
     
-    weak var favoritesCoordinator: FavoritesCoordinator?
-
+    // MARK: - Private Properties
+    
     private weak var view: FavoritesViewControllerProtocol?
     
-    var recipes = Recipes.favoritesRecipes
-
+    private var recipes = Recipes.favoritesRecipes
+    
+    // MARK: - Public Properties
+    
+    weak var favoritesCoordinator: FavoritesCoordinator?
+    
+    // MARK: - Initializers
+    
     init(view: FavoritesViewControllerProtocol) {
         self.view = view
     }
+}
+    // MARK: - FavoritesPresenter + FavoritesPresenterProtocol
 
-    func onTap() {
+    extension FavoritesPresenter: FavoritesPresenterProtocol {
+    
+    private  func onTap() {
         favoritesCoordinator?.pushRecipe()
     }
 
-    func onLogOut() {
+    private func onLogOut() {
         favoritesCoordinator?.logOut()
     }
 

@@ -12,6 +12,12 @@ final class FavoritesViewController: UIViewController {
         static let titleFont = UIFont(name: "Verdana-Bold", size: 28)
         static let emptyLabelText = "There's nothing here yet"
         static let additionalEmptyLabelText = "Add interesting recipes to make ordering products convenient"
+        static let tabBarImageName = "favorites"
+        static let tabBarFillImageName = "favorites.fill"
+        static let backgroundColorName = "background08"
+        static let addFavImageName = "addfavorites"
+        static let verdanaBold = "Verdana-Bold"
+        static let verdana = "Verdana"
     }
     
     // MARK: - Public Properties
@@ -23,11 +29,13 @@ final class FavoritesViewController: UIViewController {
     
     func setupUI() {
         tabBarItem = UITabBarItem(
-            title: "Favorites",
-            image: UIImage(named: "favorites"),
-            selectedImage: UIImage(named: "favorites.fill")
+            title: Constants.titleText,
+            image: UIImage(named: Constants.tabBarImageName),
+            selectedImage: UIImage(named: Constants.tabBarFillImageName)
         )
     }
+    
+    // MARK: - Visual Components
     
     private lazy var recipesTableView: UITableView = {
         let table = UITableView()
@@ -49,14 +57,14 @@ final class FavoritesViewController: UIViewController {
             let view = UIView()
             view.layer.cornerRadius = 12
             view.clipsToBounds = true
-            view.backgroundColor = UIColor(named: "background08")
+            view.backgroundColor = UIColor(named: Constants.backgroundColorName)
             view.translatesAutoresizingMaskIntoConstraints = false
             return view
         }()
 
         private let iconImageView: UIImageView = {
             let imageView = UIImageView()
-            imageView.image = UIImage(named: "addfavorites")
+            imageView.image = UIImage(named: Constants.addFavImageName)
             imageView.contentMode = .scaleAspectFit
             imageView.tintColor = .black
             imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -66,7 +74,7 @@ final class FavoritesViewController: UIViewController {
         private let emptyLabel: UILabel = {
             let label = UILabel()
             label.text = Constants.emptyLabelText
-            label.font = UIFont(name: "Verdana-Bold", size: 18)
+            label.font = UIFont(name: Constants.verdanaBold, size: 18)
             label.textAlignment = .center
             label.translatesAutoresizingMaskIntoConstraints = false
             return label
@@ -75,7 +83,7 @@ final class FavoritesViewController: UIViewController {
         private let additionalEmptyLabel: UILabel = {
             let label = UILabel()
             label.text = Constants.additionalEmptyLabelText
-            label.font = UIFont(name: "Verdana", size: 14)
+            label.font = UIFont(name: Constants.verdana, size: 14)
             label.textColor = .lightGray
             label.numberOfLines = 2
             label.textAlignment = .center
@@ -83,6 +91,7 @@ final class FavoritesViewController: UIViewController {
             return label
         }()
 
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,7 +99,9 @@ final class FavoritesViewController: UIViewController {
         configureUI()
     }
     
-    func configureUI() {
+    // MARK: - Private Methods
+    
+   private func configureUI() {
         getFavRecipes()
         view.backgroundColor = .white
         view.addSubview(emptyMessageView)
@@ -119,6 +130,9 @@ final class FavoritesViewController: UIViewController {
         setAdditionalEmptyLabelConstraints()
     }
 }
+
+    // MARK: - Extension
+
     extension FavoritesViewController {
         private func makeTableViewAnchor() {
             recipesTableView.translatesAutoresizingMaskIntoConstraints = false
@@ -241,5 +255,4 @@ extension FavoritesViewController: RecipesViewProtocol {
         //recipes = presenter?.getFavourites() ?? []
 //        recipesTableView.reloadData()
     }
-    
 }
