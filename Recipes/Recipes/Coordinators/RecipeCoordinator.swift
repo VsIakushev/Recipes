@@ -29,6 +29,7 @@ final class RecipeCoordinator: BaseCoodinator {
         // TODO: Расскомментировать когда Евгений реализует экран categoryDetailViewController
         let categoryViewController = appBuilder.makeRecipesListModule(coordinator: self)
          rootController.pushViewController(categoryViewController, animated: true)
+        categoryViewController.categoryTitle = category
     }
     
     func closeRecipeDetails() {
