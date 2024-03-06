@@ -21,7 +21,7 @@ final class RecipesCell: UITableViewCell {
 
     private let uiViewBackground: UIView = {
         let uiView = UIView()
-        uiView.backgroundColor = UIColor(red: 242 / 255, green: 245 / 255, blue: 250 / 255, alpha: 1.0)
+        uiView.backgroundColor = UIColor.background06()
         uiView.layer.cornerRadius = 12
         uiView.translatesAutoresizingMaskIntoConstraints = false
         return uiView
@@ -129,22 +129,25 @@ final class RecipesCell: UITableViewCell {
     }
 
     private func setupAnchorsUiViewBackground() {
-        uiViewBackground.widthAnchor.constraint(equalToConstant: 338).isActive = true
         uiViewBackground.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20).isActive = true
-        uiViewBackground.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10).isActive = true
-        uiViewBackground.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 14).isActive = true
+        uiViewBackground.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
+        uiViewBackground.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -6).isActive = true
+        uiViewBackground.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 6).isActive = true
+        uiViewBackground.heightAnchor.constraint(equalToConstant: 153).isActive = true
     }
 
     private func setupAnchorsRecipeImageView() {
         recipeImageView.leadingAnchor.constraint(equalTo: uiViewBackground.leadingAnchor, constant: 10)
             .isActive = true
         recipeImageView.topAnchor.constraint(equalTo: uiViewBackground.topAnchor, constant: 10).isActive = true
+        recipeImageView.bottomAnchor.constraint(equalTo: uiViewBackground.bottomAnchor, constant: -10).isActive = true
     }
 
     private func setupAnchorsTitleRecipe() {
         titleRecipe.topAnchor.constraint(equalTo: uiViewBackground.topAnchor, constant: 22).isActive = true
         titleRecipe.leadingAnchor.constraint(equalTo: recipeImageView.trailingAnchor, constant: 20).isActive = true
         titleRecipe.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        
     }
 
     private func setupAnchorsTimeLabel() {
