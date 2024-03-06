@@ -21,6 +21,7 @@ final class RecipesListViewController: UIViewController {
         static let timeButtonTitle = "Time"
     }
 
+    
     // MARK: - Visual Components
 
     private lazy var recipesTableView: UITableView = {
@@ -49,10 +50,11 @@ final class RecipesListViewController: UIViewController {
     }()
 
 
-    private let searchBar: UISearchBar = {
+    private lazy var searchBar: UISearchBar = {
         let search = UISearchBar()
         search.placeholder = Constants.serchPlaceholder
         search.backgroundImage = UIImage()
+        search.delegate = self
         return search
     }()
 
@@ -93,8 +95,8 @@ final class RecipesListViewController: UIViewController {
         view.addSubview(recipesTableView)
         makeFilterButton(button: caloriesButton, title: Constants.caloriesButtonTitle)
         makeFilterButton(button: timeButton, title: Constants.timeButtonTitle)
-//        configureNavigation()
         makeAnchor()
+
         
         navigationItem.leftBarButtonItems = [
                     UIBarButtonItem(customView: backButton),
@@ -184,22 +186,33 @@ extension RecipesListViewController: UITableViewDelegate {
 // MARK: - UITableViewDataSource
 
 extension RecipesListViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        1
-    }
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        1
+//    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        recipes.count
+//        recipes.count
+        guard let searchNames = presenter?.checkSearch() else { return 0 }
+                return searchNames.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        guard let cell = tableView.dequeueReusableCell(
+//            withIdentifier: Constants.cellIdendefire,
+//            for: indexPath
+//        ) as? RecipesCell
+//        else { return UITableViewCell() }
+//        cell.configure(with: recipes[indexPath.row])
+//        return cell
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: Constants.cellIdendefire,
             for: indexPath
-        ) as? RecipesCell
+        ) as? RecipesCell,
+              let searchNames = presenter?.checkSearch()
         else { return UITableViewCell() }
-        cell.configure(with: recipes[indexPath.row])
+        cell.configure(with: searchNames[indexPath.row])
         return cell
+
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -207,7 +220,13 @@ extension RecipesListViewController: UITableViewDataSource {
     }
 }
 
+
+
 extension RecipesListViewController: RecipesViewProtocol {
+    func reloadTableView() {
+        recipesTableView.reloadData()
+    }
+    
     func goToTheCategory() {
         navigationController?.popViewController(animated: true)
 
@@ -221,5 +240,19 @@ extension RecipesListViewController: RecipesViewProtocol {
     func setTitle(_ title: String) {
         titleLabel.text = categoryTitle
     }
+}
 
+extension RecipesListViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.count >= 3 {
+            presenter?.searchRecipes(text: searchText)
+        } else {
+            presenter?.searchRecipes(text: "")
+        }
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+            presenter?.startSearch()
+            recipesTableView.reloadData()
+        }
 }

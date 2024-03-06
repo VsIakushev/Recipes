@@ -239,6 +239,10 @@ extension FavoritesViewController: FavoritesViewControllerProtocol {
 }
 
 extension FavoritesViewController: RecipesViewProtocol {
+    func reloadTableView() {
+        recipesTableView.reloadData()
+    }
+    
     func getRecipes(recipes: [Recipes]) {
         
     }
