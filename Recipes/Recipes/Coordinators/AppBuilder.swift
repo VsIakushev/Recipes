@@ -12,7 +12,7 @@ class AppBuilder {
         view.setupUI()
         return view
     }
-    
+
     func makeRecipeDetailsModule(coordinator: RecipeCoordinator) -> RecipeDetailsViewController {
         let view = RecipeDetailsViewController()
         let recipeDetailsPresenter = RecipeDetailsPresenter(view: view, coordinator: coordinator)
@@ -36,13 +36,12 @@ class AppBuilder {
         view.setupUI()
         return view
     }
-    
+
     func makeRecipesListModule(coordinator: RecipeCoordinator) -> RecipesListViewController {
         let view = RecipesListViewController()
         let allRecipesPresenter = AllRecipesPresenter(view: view, coordinator: coordinator)
         view.presenter = allRecipesPresenter
         view.setupUI()
         return view
-
     }
 }

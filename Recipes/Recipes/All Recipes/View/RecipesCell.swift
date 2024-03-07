@@ -1,9 +1,5 @@
-//
-//  RecipesCell.swift
-//  Recipes
-//
-//  Created by Vermut xxx on 04.03.2024.
-//
+// RecipesCell.swift
+// Copyright © RoadMap. All rights reserved.
 
 import UIKit
 
@@ -147,7 +143,6 @@ final class RecipesCell: UITableViewCell {
         titleRecipeLabel.topAnchor.constraint(equalTo: backgroundCellView.topAnchor, constant: 22).isActive = true
         titleRecipeLabel.leadingAnchor.constraint(equalTo: recipeImageView.trailingAnchor, constant: 20).isActive = true
         titleRecipeLabel.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        
     }
 
     private func setupAnchorsTimeLabel() {
@@ -177,5 +172,3 @@ final class RecipesCell: UITableViewCell {
         nextButton.topAnchor.constraint(equalTo: backgroundCellView.topAnchor, constant: 40).isActive = true
     }
 }
-
-

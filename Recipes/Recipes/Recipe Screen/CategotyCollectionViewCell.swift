@@ -5,7 +5,6 @@ import UIKit
 
 /// Ячейка Категории рецепта для главного экрана рецептов
 final class CategoryCollectionViewCell: UICollectionViewCell {
-    
     // MARK: - Public Properties
 
     var cornerRadius: CGFloat = 0

@@ -1,9 +1,5 @@
-//
-//  RecipesListViewController.swift
-//  Recipes
-//
-//  Created by Vermut xxx on 04.03.2024.
-//
+// RecipesListViewController.swift
+// Copyright © RoadMap. All rights reserved.
 
 import UIKit
 
@@ -21,7 +17,7 @@ final class RecipesListViewController: UIViewController {
         static let timeButtonTitle = "Time"
         static let arrowBack = "arrowBack"
     }
-    
+
     // MARK: - Visual Components
 
     private lazy var recipesTableView: UITableView = {
@@ -34,13 +30,13 @@ final class RecipesListViewController: UIViewController {
         table.showsVerticalScrollIndicator = false
         return table
     }()
-    
+
     private let titleLabel: UILabel = {
-            let label = UILabel()
+        let label = UILabel()
         label.font = UIFont.verdanaBold28()
-            label.textColor = .black
-            return label
-        }()
+        label.textColor = .black
+        return label
+    }()
 
     private lazy var backButton: UIButton = {
         let view = UIView()
@@ -49,7 +45,6 @@ final class RecipesListViewController: UIViewController {
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         return button
     }()
-
 
     private lazy var searchBar: UISearchBar = {
         let search = UISearchBar()
@@ -65,13 +60,13 @@ final class RecipesListViewController: UIViewController {
     // MARK: - Public Properties
 
     var recipes: [Recipes] = []
-    
+
     var categoryTitle: String = ""
 
     var presenter: AllRecipesPresenter?
-    
+
     // MARK: - Private Properties
-    
+
     private var stateShimer = StateShimer.loading
 
     // MARK: - Life Cycle
@@ -80,9 +75,9 @@ final class RecipesListViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         hideSkeleton()
-        self.hidesBottomBarWhenPushed = true
+        hidesBottomBarWhenPushed = true
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         titleLabel.text = categoryTitle
@@ -131,15 +126,14 @@ final class RecipesListViewController: UIViewController {
     @objc private func caloriesButtonTapped() {
         presenter?.buttonCaloriesChange(category: Recipes.allRecipes)
     }
-    
+
     @objc private func timeButtonTapped() {
         presenter?.buttonTimeChange(category: Recipes.allRecipes)
     }
 
-    
     @objc private func backButtonTapped() {
         presenter?.goToCategory()
-        }
+    }
 }
 
 // MARK: - Extension
@@ -176,7 +170,7 @@ extension RecipesListViewController {
         timeButton.widthAnchor.constraint(equalToConstant: 90).isActive = true
         timeButton.heightAnchor.constraint(equalToConstant: 36).isActive = true
     }
-    
+
     private func hideSkeleton() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             self.stateShimer = .done
@@ -189,20 +183,18 @@ extension RecipesListViewController {
 
 extension RecipesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
         presenter?.goToRecipeDetails()
-        }
+    }
 }
 
 // MARK: - UITableViewDataSource
 
 extension RecipesListViewController: UITableViewDataSource {
-
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        recipes.count
         guard let searchNames = presenter?.checkSearch() else { return 0 }
-                return searchNames.count
+        return searchNames.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -226,42 +218,40 @@ extension RecipesListViewController: UITableViewDataSource {
 }
 
 extension RecipesListViewController: RecipesViewProtocol {
-    
     func buttonTimeState(color: String, image: String) {
         timeButton.backgroundColor = UIColor(named: color)
         timeButton.setTitleColor(.white, for: .normal)
         timeButton.setImage(UIImage(named: image), for: .normal)
         timeButton.setTitleColor(.black, for: .normal)
     }
-    
+
     func buttonCaloriesState(color: String, image: String) {
         caloriesButton.backgroundColor = UIColor(named: color)
         caloriesButton.setTitleColor(.white, for: .normal)
         caloriesButton.setImage(UIImage(named: image), for: .normal)
         caloriesButton.setTitleColor(.black, for: .normal)
     }
-    
+
     func sortViewRecipes(recipes: [Recipes]) {
         self.recipes = recipes
         print(recipes)
         print(self.recipes)
         recipesTableView.reloadData()
     }
-    
+
     func reloadTableView() {
         recipesTableView.reloadData()
     }
-    
+
     func goToTheCategory() {
         navigationController?.popViewController(animated: true)
-
     }
-    
+
     func getRecipes(recipes: [Recipes]) {
         self.recipes = recipes
         recipesTableView.reloadData()
     }
-    
+
     func setTitle(_ title: String) {
         titleLabel.text = categoryTitle
     }
@@ -271,14 +261,14 @@ extension RecipesListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.count >= 3 {
             presenter?.searchRecipes(text: searchText)
-            self.stateShimer = .loading
+            stateShimer = .loading
             hideSkeleton()
         } else {
             presenter?.searchRecipes(text: "")
         }
     }
-    
+
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-            presenter?.startSearch()
-        }
+        presenter?.startSearch()
+    }
 }

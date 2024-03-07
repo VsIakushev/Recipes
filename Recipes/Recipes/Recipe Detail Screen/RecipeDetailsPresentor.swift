@@ -29,9 +29,8 @@ protocol RecipeDetailsPresenterProtocol {
 
 /// Презентер экрана деталей рецепта
 final class RecipeDetailsPresenter: RecipeDetailsPresenterProtocol {
-    
     weak var recipeCoordinator: RecipeCoordinator?
-    
+
     // MARK: - Public Properties
 
     var recipe = Recipe.recipeExample()
@@ -44,7 +43,7 @@ final class RecipeDetailsPresenter: RecipeDetailsPresenterProtocol {
 
     init(view: RecipeDetailsViewControllerProtocol, coordinator: RecipeCoordinator) {
         self.view = view
-        self.recipeCoordinator = coordinator
+        recipeCoordinator = coordinator
     }
 
     // MARK: - Public Methods
@@ -54,7 +53,7 @@ final class RecipeDetailsPresenter: RecipeDetailsPresenterProtocol {
     }
 
     func shareViaTelegram() {}
-    
+
     func closeDetailsScreen() {
         recipeCoordinator?.closeRecipeDetails()
     }

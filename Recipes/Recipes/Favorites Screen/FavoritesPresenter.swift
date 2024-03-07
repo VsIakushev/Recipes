@@ -1,7 +1,7 @@
 // FavoritesPresenter.swift
 // Copyright © RoadMap. All rights reserved.
 
-///протокол вью
+/// протокол вью
 protocol FavoritesViewControllerProtocol: AnyObject {
     /// показать плашку нет избранных
     func setEmptyState()
@@ -12,7 +12,8 @@ protocol FavoritesViewControllerProtocol: AnyObject {
     /// рецепты
     var recipes: [Recipes] { get set }
 }
-///протокол презентера
+
+/// протокол презентера
 protocol FavoritesPresenterProtocol {
     var favoritesCoordinator: FavoritesCoordinator? { get set }
     /// проверка на сустой массив избранных
@@ -25,33 +26,31 @@ protocol FavoritesPresenterProtocol {
     func removeFromFavourites(recipeIndex: Int)
     /// переход к экрану детального рецепта
     func goToRecipeDetails()
-
 }
 
 /// Презентер экрана Избранных рецептов
 final class FavoritesPresenter {
-    
     // MARK: - Private Properties
-    
+
     private weak var view: FavoritesViewControllerProtocol?
-    
+
     private var recipes = Recipes.favoritesRecipes
-    
+
     // MARK: - Public Properties
-    
+
     weak var favoritesCoordinator: FavoritesCoordinator?
-    
+
     // MARK: - Initializers
-    
+
     init(view: FavoritesViewControllerProtocol) {
         self.view = view
     }
 }
-    // MARK: - FavoritesPresenter + FavoritesPresenterProtocol
 
-    extension FavoritesPresenter: FavoritesPresenterProtocol {
-    
-    private  func onTap() {
+// MARK: - FavoritesPresenter + FavoritesPresenterProtocol
+
+extension FavoritesPresenter: FavoritesPresenterProtocol {
+    private func onTap() {
         favoritesCoordinator?.pushRecipe()
     }
 
@@ -60,32 +59,30 @@ final class FavoritesPresenter {
     }
 
     func removeFromFavourites(recipeIndex: Int) {
-            let recipe = Recipes.favoritesRecipes.remove(at: recipeIndex)
-            view?.recipes.remove(at: recipeIndex)
-        
-            for var item in Recipes.allRecipes where item == recipe {
-                item.isFavorite = false
-            }
-        }
-    
-    func getFavourites() -> [Recipes] {
-        return recipes
-        
-        }
+        let recipe = Recipes.favoritesRecipes.remove(at: recipeIndex)
+        view?.recipes.remove(at: recipeIndex)
 
-    
+        for var item in Recipes.allRecipes where item == recipe {
+            item.isFavorite = false
+        }
+    }
+
+    func getFavourites() -> [Recipes] {
+        recipes
+    }
+
     func checkIfFavouritesEmpty() {
         if getFavouritesCount() == 0 {
-                view?.setEmptyState()
-            } else {
-                view?.setNonEmptyState()
-            }
+            view?.setEmptyState()
+        } else {
+            view?.setNonEmptyState()
         }
-    
+    }
+
     func getFavouritesCount() -> Int {
         view?.recipes.count ?? 0
     }
-    
+
     func goToRecipeDetails() {
         favoritesCoordinator?.pushReceiptDetails()
     }

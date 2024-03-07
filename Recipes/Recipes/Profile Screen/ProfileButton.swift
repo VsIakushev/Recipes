@@ -5,7 +5,6 @@ import UIKit
 
 /// Кастомная кнопка для страницы Профиля
 final class ProfileButton: UIButton {
-
     // MARK: - Visual Components
 
     private let buttonView = UIButton()

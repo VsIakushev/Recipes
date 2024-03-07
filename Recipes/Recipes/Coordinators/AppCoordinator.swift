@@ -10,13 +10,6 @@ final class AppCoordinator: BaseCoodinator {
 
     // MARK: - Life Cycles
 
-//    override func start() {
-//        if "admin" == "admin" {
-//            toMain​()
-//        } else {
-//            t​oAuth​()
-//        }
-//    }
     override func start() {
         if "admin" == "admin" {
             t​oAuth​()
@@ -33,7 +26,6 @@ final class AppCoordinator: BaseCoodinator {
         let recipeCoordinator = RecipeCoordinator()
         let recipeModuleView = appBuilder.makeRecipeModule(coordinator: recipeCoordinator)
         recipeCoordinator.setRootViewController(view: recipeModuleView)
-//        recipeModuleView.presenter?.recipeCoordinator = recipeCoordinator
         add(coordinator: recipeCoordinator)
 
         /// Set Favorites
@@ -46,8 +38,6 @@ final class AppCoordinator: BaseCoodinator {
         let profileCoordinator = ProfileCoordinator()
         let profileView = appBuilder.makeProfileModule(coordinator: profileCoordinator)
         profileCoordinator.setRootViewController(view: profileView)
-
-//        profileView.presenter?.profileCoordinator = profileCoordinator
         add(coordinator: profileCoordinator)
 
         profileCoordinator.onFinishFlow = { [weak self] in

@@ -1,9 +1,5 @@
-//
-//  Category.swift
-//  Recipes
-//
-//  Created by Vermut xxx on 04.03.2024.
-//
+// Category.swift
+// Copyright © RoadMap. All rights reserved.
 
 import Foundation
 
