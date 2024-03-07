@@ -1,19 +1,15 @@
-//
-//  TermsAndPolicyViewController.swift
-//  Recipes
-//
-//  Created by Vitaliy Iakushev on 04.03.2024.
-//
+// TermsAndPolicyView.swift
+// Copyright © RoadMap. All rights reserved.
 
 import UIKit
+
 /// Всплывающее окно с Условиями и Политикой Конфиденциальности
 final class TermsAndPolicyView: UIView {
-
     // MARK: - Constants
 
     private enum Constants {
         static let titleText = "Terms of Use"
-       
+
         static let termsText = """
         Welcome to our recipe app! We're thrilled to have you on board. To ensure a delightful experience for everyone, please take a moment to familiarize yourself with our rules:
         User Accounts:
@@ -49,27 +45,27 @@ final class TermsAndPolicyView: UIView {
     private let termsTitleLabel = UILabel()
     private let termsLabel = UILabel()
     private let scrollView = UIScrollView()
-    
+
     // MARK: - Public Properties
-    
+
     var presenter: TermsAndPolicyPresenterProtocol?
-    
+
     // MARK: - Initializers
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
         addViews()
         setConstraints()
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupUI()
         addViews()
         setConstraints()
     }
-    
+
     // MARK: - Private Methods
 
     private func addViews() {
@@ -87,7 +83,7 @@ final class TermsAndPolicyView: UIView {
 
         barLine.layer.cornerRadius = 3
         barLine.backgroundColor = .lightGray
-        
+
         scrollView.showsVerticalScrollIndicator = false
         scrollView.isScrollEnabled = true
 
@@ -120,12 +116,12 @@ final class TermsAndPolicyView: UIView {
             handleArea.heightAnchor.constraint(equalToConstant: 40),
             handleArea.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 35),
             handleArea.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -35),
-            
+
             barLine.centerXAnchor.constraint(equalTo: handleArea.centerXAnchor),
             barLine.topAnchor.constraint(equalTo: handleArea.topAnchor, constant: 10),
             barLine.widthAnchor.constraint(equalToConstant: 50),
             barLine.heightAnchor.constraint(equalToConstant: 5),
-            
+
             closeButton.topAnchor.constraint(equalTo: topAnchor, constant: 25),
             closeButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25),
             closeButton.widthAnchor.constraint(equalToConstant: 13),
@@ -135,26 +131,26 @@ final class TermsAndPolicyView: UIView {
             termsTitleLabel.heightAnchor.constraint(equalToConstant: 20),
             termsTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 25),
             termsTitleLabel.topAnchor.constraint(equalTo: handleArea.bottomAnchor, constant: 5),
-            
+
             scrollView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 25),
             scrollView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25),
             scrollView.topAnchor.constraint(equalTo: termsTitleLabel.bottomAnchor, constant: 20),
             scrollView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -25),
-            
+
             termsLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             termsLabel.topAnchor.constraint(equalTo: scrollView.topAnchor),
             termsLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             termsLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             termsLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
-            
+
         ])
     }
-    
+
     @objc private func closeButtonTapped() {
         presenter?.closeTermsSheet()
     }
 }
 
 // MARK: - TermsAndPolicyViewController + TermsAndPolicyPresenterViewProtocol
-extension TermsAndPolicyView: TermsAndPolicyPresenterViewProtocol {
-}
+
+extension TermsAndPolicyView: TermsAndPolicyPresenterViewProtocol {}

@@ -9,7 +9,7 @@ final class ProfileTableViewCell: UITableViewCell {
 
     private enum Constants {
         static let title = "Profile"
-        
+
         static let imageViewHeight: CGFloat = 160
         static let nameLabelWidth: CGFloat = 256
         static let nameLabelHeight: CGFloat = 30

@@ -7,9 +7,9 @@ protocol ProfileViewProtocol: AnyObject {
     func updateView()
     /// показать алерт для ввода нового имени
     func showEditAlert()
-    
+
     func showTermsAndPolicy()
-    
+
     var termsView: TermsAndPolicyView { get set }
 }
 
@@ -52,10 +52,9 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     func bonusButtonPressed() {
         profileCoordinator?.showBonusBottomSheet(bonuses: profileInfo.bonuses)
     }
-    
+
     func termsAndPolictPressed(profileViewController: ProfileViewProtocol) {
         profileCoordinator?.showTermsAndPolicySheet(profileViewController: profileViewController)
-        
     }
 
     func setName(newName: String) {

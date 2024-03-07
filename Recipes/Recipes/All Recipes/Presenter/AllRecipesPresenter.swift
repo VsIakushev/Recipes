@@ -1,12 +1,7 @@
-//
-//  File.swift
-//  Recipes
-//
-//  Created by Vermut xxx on 04.03.2024.
-//
+// AllRecipesPresenter.swift
+// Copyright © RoadMap. All rights reserved.
 
-import Foundation
-/// протокол вью  всех рецептов
+/// Протокол вью  всех рецептов
 protocol RecipesViewProtocol: AnyObject {
     /// получение рецептов
     func getRecipes(recipes: [Recipes])
@@ -20,9 +15,9 @@ protocol RecipesViewProtocol: AnyObject {
     func caloriesButtonPressed(color: String, image: String)
     /// отсортировать рецепты
     func sortViewRecipes(recipes: [Recipes])
-
 }
-///протокол презентера
+
+/// Протокол презентера
 protocol RecipeProtocol: AnyObject {
     /// получить рецепты
     func getReceipts()
@@ -53,6 +48,7 @@ final class AllRecipesPresenter {
     }
     
     private weak var view: RecipesViewProtocol?
+
     private weak var recipesCoordinator: RecipeCoordinator?
     private var user: Recipes?
     private var isSearching = false
@@ -62,12 +58,11 @@ final class AllRecipesPresenter {
     private var sortedTime = SortedTime.none
     var sorted = Recipes.allRecipes
 
-
     init(view: RecipesViewProtocol, coordinator: RecipeCoordinator) {
         self.view = view
-        self.recipesCoordinator = coordinator
+        recipesCoordinator = coordinator
     }
-    
+
     func buttonCaloriesChange(category: [Recipes]) {
             if sortedCalories == .none {
                 sortedCalories = .caloriesLow
@@ -83,6 +78,7 @@ final class AllRecipesPresenter {
                 sortRecipes(category: category)
             }
         }
+    }
 
         /// Метод меняющий состояниие кнопки таймера
         func buttonTimeChange(category: [Recipes]) {
@@ -100,10 +96,12 @@ final class AllRecipesPresenter {
                 sortRecipes(category: category)
             }
         }
+    }
 }
 
-extension AllRecipesPresenter: RecipeProtocol {
+// MARK: AllRecipesPresenter + RecipeProtocol
 
+extension AllRecipesPresenter: RecipeProtocol {
     func sortRecipes(category: [Recipes]) {
         let defaultRecipes = Recipes.allRecipes
         var sorted = category
@@ -130,23 +128,23 @@ extension AllRecipesPresenter: RecipeProtocol {
 
         sorted = category.sorted { lhs, rhs in
             if let sortCalories = sortCalories, let sortTime = sortTime {
-                    if lhs.caloriesTitle == rhs.caloriesTitle {
-                        return sortTime(lhs, rhs)
-                    } else {
-                        return sortCalories(lhs, rhs)
-                    }
-                } else if let sortCalories = sortCalories {
-                    return sortCalories(lhs, rhs)
-                } else if let sortTime = sortTime {
+                if lhs.caloriesTitle == rhs.caloriesTitle {
                     return sortTime(lhs, rhs)
+                } else {
+                    return sortCalories(lhs, rhs)
                 }
-                return false
+            } else if let sortCalories = sortCalories {
+                return sortCalories(lhs, rhs)
+            } else if let sortTime = sortTime {
+                return sortTime(lhs, rhs)
             }
+            return false
+        }
 
         view?.sortViewRecipes(recipes: sorted)
         self.sorted = sorted
     }
-    
+
     func checkSearch() -> [Recipes] {
         if isSearching {
             return searchNames
@@ -154,15 +152,15 @@ extension AllRecipesPresenter: RecipeProtocol {
             return sorted
         }
     }
-    
+
     func startSearch() {
         isSearching = true
     }
-    
+
     func stopSearch() {
         isSearching = false
     }
-    
+
     func searchRecipes(text: String) {
         guard !text.isEmpty else {
             isSearching = false
@@ -174,7 +172,7 @@ extension AllRecipesPresenter: RecipeProtocol {
         searchNames = recipes.filter { $0.titleRecipies.lowercased().contains(text.lowercased()) }
         view?.reloadTableView()
     }
-    
+
     func goToCategory() {
         view?.goToTheCategory()
     }
@@ -183,7 +181,7 @@ extension AllRecipesPresenter: RecipeProtocol {
         let storage = Storage()
         view?.getRecipes(recipes: storage.fish)
     }
-    
+
     func goToRecipeDetails() {
         recipesCoordinator?.pushReceiptDetails()
     }

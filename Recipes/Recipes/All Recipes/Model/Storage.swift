@@ -1,9 +1,5 @@
-//
-//  Storage.swift
-//  Recipes
-//
-//  Created by Vermut xxx on 04.03.2024.
-//
+// Storage.swift
+// Copyright © RoadMap. All rights reserved.
 
 import Foundation
 
@@ -11,7 +7,7 @@ import Foundation
 final class Storage {
     // MARK: - Public Properties
 
-    var fish: [Recipes] = [
+    var fishes: [Recipes] = [
         Recipes(
             avatarRecipie: "fish_1",
             titleRecipies: "Simple Fish And Corn",
@@ -55,11 +51,10 @@ final class Storage {
         .init(avatarImageName: "soup", categoryTitle: "Soup", recepies: []),
         .init(avatarImageName: "chicken", categoryTitle: "Chicken", recepies: []),
         .init(avatarImageName: "meat", categoryTitle: "Meat", recepies: []),
-        .init(avatarImageName: "fish", categoryTitle: "Fish", recepies: fish),
+        .init(avatarImageName: "fish", categoryTitle: "Fish", recepies: fishes),
         .init(avatarImageName: "side dish", categoryTitle: "Side dish", recepies: []),
         .init(avatarImageName: "drinks", categoryTitle: "Drinks", recepies: []),
         .init(avatarImageName: "pancake", categoryTitle: "Pancake", recepies: []),
         .init(avatarImageName: "desserts", categoryTitle: "Desserts", recepies: [])
     ]
 }
-

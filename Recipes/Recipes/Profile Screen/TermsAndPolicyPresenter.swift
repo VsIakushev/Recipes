@@ -1,10 +1,10 @@
-// BottomSheetPresenter.swift
+// TermsAndPolicyPresenter.swift
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
 
 // Протокол экрана Условий и Политики конфиденциальности
-protocol TermsAndPolicyPresenterViewProtocol: AnyObject { }
+protocol TermsAndPolicyPresenterViewProtocol: AnyObject {}
 
 // Протокол Презентора экрана Условий и Политики конфиденциальности
 protocol TermsAndPolicyPresenterProtocol {
@@ -16,7 +16,7 @@ protocol TermsAndPolicyPresenterProtocol {
 final class TermsAndPolicyPresenter: TermsAndPolicyPresenterProtocol {
     // MARK: - Public Properties
 
-    weak var view: TermsAndPolicyPresenterViewProtocol?
+    private weak var view: TermsAndPolicyPresenterViewProtocol?
 
     private weak var coordinator: ProfileCoordinator?
 

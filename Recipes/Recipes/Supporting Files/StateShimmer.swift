@@ -1,9 +1,5 @@
-//
-//  StateShimmer.swift
-//  Recipes
-//
-//  Created by Vitaliy Iakushev on 06.03.2024.
-//
+// StateShimmer.swift
+// Copyright © RoadMap. All rights reserved.
 
 ///  Состояния шимера
 enum StateShimer {
