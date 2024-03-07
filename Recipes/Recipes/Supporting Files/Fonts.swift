@@ -17,6 +17,10 @@ extension UIFont {
         return UIFont(name: "Verdana-Bold", size: 25) ?? UIFont.systemFont(ofSize: 25, weight: .bold)
     }
     
+    static func verdanaBold12() -> UIFont {
+        return UIFont(name: "Verdana-Bold", size: 12) ?? UIFont.systemFont(ofSize: 12, weight: .bold)
+    }
+    
     static func verdanaBold20() -> UIFont {
         return UIFont(name: "Verdana-Bold", size: 20) ?? UIFont.systemFont(ofSize: 20, weight: .bold)
     }

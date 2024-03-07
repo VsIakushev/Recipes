@@ -15,7 +15,7 @@ final class FavoritesViewController: UIViewController {
         static let tabBarImageName = "favorites"
         static let tabBarFillImageName = "favorites.fill"
         static let backgroundColorName = "background08"
-        static let addFavImageName = "addfavorites"
+        static let addFavImageName = "addfavorites 1"
         static let verdanaBold = "Verdana-Bold"
         static let verdana = "Verdana"
     }
@@ -57,7 +57,7 @@ final class FavoritesViewController: UIViewController {
             let view = UIView()
             view.layer.cornerRadius = 12
             view.clipsToBounds = true
-            view.backgroundColor = UIColor(named: Constants.backgroundColorName)
+            view.backgroundColor = UIColor.background08()
             view.translatesAutoresizingMaskIntoConstraints = false
             return view
         }()
@@ -74,7 +74,7 @@ final class FavoritesViewController: UIViewController {
         private let emptyLabel: UILabel = {
             let label = UILabel()
             label.text = Constants.emptyLabelText
-            label.font = UIFont(name: Constants.verdanaBold, size: 18)
+            label.font = UIFont.verdanaBold20()
             label.textAlignment = .center
             label.translatesAutoresizingMaskIntoConstraints = false
             return label
@@ -83,7 +83,7 @@ final class FavoritesViewController: UIViewController {
         private let additionalEmptyLabel: UILabel = {
             let label = UILabel()
             label.text = Constants.additionalEmptyLabelText
-            label.font = UIFont(name: Constants.verdana, size: 14)
+            label.font = UIFont.verdana14()
             label.textColor = .lightGray
             label.numberOfLines = 2
             label.textAlignment = .center
@@ -116,7 +116,7 @@ final class FavoritesViewController: UIViewController {
     
     private func setupTitleLabel() {
         let titleLabel = UILabel()
-        titleLabel.font = Constants.titleFont
+        titleLabel.font = UIFont.verdanaBold28()
         titleLabel.text = Constants.titleText
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
     }
