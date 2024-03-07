@@ -6,7 +6,7 @@ import UIKit
 /// Координатор профиля
 final class ProfileCoordinator: BaseCoodinator {
     var rootController: UINavigationController!
-    var onFinishFlow: (() -> Void)?
+    var onFinishFlow: VoidHandler?
 
     func setRootViewController(view: UIViewController) {
         rootController = UINavigationController(rootViewController: view)

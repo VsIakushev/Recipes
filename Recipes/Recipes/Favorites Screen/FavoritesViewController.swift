@@ -13,7 +13,6 @@ final class FavoritesViewController: UIViewController {
         static let additionalEmptyLabelText = "Add interesting recipes to make ordering products convenient"
         static let tabBarImageName = "favorites"
         static let tabBarFillImageName = "favorites.fill"
-        static let backgroundColorName = "background08"
         static let addFavImageName = "addfavorites 1"
         static let verdanaBold = "Verdana-Bold"
         static let verdana = "Verdana"
