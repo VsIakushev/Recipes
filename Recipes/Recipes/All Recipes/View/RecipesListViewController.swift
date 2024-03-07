@@ -22,7 +22,7 @@ final class RecipesListViewController: UIViewController {
 
     let caloriesButton = UIButton()
     let timeButton = UIButton()
-    
+
     private lazy var recipesTableView: UITableView = {
         let table = UITableView()
         table.delegate = self
@@ -216,14 +216,14 @@ extension RecipesListViewController: UITableViewDataSource {
     }
 }
 
-extension RecipesListViewController: RecipesViewProtocol {   
+extension RecipesListViewController: RecipesViewProtocol {
     func timeButtonPressed(color: String, image: String) {
         timeButton.backgroundColor = UIColor(named: color)
         timeButton.setTitleColor(.white, for: .normal)
         timeButton.setImage(UIImage(named: image), for: .normal)
         timeButton.setTitleColor(.black, for: .normal)
     }
-    
+
     func caloriesButtonPressed(color: String, image: String) {
         caloriesButton.backgroundColor = UIColor(named: color)
         caloriesButton.setTitleColor(.white, for: .normal)

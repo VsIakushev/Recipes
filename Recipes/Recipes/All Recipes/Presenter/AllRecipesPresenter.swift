@@ -38,7 +38,6 @@ protocol RecipeProtocol: AnyObject {
 }
 
 final class AllRecipesPresenter {
-    
     private enum Constants {
         static let background01 = "background01"
         static let filterLow = "filterLow"
@@ -46,7 +45,7 @@ final class AllRecipesPresenter {
         static let background06 = "background06"
         static let filterIcon = "filterIcon"
     }
-    
+
     private weak var view: RecipesViewProtocol?
 
     private weak var recipesCoordinator: RecipeCoordinator?
@@ -64,37 +63,35 @@ final class AllRecipesPresenter {
     }
 
     func buttonCaloriesChange(category: [Recipes]) {
-            if sortedCalories == .none {
-                sortedCalories = .caloriesLow
-                view?.caloriesButtonPressed(color: Constants.background01, image: Constants.filterLow)
-                sortRecipes(category: category)
-            } else if sortedCalories == .caloriesLow {
-                sortedCalories = .caloriesHigh
-                view?.caloriesButtonPressed(color: Constants.background01, image: Constants.filterHigh)
-                sortRecipes(category: category)
-            } else if sortedCalories == .caloriesHigh {
-                sortedCalories = .none
-                view?.caloriesButtonPressed(color: Constants.background06, image: Constants.filterIcon)
-                sortRecipes(category: category)
-            }
+        if sortedCalories == .none {
+            sortedCalories = .caloriesLow
+            view?.caloriesButtonPressed(color: Constants.background01, image: Constants.filterLow)
+            sortRecipes(category: category)
+        } else if sortedCalories == .caloriesLow {
+            sortedCalories = .caloriesHigh
+            view?.caloriesButtonPressed(color: Constants.background01, image: Constants.filterHigh)
+            sortRecipes(category: category)
+        } else if sortedCalories == .caloriesHigh {
+            sortedCalories = .none
+            view?.caloriesButtonPressed(color: Constants.background06, image: Constants.filterIcon)
+            sortRecipes(category: category)
         }
     }
 
-        /// Метод меняющий состояниие кнопки таймера
-        func buttonTimeChange(category: [Recipes]) {
-            if sortedTime == .none {
-                sortedTime = .timeLow
-                view?.timeButtonPressed(color: Constants.background01, image: Constants.filterLow)
-                sortRecipes(category: category)
-            } else if sortedTime == .timeLow {
-                view?.timeButtonPressed(color: Constants.background01, image: Constants.filterHigh)
-                sortedTime = .timeHigh
-                sortRecipes(category: category)
-            } else if sortedTime == .timeHigh {
-                sortedTime = .none
-                view?.timeButtonPressed(color: Constants.background06, image: Constants.filterIcon)
-                sortRecipes(category: category)
-            }
+    /// Метод меняющий состояниие кнопки таймера
+    func buttonTimeChange(category: [Recipes]) {
+        if sortedTime == .none {
+            sortedTime = .timeLow
+            view?.timeButtonPressed(color: Constants.background01, image: Constants.filterLow)
+            sortRecipes(category: category)
+        } else if sortedTime == .timeLow {
+            view?.timeButtonPressed(color: Constants.background01, image: Constants.filterHigh)
+            sortedTime = .timeHigh
+            sortRecipes(category: category)
+        } else if sortedTime == .timeHigh {
+            sortedTime = .none
+            view?.timeButtonPressed(color: Constants.background06, image: Constants.filterIcon)
+            sortRecipes(category: category)
         }
     }
 }
@@ -176,10 +173,10 @@ extension AllRecipesPresenter: RecipeProtocol {
     func goToCategory() {
         view?.goToTheCategory()
     }
-    
+
     func getReceipts() {
         let storage = Storage()
-        view?.getRecipes(recipes: storage.fish)
+        view?.getRecipes(recipes: storage.fishes)
     }
 
     func goToRecipeDetails() {
