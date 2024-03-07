@@ -44,7 +44,7 @@ final class AuthViewController: UIViewController {
     private lazy var loginButton: UIButton = {
         let button = UIButton()
         button.setTitle(Constants.login, for: .normal)
-        button.backgroundColor = UIColor(named: Constants.background02)
+        button.backgroundColor = UIColor.background02()
         button.layer.cornerRadius = 12
         button.addTarget(
             self,
@@ -58,8 +58,8 @@ final class AuthViewController: UIViewController {
     private let loginLabel: UILabel = {
         let label = UILabel()
         label.text = Constants.login
-        label.font = UIFont(name: Constants.verdanaBold, size: 28)
-        label.textColor = UIColor(named: Constants.text01)
+        label.font = UIFont.verdanaBold28()
+        label.textColor = UIColor.text01()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -67,8 +67,8 @@ final class AuthViewController: UIViewController {
     private let emailAddressLabel: UILabel = {
         let label = UILabel()
         label.text = Constants.emailAddress
-        label.font = UIFont(name: Constants.verdanaBold, size: 18)
-        label.textColor = UIColor(named: Constants.text01)
+        label.font = UIFont.verdanaBold20()
+        label.textColor = UIColor.text01()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -78,7 +78,7 @@ final class AuthViewController: UIViewController {
         view.backgroundColor = .white
         view.layer.cornerRadius = 12
         view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor(named: Constants.text03)?.cgColor
+        view.layer.borderColor = UIColor.text03().cgColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -86,7 +86,7 @@ final class AuthViewController: UIViewController {
     private let envelopeImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(systemName: Constants.envelope)
-        image.tintColor = UIColor(named: Constants.text03)
+        image.tintColor = UIColor.text03()
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -102,7 +102,7 @@ final class AuthViewController: UIViewController {
     private let emailWrongAddressLabel: UILabel = {
         let label = UILabel()
         label.text = Constants.incorrectFormat
-        label.font = UIFont(name: Constants.verdanaBold, size: 12)
+        label.font = UIFont.verdanaBold12()
         label.textColor = UIColor(named: Constants.background03)
         label.isHidden = true
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -112,7 +112,7 @@ final class AuthViewController: UIViewController {
     private let passwordLabel: UILabel = {
         let label = UILabel()
         label.text = Constants.password
-        label.font = UIFont(name: Constants.verdanaBold, size: 18)
+        label.font = UIFont.verdanaBold20()
         label.textColor = UIColor(named: Constants.text01)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -123,7 +123,7 @@ final class AuthViewController: UIViewController {
         view.backgroundColor = .white
         view.layer.cornerRadius = 12
         view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor(named: Constants.text03)?.cgColor
+        view.layer.borderColor = UIColor.text03().cgColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -131,7 +131,7 @@ final class AuthViewController: UIViewController {
     private let lockImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(systemName: Constants.lock)
-        image.tintColor = UIColor(named: Constants.text03)
+        image.tintColor = UIColor.text03()
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -147,8 +147,8 @@ final class AuthViewController: UIViewController {
     private let passwordWrongLabel: UILabel = {
         let label = UILabel()
         label.text = Constants.youEnteredTheWrongPassword
-        label.font = UIFont(name: Constants.verdanaBold, size: 12)
-        label.textColor = UIColor(named: Constants.background03)
+        label.font = UIFont.verdanaBold12()
+        label.textColor = UIColor.background03()
         label.isHidden = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -157,7 +157,7 @@ final class AuthViewController: UIViewController {
     private lazy var eyeButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: Constants.eyeSlash), for: .normal)
-        button.tintColor = UIColor(named: Constants.text03)
+        button.tintColor = UIColor.text03()
         button.addTarget(self, action: #selector(eyeButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -165,7 +165,7 @@ final class AuthViewController: UIViewController {
 
     private let errorView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(named: Constants.background03)
+        view.backgroundColor = UIColor.background03()
         view.layer.cornerRadius = 12
         view.translatesAutoresizingMaskIntoConstraints = false
         view.isHidden = true
@@ -175,7 +175,7 @@ final class AuthViewController: UIViewController {
     private let errorLabel: UILabel = {
         let label = UILabel()
         label.text = Constants.pleaseCheckTheAccuracy
-        label.font = UIFont(name: Constants.verdana, size: 18)
+        label.font = UIFont.verdana20()
         label.textColor = .white
         label.numberOfLines = 0
         label.textAlignment = .center
@@ -247,7 +247,7 @@ final class AuthViewController: UIViewController {
         view.layer.sublayers?.filter { $0 is CAGradientLayer }.forEach { $0.removeFromSuperlayer() }
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = view.bounds
-        gradientLayer.colors = [UIColor.white.cgColor, UIColor(named: Constants.background04)?.cgColor as Any]
+        gradientLayer.colors = [UIColor.white.cgColor, UIColor.background04().cgColor as Any]
         gradientLayer.startPoint = CGPoint(x: 0, y: 0)
         gradientLayer.endPoint = CGPoint(x: 1, y: 1)
         view.layer.insertSublayer(gradientLayer, at: 0)

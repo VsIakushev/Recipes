@@ -14,12 +14,12 @@ final class RecipesListViewController: UIViewController {
     private enum Constants {
         static let cellIdendefire = "CellRecipes"
         static let skeletonCellIdIdentifier = "CellSkeleton"
-        static let backBarButtonImage = UIImage(systemName: "arrow.backward")
         static let filterIconImage = UIImage(named: "filterIcon")
         static let titleNavigation = "Fish"
         static let serchPlaceholder = "Search recipes"
         static let caloriesButtonTitle = "Calories"
         static let timeButtonTitle = "Time"
+        static let arrowBack = "arrowBack"
     }
     
     // MARK: - Visual Components
@@ -37,7 +37,7 @@ final class RecipesListViewController: UIViewController {
     
     private let titleLabel: UILabel = {
             let label = UILabel()
-            label.font = UIFont(name: "Verdana-Bold", size: 28)
+        label.font = UIFont.verdanaBold28()
             label.textColor = .black
             return label
         }()
@@ -45,7 +45,7 @@ final class RecipesListViewController: UIViewController {
     private lazy var backButton: UIButton = {
         let view = UIView()
         let button = UIButton()
-        button.setImage(UIImage(named: "arrowBack"), for: .normal)
+        button.setImage(UIImage(named: Constants.arrowBack), for: .normal)
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -79,7 +79,7 @@ final class RecipesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        showSkeleton()
+        hideSkeleton()
         self.hidesBottomBarWhenPushed = true
     }
     
@@ -177,7 +177,7 @@ extension RecipesListViewController {
         timeButton.heightAnchor.constraint(equalToConstant: 36).isActive = true
     }
     
-    private func showSkeleton() {
+    private func hideSkeleton() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             self.stateShimer = .done
             self.recipesTableView.reloadData()
@@ -271,6 +271,8 @@ extension RecipesListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.count >= 3 {
             presenter?.searchRecipes(text: searchText)
+            self.stateShimer = .loading
+            hideSkeleton()
         } else {
             presenter?.searchRecipes(text: "")
         }
@@ -278,6 +280,5 @@ extension RecipesListViewController: UISearchBarDelegate {
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
             presenter?.startSearch()
-            recipesTableView.reloadData()
         }
 }

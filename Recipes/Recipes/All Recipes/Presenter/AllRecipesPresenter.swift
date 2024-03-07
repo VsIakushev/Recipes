@@ -92,9 +92,9 @@ extension AllRecipesPresenter: RecipeProtocol {
         let sortCalories: ((Recipes, Recipes) -> Bool)?
         switch sortedCalories {
         case .caloriesLow:
-            sortCalories = { $0.caloriesTitle < $1.caloriesTitle }
+            sortCalories = { Int($0.caloriesTitle) ?? 0 < Int($1.caloriesTitle) ?? 0 }
         case .caloriesHigh:
-            sortCalories = { $0.caloriesTitle > $1.caloriesTitle }
+            sortCalories = { Int($0.caloriesTitle) ?? 0 > Int($1.caloriesTitle) ?? 0 }
         default:
             sortCalories = nil
         }
@@ -102,22 +102,27 @@ extension AllRecipesPresenter: RecipeProtocol {
         let sortTime: ((Recipes, Recipes) -> Bool)?
         switch sortedTime {
         case .timeLow:
-            sortTime = { $0.cookingTimeTitle < $1.cookingTimeTitle }
+            sortTime = { Int($0.cookingTimeTitle) ?? 0 < Int($1.cookingTimeTitle) ?? 0 }
         case .timeHigh:
-            sortTime = { $0.cookingTimeTitle > $1.cookingTimeTitle }
+            sortTime = { Int($0.cookingTimeTitle) ?? 0 > Int($1.cookingTimeTitle) ?? 0 }
         default:
             sortTime = nil
         }
 
         sorted = category.sorted { lhs, rhs in
-            if let sortCalories = sortCalories {
-                if lhs.caloriesTitle == rhs.caloriesTitle {
-                    return sortTime?(lhs, rhs) ?? false
+            if let sortCalories = sortCalories, let sortTime = sortTime {
+                    if lhs.caloriesTitle == rhs.caloriesTitle {
+                        return sortTime(lhs, rhs)
+                    } else {
+                        return sortCalories(lhs, rhs)
+                    }
+                } else if let sortCalories = sortCalories {
+                    return sortCalories(lhs, rhs)
+                } else if let sortTime = sortTime {
+                    return sortTime(lhs, rhs)
                 }
-                return sortCalories(lhs, rhs)
+                return false
             }
-            return sortTime?(lhs, rhs) ?? false
-        }
 
         view?.sortViewRecipes(recipes: sorted)
         self.sorted = sorted

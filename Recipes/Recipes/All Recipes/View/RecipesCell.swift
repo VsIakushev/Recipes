@@ -19,7 +19,7 @@ final class RecipesCell: UITableViewCell {
 
     // MARK: - VIsual Components
 
-    private let uiViewBackground: UIView = {
+    private let backgroundCellView: UIView = {
         let uiView = UIView()
         uiView.backgroundColor = UIColor.background06()
         uiView.layer.cornerRadius = 12
@@ -33,7 +33,7 @@ final class RecipesCell: UITableViewCell {
         return imageView
     }()
 
-    private let titleRecipe: UILabel = {
+    private let titleRecipeLabel: UILabel = {
         let label = UILabel()
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
@@ -98,7 +98,7 @@ final class RecipesCell: UITableViewCell {
 
     func configure(with items: Recipes) {
         recipeImageView.image = UIImage(named: items.avatarRecipie)
-        titleRecipe.text = items.titleRecipies
+        titleRecipeLabel.text = items.titleRecipies
         timeLabel.text = items.cookingTimeTitle + Constants.timeLabelText
         pizzaLabel.text = items.caloriesTitle + Constants.pizzaLabelText
     }
@@ -107,9 +107,9 @@ final class RecipesCell: UITableViewCell {
 
     private func setupViews() {
         selectionStyle = .none
-        contentView.addSubview(uiViewBackground)
+        contentView.addSubview(backgroundCellView)
         contentView.addSubview(recipeImageView)
-        contentView.addSubview(titleRecipe)
+        contentView.addSubview(titleRecipeLabel)
         contentView.addSubview(timeLabel)
         contentView.addSubview(timerImageView)
         contentView.addSubview(pizzaImageView)
@@ -129,52 +129,52 @@ final class RecipesCell: UITableViewCell {
     }
 
     private func setupAnchorsUiViewBackground() {
-        uiViewBackground.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20).isActive = true
-        uiViewBackground.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
-        uiViewBackground.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -6).isActive = true
-        uiViewBackground.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 6).isActive = true
-        uiViewBackground.heightAnchor.constraint(equalToConstant: 153).isActive = true
+        backgroundCellView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20).isActive = true
+        backgroundCellView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
+        backgroundCellView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -6).isActive = true
+        backgroundCellView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 6).isActive = true
+        backgroundCellView.heightAnchor.constraint(equalToConstant: 153).isActive = true
     }
 
     private func setupAnchorsRecipeImageView() {
-        recipeImageView.leadingAnchor.constraint(equalTo: uiViewBackground.leadingAnchor, constant: 10)
+        recipeImageView.leadingAnchor.constraint(equalTo: backgroundCellView.leadingAnchor, constant: 10)
             .isActive = true
-        recipeImageView.topAnchor.constraint(equalTo: uiViewBackground.topAnchor, constant: 10).isActive = true
-        recipeImageView.bottomAnchor.constraint(equalTo: uiViewBackground.bottomAnchor, constant: -10).isActive = true
+        recipeImageView.topAnchor.constraint(equalTo: backgroundCellView.topAnchor, constant: 10).isActive = true
+        recipeImageView.bottomAnchor.constraint(equalTo: backgroundCellView.bottomAnchor, constant: -10).isActive = true
     }
 
     private func setupAnchorsTitleRecipe() {
-        titleRecipe.topAnchor.constraint(equalTo: uiViewBackground.topAnchor, constant: 22).isActive = true
-        titleRecipe.leadingAnchor.constraint(equalTo: recipeImageView.trailingAnchor, constant: 20).isActive = true
-        titleRecipe.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        titleRecipeLabel.topAnchor.constraint(equalTo: backgroundCellView.topAnchor, constant: 22).isActive = true
+        titleRecipeLabel.leadingAnchor.constraint(equalTo: recipeImageView.trailingAnchor, constant: 20).isActive = true
+        titleRecipeLabel.widthAnchor.constraint(equalToConstant: 200).isActive = true
         
     }
 
     private func setupAnchorsTimeLabel() {
         timeLabel.leadingAnchor.constraint(equalTo: recipeImageView.trailingAnchor, constant: 40).isActive = true
-        timeLabel.topAnchor.constraint(equalTo: titleRecipe.bottomAnchor, constant: 20).isActive = true
+        timeLabel.topAnchor.constraint(equalTo: titleRecipeLabel.bottomAnchor, constant: 20).isActive = true
     }
 
     private func setupAnchorsTimerImageView() {
         timerImageView.leadingAnchor.constraint(equalTo: recipeImageView.trailingAnchor, constant: 22)
             .isActive = true
-        timerImageView.topAnchor.constraint(equalTo: titleRecipe.bottomAnchor, constant: 19).isActive = true
+        timerImageView.topAnchor.constraint(equalTo: titleRecipeLabel.bottomAnchor, constant: 19).isActive = true
     }
 
     private func setupAnchorsPizzaImageView() {
         pizzaImageView.leadingAnchor.constraint(equalTo: timeLabel.trailingAnchor, constant: 37).isActive = true
-        pizzaImageView.topAnchor.constraint(equalTo: titleRecipe.bottomAnchor, constant: 19).isActive = true
+        pizzaImageView.topAnchor.constraint(equalTo: titleRecipeLabel.bottomAnchor, constant: 19).isActive = true
     }
 
     private func setupAnchorsPizzaLabel() {
         pizzaLabel.leadingAnchor.constraint(equalTo: timeLabel.trailingAnchor, constant: 55).isActive = true
-        pizzaLabel.topAnchor.constraint(equalTo: titleRecipe.bottomAnchor, constant: 20).isActive = true
+        pizzaLabel.topAnchor.constraint(equalTo: titleRecipeLabel.bottomAnchor, constant: 20).isActive = true
     }
 
     private func setupAnchorsNextButton() {
-        nextButton.trailingAnchor.constraint(equalTo: uiViewBackground.trailingAnchor, constant: -16)
+        nextButton.trailingAnchor.constraint(equalTo: backgroundCellView.trailingAnchor, constant: -16)
             .isActive = true
-        nextButton.topAnchor.constraint(equalTo: uiViewBackground.topAnchor, constant: 40).isActive = true
+        nextButton.topAnchor.constraint(equalTo: backgroundCellView.topAnchor, constant: 40).isActive = true
     }
 }
 
