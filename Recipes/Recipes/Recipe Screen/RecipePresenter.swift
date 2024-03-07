@@ -10,8 +10,6 @@ protocol RecipePresenterProtocol {
     var categories: [RecipeCategory] { get set }
     /// Переход на экран Категории рецептов
     func goToCategoryListScreen(for category: String)
-    /// Координатор рецептов //TODO: - убрать когда сделаю координатор приватным
-    var recipeCoordinator: RecipeCoordinator? { get set }
 }
 
 /// Презентер экрана Рецептов
@@ -23,7 +21,7 @@ final class RecipePresenter: RecipePresenterProtocol {
     // MARK: - Private Properties
 
     private weak var view: RecipeViewControllerProtocol?
-    weak var recipeCoordinator: RecipeCoordinator?
+    private weak var recipeCoordinator: RecipeCoordinator?
 
     // MARK: - Initializers
 

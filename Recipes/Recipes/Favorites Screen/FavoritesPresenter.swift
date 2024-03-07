@@ -15,7 +15,6 @@ protocol FavoritesViewControllerProtocol: AnyObject {
 
 /// протокол презентера
 protocol FavoritesPresenterProtocol {
-    var favoritesCoordinator: FavoritesCoordinator? { get set }
     /// проверка на сустой массив избранных
     func checkIfFavouritesEmpty()
     /// получить количество избранных в масиве
@@ -33,31 +32,20 @@ final class FavoritesPresenter {
     // MARK: - Private Properties
 
     private weak var view: FavoritesViewControllerProtocol?
-
     private var recipes = Recipes.favoritesRecipes
-
-    // MARK: - Public Properties
-
-    weak var favoritesCoordinator: FavoritesCoordinator?
+    private weak var favoritesCoordinator: FavoritesCoordinator?
 
     // MARK: - Initializers
 
-    init(view: FavoritesViewControllerProtocol) {
+    init(view: FavoritesViewControllerProtocol, coordinator: FavoritesCoordinator) {
         self.view = view
+        favoritesCoordinator = coordinator
     }
 }
 
 // MARK: - FavoritesPresenter + FavoritesPresenterProtocol
 
 extension FavoritesPresenter: FavoritesPresenterProtocol {
-    private func onTap() {
-        favoritesCoordinator?.pushRecipe()
-    }
-
-    private func onLogOut() {
-        favoritesCoordinator?.logOut()
-    }
-
     func removeFromFavourites(recipeIndex: Int) {
         let recipe = Recipes.favoritesRecipes.remove(at: recipeIndex)
         view?.recipes.remove(at: recipeIndex)

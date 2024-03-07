@@ -7,19 +7,16 @@ import UIKit
 final class FavoritesCoordinator: BaseCoodinator {
     // MARK: - Public Properties
 
-    var rootController: UINavigationController
+    var rootController: UINavigationController!
     var onFinishFlow: VoidHandler?
     let recipeCoordinator = RecipeCoordinator()
-
     private var appBuilder = AppBuilder()
 
-    // MARK: - Initializers
-
-    init(rootController: UIViewController) {
-        self.rootController = UINavigationController(rootViewController: rootController)
-    }
-
     // MARK: - Public Methods
+
+    func setRootViewController(view: UIViewController) {
+        rootController = UINavigationController(rootViewController: view)
+    }
 
     func logOut() {
         onFinishFlow?()

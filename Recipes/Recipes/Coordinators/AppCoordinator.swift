@@ -29,9 +29,10 @@ final class AppCoordinator: BaseCoodinator {
         add(coordinator: recipeCoordinator)
 
         /// Set Favorites
-        let favoritesModuleView = appBuilder.makeFavoriteModule()
-        let favoritesCoordinator = FavoritesCoordinator(rootController: favoritesModuleView)
-        favoritesModuleView.presenter?.favoritesCoordinator = favoritesCoordinator
+        let favoritesCoordinator = FavoritesCoordinator()
+
+        let favoritesModuleView = appBuilder.makeFavoriteModule(coordinator: favoritesCoordinator)
+        favoritesCoordinator.setRootViewController(view: favoritesModuleView)
         add(coordinator: favoritesCoordinator)
 
         /// Set Profile

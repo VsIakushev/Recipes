@@ -21,9 +21,9 @@ class AppBuilder {
         return view
     }
 
-    func makeFavoriteModule() -> FavoritesViewController {
+    func makeFavoriteModule(coordinator: FavoritesCoordinator) -> FavoritesViewController {
         let view = FavoritesViewController()
-        let favoritesPresenter = FavoritesPresenter(view: view)
+        let favoritesPresenter = FavoritesPresenter(view: view, coordinator: coordinator)
         view.presenter = favoritesPresenter
         view.setupUI()
         return view
