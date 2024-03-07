@@ -9,7 +9,6 @@ final class BottomSheetViewController: UIViewController {
 
     private enum Constants {
         static let titleText = "Your bonuses"
-        static let titleFons = UIFont(name: "Verdana-Bold", size: 20)
         static let bonusesFont = UIFont(name: "Verdana-Bold", size: 30)
     }
 
@@ -55,13 +54,13 @@ final class BottomSheetViewController: UIViewController {
         view.backgroundColor = .white
 
         closeButton.setImage(UIImage(systemName: "xmark"), for: .normal)
-        closeButton.tintColor = UIColor(named: "text02")
+        closeButton.tintColor = UIColor.text02()
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
 
         bonusTitleLabel.text = Constants.titleText
-        bonusTitleLabel.font = Constants.titleFons
+        bonusTitleLabel.font = UIFont.verdanaBold20()
         bonusTitleLabel.textAlignment = .center
-        bonusTitleLabel.textColor = UIColor(named: "text02")
+        bonusTitleLabel.textColor = UIColor.text02()
 
         bonusImageView.image = UIImage(named: "bonus")
 
@@ -70,7 +69,7 @@ final class BottomSheetViewController: UIViewController {
         bonusesLabel.text = "\(bonuses)"
         bonusesLabel.textAlignment = .left
         bonusesLabel.font = Constants.bonusesFont
-        bonusesLabel.textColor = UIColor(named: "text02")
+        bonusesLabel.textColor = UIColor.text02()
     }
 
     private func setConstraints() {
@@ -112,5 +111,7 @@ final class BottomSheetViewController: UIViewController {
         presenter?.closeBottomSheet()
     }
 }
+
+// MARK: - BottomSheetViewController + BottomSheetViewControllerProtocol
 
 extension BottomSheetViewController: BottomSheetViewControllerProtocol {}

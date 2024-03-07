@@ -12,9 +12,9 @@ final class AppCoordinator: BaseCoodinator {
 
     override func start() {
         if "admin" == "admin" {
-            toMain​()
-        } else {
             t​oAuth​()
+        } else {
+            toMain​()
         }
     }
 
@@ -23,23 +23,22 @@ final class AppCoordinator: BaseCoodinator {
     private func toMain​() {
         tabBarViewController = MainTabBarViewController()
         /// Set Recipe
-        let recipeModuleView = appBuilder.makeRecipeModule()
-        let recipeCoordinator = RecipeCoordinator(rootController: recipeModuleView)
-        recipeModuleView.presenter?.recipeCoordinator = recipeCoordinator
+        let recipeCoordinator = RecipeCoordinator()
+        let recipeModuleView = appBuilder.makeRecipeModule(coordinator: recipeCoordinator)
+        recipeCoordinator.setRootViewController(view: recipeModuleView)
         add(coordinator: recipeCoordinator)
 
         /// Set Favorites
-        let favoritesModuleView = appBuilder.makeFavoriteModule()
-        let favoritesCoordinator = FavoritesCoordinator(rootController: favoritesModuleView)
-        favoritesModuleView.presenter?.favoritesCoordinator = favoritesCoordinator
+        let favoritesCoordinator = FavoritesCoordinator()
+
+        let favoritesModuleView = appBuilder.makeFavoriteModule(coordinator: favoritesCoordinator)
+        favoritesCoordinator.setRootViewController(view: favoritesModuleView)
         add(coordinator: favoritesCoordinator)
 
         /// Set Profile
         let profileCoordinator = ProfileCoordinator()
         let profileView = appBuilder.makeProfileModule(coordinator: profileCoordinator)
         profileCoordinator.setRootViewController(view: profileView)
-
-//        profileView.presenter?.profileCoordinator = profileCoordinator
         add(coordinator: profileCoordinator)
 
         profileCoordinator.onFinishFlow = { [weak self] in

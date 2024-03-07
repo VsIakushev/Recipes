@@ -5,15 +5,32 @@ import UIKit
 
 /// Координатор рецептов
 final class RecipeCoordinator: BaseCoodinator {
-    var rootController: UINavigationController
-    var onFinishFlow: (() -> Void)?
+    var rootController: UINavigationController!
+    var onFinishFlow: VoidHandler?
 
-    init(rootController: UIViewController) {
-        self.rootController = UINavigationController(rootViewController: rootController)
+    private var appBuilder = AppBuilder()
+
+    func setRootViewController(view: UIViewController) {
+        rootController = UINavigationController(rootViewController: view)
+    }
+
+    func pushCategoryDetails(for category: String) {
+        let categoryViewController = appBuilder.makeRecipesListModule(coordinator: self)
+        rootController.pushViewController(categoryViewController, animated: true)
+        categoryViewController.categoryTitle = category
+    }
+
+    func closeRecipeDetails() {
+        rootController.popViewController(animated: true)
     }
 
     func pushProfile() {
-        let profileVC = ProfileViewController()
-        rootController.pushViewController(profileVC, animated: true)
+        let profileViewController = ProfileViewController()
+        rootController.pushViewController(profileViewController, animated: true)
+    }
+
+    func pushReceiptDetails() {
+        let recipeDetailViewController = appBuilder.makeRecipeDetailsModule(coordinator: self)
+        rootController.pushViewController(recipeDetailViewController, animated: true)
     }
 }

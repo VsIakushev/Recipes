@@ -5,14 +5,6 @@ import UIKit
 
 /// Кастомная кнопка для страницы Профиля
 final class ProfileButton: UIButton {
-    // MARK: - Constants
-
-    private enum Constants {
-        static let background04Color = "background04"
-        static let text02Color = "text02"
-        static let divider02Color = "divider02"
-    }
-
     // MARK: - Visual Components
 
     private let buttonView = UIButton()
@@ -45,7 +37,7 @@ final class ProfileButton: UIButton {
     private func setupUI() {
         buttonView.isUserInteractionEnabled = false
 
-        imageBackgroundView.backgroundColor = UIColor(named: Constants.background04Color)
+        imageBackgroundView.backgroundColor = UIColor.background04()
         imageBackgroundView.layer.cornerRadius = 12
         imageBackgroundView.isUserInteractionEnabled = false
 
@@ -54,16 +46,16 @@ final class ProfileButton: UIButton {
 
         label.textAlignment = .center
         label.textAlignment = .left
-        label.textColor = UIColor(named: Constants.text02Color)
+        label.textColor = UIColor.text02()
         buttonImageView.isUserInteractionEnabled = false
         buttonView.addSubview(label)
 
         chevronImageView.contentMode = .scaleAspectFit
         chevronImageView.image = UIImage(systemName: "chevron.forward")
-        chevronImageView.tintColor = UIColor(named: Constants.text02Color)
+        chevronImageView.tintColor = UIColor.text02()
         buttonImageView.isUserInteractionEnabled = false
 
-        underlineView.backgroundColor = UIColor(named: Constants.divider02Color)
+        underlineView.backgroundColor = UIColor.divider02()
     }
 
     private func setConstraints() {

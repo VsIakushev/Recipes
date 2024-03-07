@@ -7,6 +7,10 @@ protocol ProfileViewProtocol: AnyObject {
     func updateView()
     /// показать алерт для ввода нового имени
     func showEditAlert()
+
+    func showTermsAndPolicy()
+
+    var termsView: TermsAndPolicyView { get set }
 }
 
 /// Протокол Презентера Профиля пользователя
@@ -21,6 +25,8 @@ protocol ProfilePresenterProtocol {
     func setName(newName: String)
     /// обработка нажатия на кнопку бонусов
     func bonusButtonPressed()
+    /// обработка нажатия на Terms and Privacy Policy
+    func termsAndPolictPressed(profileViewController: ProfileViewProtocol)
 }
 
 /// Презентер для экрана Профиля пользователя
@@ -45,6 +51,10 @@ final class ProfilePresenter: ProfilePresenterProtocol {
 
     func bonusButtonPressed() {
         profileCoordinator?.showBonusBottomSheet(bonuses: profileInfo.bonuses)
+    }
+
+    func termsAndPolictPressed(profileViewController: ProfileViewProtocol) {
+        profileCoordinator?.showTermsAndPolicySheet(profileViewController: profileViewController)
     }
 
     func setName(newName: String) {

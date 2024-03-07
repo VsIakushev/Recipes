@@ -9,7 +9,7 @@ final class ProfileTableViewCell: UITableViewCell {
 
     private enum Constants {
         static let title = "Profile"
-        static let nameFont = UIFont(name: "Verdana-Bold", size: 25)
+
         static let imageViewHeight: CGFloat = 160
         static let nameLabelWidth: CGFloat = 256
         static let nameLabelHeight: CGFloat = 30
@@ -65,13 +65,13 @@ final class ProfileTableViewCell: UITableViewCell {
         userImageView.clipsToBounds = true
 
         userNameLabel.text = userName
-        userNameLabel.font = Constants.nameFont
-        userNameLabel.textColor = UIColor(named: "text02")
+        userNameLabel.font = UIFont.verdanaBold25()
+        userNameLabel.textColor = UIColor.text02()
         userNameLabel.textAlignment = .center
 
         editButton.setImage(UIImage(named: "pencil"), for: .normal)
         editButton.addTarget(self, action: #selector(editButtonPressed), for: .touchUpInside)
-        editButton.tintColor = UIColor(named: "text02")
+        editButton.tintColor = UIColor.text02()
     }
 
     private func setConstraints() {

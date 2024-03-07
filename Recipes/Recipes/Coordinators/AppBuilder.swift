@@ -5,17 +5,25 @@ import UIKit
 
 /// Контейнер для проставления зависимостей и сборки модуля
 class AppBuilder {
-    func makeRecipeModule() -> RecipeViewController {
+    func makeRecipeModule(coordinator: RecipeCoordinator) -> RecipeViewController {
         let view = RecipeViewController()
-        let recipePresenter = RecipePresenter(view: view)
+        let recipePresenter = RecipePresenter(view: view, coordinator: coordinator)
         view.presenter = recipePresenter
         view.setupUI()
         return view
     }
 
-    func makeFavoriteModule() -> FavoritesViewController {
+    func makeRecipeDetailsModule(coordinator: RecipeCoordinator) -> RecipeDetailsViewController {
+        let view = RecipeDetailsViewController()
+        let recipeDetailsPresenter = RecipeDetailsPresenter(view: view, coordinator: coordinator)
+        view.presenter = recipeDetailsPresenter
+        view.setupUI()
+        return view
+    }
+
+    func makeFavoriteModule(coordinator: FavoritesCoordinator) -> FavoritesViewController {
         let view = FavoritesViewController()
-        let favoritesPresenter = FavoritesPresenter(view: view)
+        let favoritesPresenter = FavoritesPresenter(view: view, coordinator: coordinator)
         view.presenter = favoritesPresenter
         view.setupUI()
         return view
@@ -25,6 +33,14 @@ class AppBuilder {
         let view = ProfileViewController()
         let profilePresenter = ProfilePresenter(view: view, coordinator: coordinator)
         view.presenter = profilePresenter
+        view.setupUI()
+        return view
+    }
+
+    func makeRecipesListModule(coordinator: RecipeCoordinator) -> RecipesListViewController {
+        let view = RecipesListViewController()
+        let allRecipesPresenter = AllRecipesPresenter(view: view, coordinator: coordinator)
+        view.presenter = allRecipesPresenter
         view.setupUI()
         return view
     }

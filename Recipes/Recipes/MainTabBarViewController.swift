@@ -5,13 +5,6 @@ import UIKit
 
 /// ТабБар навигации приложения
 final class MainTabBarViewController: UITabBarController {
-    // MARK: - Constants
-
-    private enum Constants {
-        static let background01Color = "background01"
-        static let text02Color = "text02"
-    }
-
     // MARK: - Life Cycles
 
     override func viewDidLoad() {
@@ -23,7 +16,7 @@ final class MainTabBarViewController: UITabBarController {
 
     private func setupUI() {
         view.backgroundColor = .white
-        tabBar.tintColor = UIColor(named: Constants.background01Color)
-        tabBar.unselectedItemTintColor = UIColor(named: Constants.text02Color)
+        tabBar.tintColor = UIColor.background01()
+        tabBar.unselectedItemTintColor = UIColor.text02()
     }
 }

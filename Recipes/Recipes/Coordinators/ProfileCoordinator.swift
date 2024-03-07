@@ -6,11 +6,7 @@ import UIKit
 /// Координатор профиля
 final class ProfileCoordinator: BaseCoodinator {
     var rootController: UINavigationController!
-    var onFinishFlow: (() -> Void)?
-
-//    init(rootController: UIViewController) {
-//
-//    }
+    var onFinishFlow: VoidHandler?
 
     func setRootViewController(view: UIViewController) {
         rootController = UINavigationController(rootViewController: view)
@@ -29,6 +25,16 @@ final class ProfileCoordinator: BaseCoodinator {
         rootController?.dismiss(animated: true)
     }
 
+    func closeTermsAndPolicyView() {
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        if let window = windowScene?.windows.last {
+            if let lastSubview = window.subviews.last {
+                lastSubview.removeFromSuperview()
+            }
+        }
+    }
+
     func showBonusBottomSheet(bonuses: Int) {
         let bottomSheet = BottomSheetViewController()
         let presenter = BottomSheetPresenter(view: bottomSheet, coordinator: self)
@@ -42,5 +48,13 @@ final class ProfileCoordinator: BaseCoodinator {
             sheet.preferredCornerRadius = 30
         }
         rootController.present(bottomSheet, animated: true)
+    }
+
+    func showTermsAndPolicySheet(profileViewController: ProfileViewProtocol) {
+        let termsAndPrivacySheet = TermsAndPolicyView()
+        let presenter = TermsAndPolicyPresenter(view: termsAndPrivacySheet, coordinator: self)
+        termsAndPrivacySheet.presenter = presenter
+        profileViewController.termsView = termsAndPrivacySheet
+        profileViewController.showTermsAndPolicy()
     }
 }
