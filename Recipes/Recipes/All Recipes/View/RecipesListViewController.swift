@@ -24,6 +24,9 @@ final class RecipesListViewController: UIViewController {
     
     // MARK: - Visual Components
 
+    let caloriesButton = UIButton()
+    let timeButton = UIButton()
+    
     private lazy var recipesTableView: UITableView = {
         let table = UITableView()
         table.delegate = self
@@ -58,9 +61,6 @@ final class RecipesListViewController: UIViewController {
         search.delegate = self
         return search
     }()
-
-    let caloriesButton = UIButton()
-    let timeButton = UIButton()
 
     // MARK: - Public Properties
 
@@ -200,7 +200,6 @@ extension RecipesListViewController: UITableViewDataSource {
 
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        recipes.count
         guard let searchNames = presenter?.checkSearch() else { return 0 }
                 return searchNames.count
     }
@@ -227,14 +226,14 @@ extension RecipesListViewController: UITableViewDataSource {
 
 extension RecipesListViewController: RecipesViewProtocol {
     
-    func buttonTimeState(color: String, image: String) {
+    func timeButtonPressed(color: String, image: String) {
         timeButton.backgroundColor = UIColor(named: color)
         timeButton.setTitleColor(.white, for: .normal)
         timeButton.setImage(UIImage(named: image), for: .normal)
         timeButton.setTitleColor(.black, for: .normal)
     }
     
-    func buttonCaloriesState(color: String, image: String) {
+    func caloriesButtonPressed(color: String, image: String) {
         caloriesButton.backgroundColor = UIColor(named: color)
         caloriesButton.setTitleColor(.white, for: .normal)
         caloriesButton.setImage(UIImage(named: image), for: .normal)
@@ -260,10 +259,6 @@ extension RecipesListViewController: RecipesViewProtocol {
     func getRecipes(recipes: [Recipes]) {
         self.recipes = recipes
         recipesTableView.reloadData()
-    }
-    
-    func setTitle(_ title: String) {
-        titleLabel.text = categoryTitle
     }
 }
 

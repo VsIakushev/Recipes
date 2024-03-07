@@ -239,9 +239,9 @@ extension FavoritesViewController: FavoritesViewControllerProtocol {
 }
 
 extension FavoritesViewController: RecipesViewProtocol {
-    func buttonTimeState(color: String, image: String) {}
+    func timeButtonPressed(color: String, image: String) {}
     
-    func buttonCaloriesState(color: String, image: String) {}
+    func caloriesButtonPressed(color: String, image: String) {}
     
     func sortViewRecipes(recipes: [Recipes]) {}
     
