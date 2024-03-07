@@ -3,32 +3,53 @@
 
 /// Протокол вью  всех рецептов
 protocol RecipesViewProtocol: AnyObject {
+    /// получение рецептов
     func getRecipes(recipes: [Recipes])
-    func setTitle(_ title: String)
+    /// переход на экран категорий
     func goToTheCategory()
+    /// обновление таблицы
     func reloadTableView()
-    func buttonTimeState(color: String, image: String)
-    func buttonCaloriesState(color: String, image: String)
+    /// нажатие на кнопку сортировка по времени
+    func timeButtonPressed(color: String, image: String)
+    /// нажатие на кнопку сортировка по калориям
+    func caloriesButtonPressed(color: String, image: String)
+    /// отсортировать рецепты
     func sortViewRecipes(recipes: [Recipes])
 }
 
 /// Протокол презентера
 protocol RecipeProtocol: AnyObject {
+    /// получить рецепты
     func getReceipts()
+    /// переход к деталям рецепта
     func goToRecipeDetails()
+    /// переход к категориям
     func goToCategory()
-    func getCategoryTitle()
+    /// поиск рецептов
     func searchRecipes(text: String)
+    /// проверка поиска
     func checkSearch() -> [Recipes]
+    /// начать поиск
     func startSearch()
+    /// стоп поиск
     func stopSearch()
+    /// отсортировать рецепты
     func sortRecipes(category: [Recipes])
 }
 
-/// Презентер всех рецептов
 final class AllRecipesPresenter {
+    
+    private enum Constants {
+        static let background01 = "background01"
+        static let filterLow = "filterLow"
+        static let filterHigh = "filterHigh"
+        static let background06 = "background06"
+        static let filterIcon = "filterIcon"
+    }
+    
     private weak var view: RecipesViewProtocol?
-    weak var recipesCoordinator: RecipeCoordinator?
+
+    private weak var recipesCoordinator: RecipeCoordinator?
     private var user: Recipes?
     private var isSearching = false
     private var searchNames: [Recipes] = []
@@ -43,35 +64,37 @@ final class AllRecipesPresenter {
     }
 
     func buttonCaloriesChange(category: [Recipes]) {
-        if sortedCalories == .none {
-            sortedCalories = .caloriesLow
-            view?.buttonCaloriesState(color: "background01", image: "filterLow")
-            sortRecipes(category: category)
-        } else if sortedCalories == .caloriesLow {
-            sortedCalories = .caloriesHigh
-            view?.buttonCaloriesState(color: "background01", image: "filterHigh")
-            sortRecipes(category: category)
-        } else if sortedCalories == .caloriesHigh {
-            sortedCalories = .none
-            view?.buttonCaloriesState(color: "background06", image: "filterIcon")
-            sortRecipes(category: category)
+            if sortedCalories == .none {
+                sortedCalories = .caloriesLow
+                view?.caloriesButtonPressed(color: Constants.background01, image: Constants.filterLow)
+                sortRecipes(category: category)
+            } else if sortedCalories == .caloriesLow {
+                sortedCalories = .caloriesHigh
+                view?.caloriesButtonPressed(color: Constants.background01, image: Constants.filterHigh)
+                sortRecipes(category: category)
+            } else if sortedCalories == .caloriesHigh {
+                sortedCalories = .none
+                view?.caloriesButtonPressed(color: Constants.background06, image: Constants.filterIcon)
+                sortRecipes(category: category)
+            }
         }
     }
 
-    /// Метод меняющий состояниие кнопки таймера
-    func buttonTimeChange(category: [Recipes]) {
-        if sortedTime == .none {
-            sortedTime = .timeLow
-            view?.buttonTimeState(color: "background01", image: "filterLow")
-            sortRecipes(category: category)
-        } else if sortedTime == .timeLow {
-            view?.buttonTimeState(color: "background01", image: "filterHigh")
-            sortedTime = .timeHigh
-            sortRecipes(category: category)
-        } else if sortedTime == .timeHigh {
-            sortedTime = .none
-            view?.buttonTimeState(color: "background06", image: "filterIcon")
-            sortRecipes(category: category)
+        /// Метод меняющий состояниие кнопки таймера
+        func buttonTimeChange(category: [Recipes]) {
+            if sortedTime == .none {
+                sortedTime = .timeLow
+                view?.timeButtonPressed(color: Constants.background01, image: Constants.filterLow)
+                sortRecipes(category: category)
+            } else if sortedTime == .timeLow {
+                view?.timeButtonPressed(color: Constants.background01, image: Constants.filterHigh)
+                sortedTime = .timeHigh
+                sortRecipes(category: category)
+            } else if sortedTime == .timeHigh {
+                sortedTime = .none
+                view?.timeButtonPressed(color: Constants.background06, image: Constants.filterIcon)
+                sortRecipes(category: category)
+            }
         }
     }
 }
@@ -153,12 +176,10 @@ extension AllRecipesPresenter: RecipeProtocol {
     func goToCategory() {
         view?.goToTheCategory()
     }
-
-    func getCategoryTitle() {}
-
+    
     func getReceipts() {
         let storage = Storage()
-        view?.getRecipes(recipes: storage.fishes)
+        view?.getRecipes(recipes: storage.fish)
     }
 
     func goToRecipeDetails() {
