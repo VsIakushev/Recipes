@@ -4,15 +4,21 @@
 /// Профиль пользователя
 struct ProfileInfo {
     /// Имя пользователя
-    var userName: String
+    var username: String
     /// Название изображения аватарки пользователя
-    let userImage: String
+    var avatar: String
     /// Количество бонусов у пользователя
-    let bonuses: Int
+    var bonuses: Int
+    /// Email пользователя
+    var email = ""
+    /// Пароль Пользователя
+    var password = ""
 
-    init(userName: String, userImage: String, bonuses: Int) {
-        self.userName = userName
-        self.userImage = userImage
+    init(userName: String, userImage: String, email: String, password: String, bonuses: Int) {
+        username = userName
+        avatar = userImage
         self.bonuses = bonuses
+        self.email = email
+        self.password = password
     }
 }
