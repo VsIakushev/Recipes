@@ -33,7 +33,7 @@ protocol ProfilePresenterProtocol {
 final class ProfilePresenter: ProfilePresenterProtocol {
     // MARK: - Public Properties
 
-    var profileInfo = ProfileInfo(userName: "", userImage: "", email: "", password: "", bonuses: 0)
+    var profileInfo = ProfileInfo()
 
     // MARK: - Private Properties
     private let memento = ProfileMemento.shared
@@ -61,7 +61,6 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     func setName(newName: String) {
         profileInfo.username = newName
         view?.updateView()
-        saveUserData()
     }
 
     func onLogOut() {
@@ -70,16 +69,12 @@ final class ProfilePresenter: ProfilePresenterProtocol {
 
     func editTapped() {
         view?.showEditAlert()
+        
     }
     
     // MARK: - Private Methods
 
     private func loadUserData() {
-        guard let profile = memento.restoreState() else { return }
-        self.profileInfo = profile
-    }
-
-    private func saveUserData() {
-        memento.saveState(profileInfo)
+        self.profileInfo = memento.restoreState()
     }
 }

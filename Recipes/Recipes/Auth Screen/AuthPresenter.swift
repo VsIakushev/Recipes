@@ -55,7 +55,7 @@ final class AuthPresenter {
 
     init(view: AuthorizationViewControllerProtocol) {
         self.view = view
-        user = memento.restoreState() ?? memento.createUser()
+        user = memento.restoreState()
     }
 
     // MARK: - Properties
@@ -71,6 +71,12 @@ final class AuthPresenter {
 // MARK: - AuthPresenter + AuthorizationProtocol
 
 extension AuthPresenter: AuthorizationProtocol {
+    
+    private func createNewUserIfNeeded() {
+        if user.username.isEmpty && user.avatar.isEmpty {
+            user = memento.createUser()
+        }
+    }
    
     func loginAndPasswordIsEmpty() -> Bool {
         if user.password.isEmpty && user.email.isEmpty {
@@ -100,6 +106,8 @@ extension AuthPresenter: AuthorizationProtocol {
     }
     
     func checkAuthorization(email: String, password: String) {
+        createNewUserIfNeeded()
+        
         validateEmail(email: email)
         checkPassword(password: password)
         
@@ -109,7 +117,6 @@ extension AuthPresenter: AuthorizationProtocol {
         if isLoginAndPasswordEmpty, isValidateMail, isValidatePassword  {
             user.email = email
             user.password = password
-            memento.saveState(user)
             loginAllowed = true
             
         } else if !isLoginAndPasswordEmpty, isValidateMail, isValidatePassword, isLoginAndPasswordValid {

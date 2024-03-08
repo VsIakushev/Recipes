@@ -124,9 +124,11 @@ final class ProfileViewController: UIViewController {
         cell.bonusButtonAction = { [weak self] in
             self?.presenter?.bonusButtonPressed()
         }
+        
         cell.logoutButtonAction = { [weak self] in
             self?.presenter?.onLogOut()
         }
+        
         cell.termsAndPolicyButtonAction = { [weak self] in
             self?.presenter?.termsAndPolictPressed(profileViewController: self!)
         }

@@ -9,16 +9,18 @@ final class ProfileMemento {
     
     private let profileDataManager = ProfileDataManager()
     
-    func saveState(_ profileInfo: ProfileInfo) {
-        profileDataManager.saveUser(profileInfo)
-    }
-    
-    func restoreState() -> ProfileInfo? {
+    func restoreState() -> ProfileInfo {
         profileDataManager.loadUser()
     }
     
     /// Функция для создания Профиля при первом запуске, имитация предварительной регистрации
     func createUser() -> ProfileInfo {
-        ProfileInfo(userName: "Anna", userImage: "avatar", email: "", password: "", bonuses: 95)
+        var user = ProfileInfo()
+        user.username = "Anna"
+        user.avatar = "avatar"
+        user.email = ""
+        user.password = ""
+        user.bonuses = 15
+        return user
     }
 }

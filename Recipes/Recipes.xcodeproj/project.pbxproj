@@ -42,6 +42,7 @@
 		57441A262B98706000A8A41F /* StateShimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441A252B98706000A8A41F /* StateShimmer.swift */; };
 		57441A772B9A8CCE00A8A41F /* ProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441A762B9A8CCE00A8A41F /* ProfileDataManager.swift */; };
 		57441A822B9AE7EE00A8A41F /* ProfileMemento.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441A812B9AE7EE00A8A41F /* ProfileMemento.swift */; };
+		57441A842B9BC00A00A8A41F /* UserDefaultsWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441A832B9BC00A00A8A41F /* UserDefaultsWrapper.swift */; };
 		57F4EBB92B8F270B00ADA7AA /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBB82B8F270B00ADA7AA /* ProfileTableViewCell.swift */; };
 		57F4EBBB2B8F272100ADA7AA /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */; };
 		57F4EBBD2B8F273500ADA7AA /* ProfileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBBC2B8F273500ADA7AA /* ProfileButton.swift */; };
@@ -99,6 +100,7 @@
 		57441A252B98706000A8A41F /* StateShimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateShimmer.swift; sourceTree = "<group>"; };
 		57441A762B9A8CCE00A8A41F /* ProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataManager.swift; sourceTree = "<group>"; };
 		57441A812B9AE7EE00A8A41F /* ProfileMemento.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMemento.swift; sourceTree = "<group>"; };
+		57441A832B9BC00A00A8A41F /* UserDefaultsWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserDefaultsWrapper.swift; path = ../../../../../../../../Desktop/UserDefaultsWrapper.swift; sourceTree = "<group>"; };
 		57F4EBB82B8F270B00ADA7AA /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
 		57F4EBBC2B8F273500ADA7AA /* ProfileButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileButton.swift; sourceTree = "<group>"; };
@@ -273,6 +275,7 @@
 			children = (
 				57441A762B9A8CCE00A8A41F /* ProfileDataManager.swift */,
 				57441A812B9AE7EE00A8A41F /* ProfileMemento.swift */,
+				57441A832B9BC00A00A8A41F /* UserDefaultsWrapper.swift */,
 			);
 			path = UserDefaultsManager;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				574419762B92647400A8A41F /* RecipeDetailsPresentor.swift in Sources */,
 				574419812B92756D00A8A41F /* RecipeDescriptionTableViewCell.swift in Sources */,
 				5722C3162B8DBF4D00ED2AD2 /* ProfileViewController.swift in Sources */,
+				57441A842B9BC00A00A8A41F /* UserDefaultsWrapper.swift in Sources */,
 				5722C31A2B8DD28F00ED2AD2 /* FavoritesCoordinator.swift in Sources */,
 				574419782B92648000A8A41F /* Recipe.swift in Sources */,
 				57F4EBF52B902D1300ADA7AA /* RecipePresenter.swift in Sources */,
