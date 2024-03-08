@@ -27,13 +27,18 @@ protocol ProfilePresenterProtocol {
     func bonusButtonPressed()
     /// обработка нажатия на Terms and Privacy Policy
     func termsAndPolictPressed(profileViewController: ProfileViewProtocol)
+    /// сохранение данных пользователя
+    func saveUserData()
 }
 
 /// Презентер для экрана Профиля пользователя
 final class ProfilePresenter: ProfilePresenterProtocol {
     // MARK: - Public Properties
 
-    var profileInfo = ProfileInfo(userName: "Anna", userImage: "avatar", bonuses: 99)
+    var profileInfo = ProfileInfo(userName: "SOmeName", userImage: "avatar", email: "", password: "", bonuses: 0)
+
+//    let userManager = UserManager.shared
+//    let userDataManager = UserDataManager()
 
     // MARK: - Private Properties
 
@@ -45,6 +50,7 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     init(view: ProfileViewProtocol, coordinator: ProfileCoordinator) {
         self.view = view
         profileCoordinator = coordinator
+        loadUserData()
     }
 
     // MARK: - Public Methods
@@ -58,7 +64,7 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     }
 
     func setName(newName: String) {
-        profileInfo.userName = newName
+        profileInfo.username = newName
         view?.updateView()
     }
 
@@ -68,5 +74,14 @@ final class ProfilePresenter: ProfilePresenterProtocol {
 
     func editTapped() {
         view?.showEditAlert()
+    }
+
+    func loadUserData() {
+        guard let profileInfo = UserDataManager.shared.loadUser() else { return }
+        self.profileInfo = profileInfo
+    }
+
+    func saveUserData() {
+        UserDataManager.shared.saveUser(profileInfo)
     }
 }
