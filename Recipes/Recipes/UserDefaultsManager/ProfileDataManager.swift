@@ -1,10 +1,10 @@
-// UserMemento.swift
+// ProfileDataManager.swift
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
 
-/// Хранитель пользовательских данных
-class UserMemento {
+class ProfileDataManager {
+
     // MARK: - Constants
 
     private enum Constants {
@@ -16,19 +16,17 @@ class UserMemento {
     }
 
     // MARK: - Private Properties
-
-    var user: ProfileInfo
+    
     private let userDefaults = UserDefaults.standard
-
-    init(user: ProfileInfo) {
-        self.user = user
-    }
-
-    func saveUser(_ userMemento: UserMemento) {
+    
+    // MARK: - Public Methods
+    
+    func saveUser(_ user: ProfileInfo) {
         userDefaults.set(user.username, forKey: Constants.usernameKey)
         userDefaults.set(user.avatar, forKey: Constants.avatarKey)
         userDefaults.set(user.email, forKey: Constants.emailKey)
         userDefaults.set(user.password, forKey: Constants.passwordKey)
+        userDefaults.set(user.bonuses, forKey: Constants.bonusesKey)
     }
 
     func loadUser() -> ProfileInfo? {
@@ -40,26 +38,8 @@ class UserMemento {
         else {
             return nil
         }
-        var profile = ProfileInfo(
-            userName: username,
-            userImage: avatar,
-            email: email,
-            password: password,
-            bonuses: bonuses
+        return ProfileInfo(userName: username, userImage: avatar, email: email,password: password,bonuses: bonuses
         )
-
-        profile.email = email
-        profile.password = password
-        return profile
     }
-
-//
-//    func setUser(user: User) {
-//        self.user = user
-//    }
-//
-//    func getUser() -> User {
-//        return user
-//    }
-//
+    
 }

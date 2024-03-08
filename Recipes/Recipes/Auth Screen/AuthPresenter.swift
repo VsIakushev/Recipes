@@ -49,12 +49,13 @@ final class AuthPresenter {
     private weak var view: AuthorizationViewControllerProtocol?
     
     private var user: ProfileInfo
+    private let memento = ProfileMemento.shared
 
     // MARK: - Initializers
 
     init(view: AuthorizationViewControllerProtocol) {
         self.view = view
-        user = UserDataManager.shared.loadUser() ?? UserDataManager.shared.createUser()
+        user = memento.restoreState() ?? memento.createUser()
     }
 
     // MARK: - Properties
@@ -70,7 +71,6 @@ final class AuthPresenter {
 // MARK: - AuthPresenter + AuthorizationProtocol
 
 extension AuthPresenter: AuthorizationProtocol {
-    
    
     func loginAndPasswordIsEmpty() -> Bool {
         if user.password.isEmpty && user.email.isEmpty {
@@ -109,7 +109,7 @@ extension AuthPresenter: AuthorizationProtocol {
         if isLoginAndPasswordEmpty, isValidateMail, isValidatePassword  {
             user.email = email
             user.password = password
-            UserDataManager.shared.saveUser(user)
+            memento.saveState(user)
             loginAllowed = true
             
         } else if !isLoginAndPasswordEmpty, isValidateMail, isValidatePassword, isLoginAndPasswordValid {

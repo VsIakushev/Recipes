@@ -40,11 +40,8 @@
 		57441A1E2B982B9E00A8A41F /* ShimmerRecipesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441A1D2B982B9D00A8A41F /* ShimmerRecipesCell.swift */; };
 		57441A202B982BF800A8A41F /* ShimmerLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441A1F2B982BF800A8A41F /* ShimmerLoadable.swift */; };
 		57441A262B98706000A8A41F /* StateShimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441A252B98706000A8A41F /* StateShimmer.swift */; };
-		57441A772B9A8CCE00A8A41F /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441A762B9A8CCE00A8A41F /* UserDataManager.swift */; };
-		57441A792B9A8D5800A8A41F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441A782B9A8D5800A8A41F /* User.swift */; };
-		57441A7B2B9A8F0E00A8A41F /* UserMemento.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441A7A2B9A8F0E00A8A41F /* UserMemento.swift */; };
-		57441A7D2B9A9E0200A8A41F /* CarrierState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441A7C2B9A9E0200A8A41F /* CarrierState.swift */; };
-		57441A7F2B9A9E8B00A8A41F /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441A7E2B9A9E8B00A8A41F /* UserManager.swift */; };
+		57441A772B9A8CCE00A8A41F /* ProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441A762B9A8CCE00A8A41F /* ProfileDataManager.swift */; };
+		57441A822B9AE7EE00A8A41F /* ProfileMemento.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441A812B9AE7EE00A8A41F /* ProfileMemento.swift */; };
 		57F4EBB92B8F270B00ADA7AA /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBB82B8F270B00ADA7AA /* ProfileTableViewCell.swift */; };
 		57F4EBBB2B8F272100ADA7AA /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */; };
 		57F4EBBD2B8F273500ADA7AA /* ProfileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBBC2B8F273500ADA7AA /* ProfileButton.swift */; };
@@ -100,11 +97,8 @@
 		57441A1D2B982B9D00A8A41F /* ShimmerRecipesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerRecipesCell.swift; sourceTree = "<group>"; };
 		57441A1F2B982BF800A8A41F /* ShimmerLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerLoadable.swift; sourceTree = "<group>"; };
 		57441A252B98706000A8A41F /* StateShimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateShimmer.swift; sourceTree = "<group>"; };
-		57441A762B9A8CCE00A8A41F /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
-		57441A782B9A8D5800A8A41F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		57441A7A2B9A8F0E00A8A41F /* UserMemento.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMemento.swift; sourceTree = "<group>"; };
-		57441A7C2B9A9E0200A8A41F /* CarrierState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarrierState.swift; sourceTree = "<group>"; };
-		57441A7E2B9A9E8B00A8A41F /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		57441A762B9A8CCE00A8A41F /* ProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataManager.swift; sourceTree = "<group>"; };
+		57441A812B9AE7EE00A8A41F /* ProfileMemento.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMemento.swift; sourceTree = "<group>"; };
 		57F4EBB82B8F270B00ADA7AA /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
 		57F4EBBC2B8F273500ADA7AA /* ProfileButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileButton.swift; sourceTree = "<group>"; };
@@ -277,11 +271,8 @@
 		57441A752B9A8CB900A8A41F /* UserDefaultsManager */ = {
 			isa = PBXGroup;
 			children = (
-				57441A762B9A8CCE00A8A41F /* UserDataManager.swift */,
-				57441A7A2B9A8F0E00A8A41F /* UserMemento.swift */,
-				57441A7E2B9A9E8B00A8A41F /* UserManager.swift */,
-				57441A7C2B9A9E0200A8A41F /* CarrierState.swift */,
-				57441A782B9A8D5800A8A41F /* User.swift */,
+				57441A762B9A8CCE00A8A41F /* ProfileDataManager.swift */,
+				57441A812B9AE7EE00A8A41F /* ProfileMemento.swift */,
 			);
 			path = UserDefaultsManager;
 			sourceTree = "<group>";
@@ -493,7 +484,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				57441A202B982BF800A8A41F /* ShimmerLoadable.swift in Sources */,
-				57441A7D2B9A9E0200A8A41F /* CarrierState.swift in Sources */,
 				5722C30E2B8DBE8900ED2AD2 /* ProfileCoordinator.swift in Sources */,
 				5722C3122B8DBF0B00ED2AD2 /* AuthViewController.swift in Sources */,
 				574419742B92646500A8A41F /* RecipeDetailsViewController.swift in Sources */,
@@ -501,7 +491,6 @@
 				DA3F29542B951D360004CFAE /* Recipes.swift in Sources */,
 				5733135C2B73215B00092647 /* AppDelegate.swift in Sources */,
 				DA3F29582B951D650004CFAE /* Storage.swift in Sources */,
-				57441A7B2B9A8F0E00A8A41F /* UserMemento.swift in Sources */,
 				5722C3102B8DBED000ED2AD2 /* MainTabBarViewController.swift in Sources */,
 				DA3F295C2B951DB60004CFAE /* RecipesCell.swift in Sources */,
 				DA3F29562B951D4A0004CFAE /* Category.swift in Sources */,
@@ -530,13 +519,12 @@
 				5733135E2B73215B00092647 /* SceneDelegate.swift in Sources */,
 				574419F62B97E47300A8A41F /* Colors.swift in Sources */,
 				5722C30A2B8DBE0400ED2AD2 /* AuthCoordinator.swift in Sources */,
+				57441A822B9AE7EE00A8A41F /* ProfileMemento.swift in Sources */,
 				57071C762B90952F00425D68 /* BottomSheetPresenter.swift in Sources */,
-				57441A772B9A8CCE00A8A41F /* UserDataManager.swift in Sources */,
+				57441A772B9A8CCE00A8A41F /* ProfileDataManager.swift in Sources */,
 				5722C3182B8DD27100ED2AD2 /* FavoritesViewController.swift in Sources */,
 				5722C3062B8DBDDB00ED2AD2 /* BaseCoordinator.swift in Sources */,
-				57441A7F2B9A9E8B00A8A41F /* UserManager.swift in Sources */,
 				DA3F295A2B951D840004CFAE /* RecipesListViewController.swift in Sources */,
-				57441A792B9A8D5800A8A41F /* User.swift in Sources */,
 				DA98ACF42B98465400125CBD /* Sort.swift in Sources */,
 				5744196C2B91A90300A8A41F /* RecipeCategory.swift in Sources */,
 				57071C7B2B90A1CD00425D68 /* ClosuresTypealiases.swift in Sources */,

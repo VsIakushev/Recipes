@@ -258,8 +258,6 @@ extension ProfileViewController: ProfileViewProtocol {
     func showEditAlert() {
         showAlert { [weak self] editedName in
             self?.presenter?.setName(newName: editedName)
-            self?.presenter?.profileInfo.username = editedName
-            self?.presenter?.saveUserData()
         }
     }
 

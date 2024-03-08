@@ -5,43 +5,38 @@
 protocol ProfileViewProtocol: AnyObject {
     /// Обновление экрана после получения новых данных
     func updateView()
-    /// показать алерт для ввода нового имени
+    /// Показать алерт для ввода нового имени
     func showEditAlert()
-
+    /// Показать условия и политику конфиденциальности
     func showTermsAndPolicy()
-
+    /// Всплывающий экран для показа Условий и политики конфиденциальности
     var termsView: TermsAndPolicyView { get set }
 }
 
 /// Протокол Презентера Профиля пользователя
 protocol ProfilePresenterProtocol {
-    /// данные пользователя
+    /// Данные пользователя
     var profileInfo: ProfileInfo { get set }
-    /// выход на экран логина
+    /// Выход на экран логина
     func onLogOut()
-    /// обработка нажатия кнопки изменения пользовательских данных
+    /// Обработка нажатия кнопки изменения пользовательских данных
     func editTapped()
-    /// установка нового имени пользователя
+    /// Установка нового имени пользователя
     func setName(newName: String)
-    /// обработка нажатия на кнопку бонусов
+    /// Обработка нажатия на кнопку бонусов
     func bonusButtonPressed()
-    /// обработка нажатия на Terms and Privacy Policy
+    /// Обработка нажатия на Terms and Privacy Policy
     func termsAndPolictPressed(profileViewController: ProfileViewProtocol)
-    /// сохранение данных пользователя
-    func saveUserData()
 }
 
 /// Презентер для экрана Профиля пользователя
 final class ProfilePresenter: ProfilePresenterProtocol {
     // MARK: - Public Properties
 
-    var profileInfo = ProfileInfo(userName: "SOmeName", userImage: "avatar", email: "", password: "", bonuses: 0)
-
-//    let userManager = UserManager.shared
-//    let userDataManager = UserDataManager()
+    var profileInfo = ProfileInfo(userName: "", userImage: "", email: "", password: "", bonuses: 0)
 
     // MARK: - Private Properties
-
+    private let memento = ProfileMemento.shared
     private weak var profileCoordinator: ProfileCoordinator?
     private weak var view: ProfileViewProtocol?
 
@@ -66,6 +61,7 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     func setName(newName: String) {
         profileInfo.username = newName
         view?.updateView()
+        saveUserData()
     }
 
     func onLogOut() {
@@ -75,13 +71,15 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     func editTapped() {
         view?.showEditAlert()
     }
+    
+    // MARK: - Private Methods
 
-    func loadUserData() {
-        guard let profileInfo = UserDataManager.shared.loadUser() else { return }
-        self.profileInfo = profileInfo
+    private func loadUserData() {
+        guard let profile = memento.restoreState() else { return }
+        self.profileInfo = profile
     }
 
-    func saveUserData() {
-        UserDataManager.shared.saveUser(profileInfo)
+    private func saveUserData() {
+        memento.saveState(profileInfo)
     }
 }
