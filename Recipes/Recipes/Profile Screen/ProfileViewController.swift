@@ -31,6 +31,7 @@ final class ProfileViewController: UIViewController {
     // MARK: - Public Properties
 
     var presenter: ProfilePresenterProtocol?
+    var officiant: Invoker? = Invoker.shared
 
     // MARK: - Private Properties
 
@@ -53,6 +54,10 @@ final class ProfileViewController: UIViewController {
         view.backgroundColor = .lightGray
         setupNavigation()
         setupTableView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        order(command: OpenProfileScreenCommand())
     }
 
     // MARK: - Public Methods
@@ -79,6 +84,15 @@ final class ProfileViewController: UIViewController {
     }
 
     // MARK: - Private Methods
+    
+    private func order(command: Command) {
+        guard let officiant = officiant else {
+            print("error")
+            return
+        }
+        officiant.addCommand(OpenProfileScreenCommand())
+        officiant.executeCommands()
+    }
 
     private func setupNavigation() {
         let titleLabel = UILabel()

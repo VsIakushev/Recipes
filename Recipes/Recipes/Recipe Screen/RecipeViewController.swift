@@ -21,7 +21,7 @@ final class RecipeViewController: UIViewController {
     // MARK: - Public Properties
 
     var presenter: RecipePresenterProtocol?
-
+    var officiant: Invoker? = Invoker.shared
     // MARK: - Life Cycles
 
     override func viewDidLoad() {
@@ -30,6 +30,10 @@ final class RecipeViewController: UIViewController {
         setupCollectionView()
         collectionView.delegate = self
         navigationController?.navigationBar.isHidden = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        order(command: OpenCategoryScreenCommand())
     }
 
     // MARK: - Public Methods
@@ -46,6 +50,16 @@ final class RecipeViewController: UIViewController {
 
     // MARK: - Private Methods
 
+    private func order(command: Command) {
+        guard let officiant = officiant else {
+            print("error")
+            return
+        }
+        officiant.addCommand(OpenCategoryScreenCommand())
+        officiant.executeCommands()
+    }
+
+    
     private func setupNavigation() {
         let titleLabel = UILabel()
         titleLabel.font = UIFont.verdanaBold28()

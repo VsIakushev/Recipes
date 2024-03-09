@@ -60,10 +60,10 @@ final class RecipesListViewController: UIViewController {
     // MARK: - Public Properties
 
     var recipes: [Recipes] = []
-
     var categoryTitle: String = ""
-
     var presenter: AllRecipesPresenter?
+    var officiant: Invoker? = Invoker.shared
+
 
     // MARK: - Private Properties
 
@@ -82,6 +82,7 @@ final class RecipesListViewController: UIViewController {
         super.viewWillAppear(animated)
         titleLabel.text = categoryTitle
         recipesTableView.reloadData()
+        order(command: OpenAllRecipesScreenCommand())
     }
 
     // MARK: - Private Methods
@@ -101,6 +102,15 @@ final class RecipesListViewController: UIViewController {
         ]
     }
 
+    private func order(command: Command) {
+        guard let officiant = officiant else {
+            print("error")
+            return
+        }
+        officiant.addCommand(OpenAllRecipesScreenCommand())
+        officiant.executeCommands()
+    }
+    
     private func makeFilterButton(button: UIButton, title: String) {
         button.setTitle(title, for: .normal)
         button.setImage(Constants.filterIconImage, for: .normal)

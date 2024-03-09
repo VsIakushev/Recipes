@@ -17,6 +17,7 @@ final class RecipeDetailsViewController: UIViewController {
     // MARK: - Public Properties
 
     var presenter: RecipeDetailsPresenterProtocol?
+    var officiant: Invoker? = Invoker.shared
 
     // MARK: - Private Properties
 
@@ -31,6 +32,10 @@ final class RecipeDetailsViewController: UIViewController {
         setupNavigation()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        order(command: OpenDetailedRecipeScreenCommand())
+    }
+    
     // MARK: - Public Methods
 
     func setupUI() {
@@ -38,6 +43,15 @@ final class RecipeDetailsViewController: UIViewController {
     }
 
     // MARK: - Private Methods
+    
+    private func order(command: Command) {
+        guard let officiant = officiant else {
+            print("error")
+            return
+        }
+        officiant.addCommand(OpenDetailedRecipeScreenCommand())
+        officiant.executeCommands()
+    }
 
     private func setupNavigation() {
         let backButton = UIBarButtonItem(
