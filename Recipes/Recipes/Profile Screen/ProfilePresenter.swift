@@ -5,27 +5,27 @@
 protocol ProfileViewProtocol: AnyObject {
     /// Обновление экрана после получения новых данных
     func updateView()
-    /// показать алерт для ввода нового имени
+    /// Показать алерт для ввода нового имени
     func showEditAlert()
-
+    /// Показать условия и политику конфиденциальности
     func showTermsAndPolicy()
-
+    /// Всплывающий экран для показа Условий и политики конфиденциальности
     var termsView: TermsAndPolicyView { get set }
 }
 
 /// Протокол Презентера Профиля пользователя
 protocol ProfilePresenterProtocol {
-    /// данные пользователя
+    /// Данные пользователя
     var profileInfo: ProfileInfo { get set }
-    /// выход на экран логина
+    /// Выход на экран логина
     func onLogOut()
-    /// обработка нажатия кнопки изменения пользовательских данных
+    /// Обработка нажатия кнопки изменения пользовательских данных
     func editTapped()
-    /// установка нового имени пользователя
+    /// Установка нового имени пользователя
     func setName(newName: String)
-    /// обработка нажатия на кнопку бонусов
+    /// Обработка нажатия на кнопку бонусов
     func bonusButtonPressed()
-    /// обработка нажатия на Terms and Privacy Policy
+    /// Обработка нажатия на Terms and Privacy Policy
     func termsAndPolictPressed(profileViewController: ProfileViewProtocol)
 }
 
@@ -33,10 +33,10 @@ protocol ProfilePresenterProtocol {
 final class ProfilePresenter: ProfilePresenterProtocol {
     // MARK: - Public Properties
 
-    var profileInfo = ProfileInfo(userName: "Anna", userImage: "avatar", bonuses: 99)
+    var profileInfo = ProfileInfo()
 
     // MARK: - Private Properties
-
+    private let memento = ProfileMemento.shared
     private weak var profileCoordinator: ProfileCoordinator?
     private weak var view: ProfileViewProtocol?
 
@@ -45,6 +45,7 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     init(view: ProfileViewProtocol, coordinator: ProfileCoordinator) {
         self.view = view
         profileCoordinator = coordinator
+        loadUserData()
     }
 
     // MARK: - Public Methods
@@ -58,7 +59,7 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     }
 
     func setName(newName: String) {
-        profileInfo.userName = newName
+        profileInfo.username = newName
         view?.updateView()
     }
 
@@ -68,5 +69,12 @@ final class ProfilePresenter: ProfilePresenterProtocol {
 
     func editTapped() {
         view?.showEditAlert()
+        
+    }
+    
+    // MARK: - Private Methods
+
+    private func loadUserData() {
+        self.profileInfo = memento.restoreState()
     }
 }
