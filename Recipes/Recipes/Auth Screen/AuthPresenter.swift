@@ -47,42 +47,55 @@ final class AuthPresenter {
 
     weak var authCoordinator: AuthCoordinator?
     private weak var view: AuthorizationViewControllerProtocol?
+    
+    private var user: ProfileInfo
+    private let memento = ProfileMemento.shared
 
     // MARK: - Initializers
 
     init(view: AuthorizationViewControllerProtocol) {
         self.view = view
+        user = memento.restoreState()
     }
 
     // MARK: - Properties
 
     private var isValidateMail = Bool()
     private var isValidatePassword = Bool()
+    private var isLoginAndPasswordValid = false
+    private var isLoginAndPasswordEmpty = false
+    private var loginAllowed = false
 
-//    func checkAuthorization(email: String, password: String) {
-//        validateEmail(email: email)
-//        checkPassword(password: password)
-//
-//        if isValidateMail && isValidatePassword {
-//            self.view?.startSpinner()
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-//                self.authCoordinator?.onFinish()
-//            }
-//        }
-//        else {
-//            self.view?.showErrorView()
-//        }
-//    }
 }
 
 // MARK: - AuthPresenter + AuthorizationProtocol
 
 extension AuthPresenter: AuthorizationProtocol {
-    func checkAuthorization(email: String, password: String) {
-        validateEmail(email: email)
-        checkPassword(password: password)
+    
+    private func createNewUserIfNeeded() {
+        if user.username.isEmpty && user.avatar.isEmpty {
+            user = memento.createUser()
+        }
+    }
+   
+    func loginAndPasswordIsEmpty() -> Bool {
+        if user.password.isEmpty && user.email.isEmpty {
+            return true
+        } else {
+            return false
+        }
+    }
 
-        if isValidateMail, isValidatePassword {
+    func loginAndPasswordValid(enteredEmail: String, enteredPassword: String) -> Bool {
+        if enteredEmail == user.email, enteredPassword == user.password {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func login() {
+        if loginAllowed {
             view?.startSpinner()
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
                 self.authCoordinator?.onFinish()
@@ -90,6 +103,28 @@ extension AuthPresenter: AuthorizationProtocol {
         } else {
             view?.showErrorView()
         }
+    }
+    
+    func checkAuthorization(email: String, password: String) {
+        createNewUserIfNeeded()
+        
+        validateEmail(email: email)
+        checkPassword(password: password)
+        
+        isLoginAndPasswordEmpty = loginAndPasswordIsEmpty()
+        isLoginAndPasswordValid = loginAndPasswordValid(enteredEmail: email, enteredPassword: password)
+        
+        if isLoginAndPasswordEmpty, isValidateMail, isValidatePassword  {
+            user.email = email
+            user.password = password
+            loginAllowed = true
+            
+        } else if !isLoginAndPasswordEmpty, isValidateMail, isValidatePassword, isLoginAndPasswordValid {
+            loginAllowed = true
+        } else {
+            loginAllowed = false
+        }
+        login()
     }
 
     func validateEmail(email: String?) {

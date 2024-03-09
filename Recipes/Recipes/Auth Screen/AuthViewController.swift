@@ -34,6 +34,7 @@ final class AuthViewController: UIViewController {
     // MARK: - Public Properties
 
     var presenter: AuthorizationProtocol?
+    var officiant: Invoker? = Invoker.shared
 
     // MARK: - Private Properties
 
@@ -199,8 +200,22 @@ final class AuthViewController: UIViewController {
         super.viewDidLayoutSubviews()
         setupBackgroundColor()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        order(command: OpenAuthScreenCommand())
+    }
 
     // MARK: - Private Methods
+    
+    private func order(command: Command) {
+        guard let officiant = officiant else {
+            print("error")
+            return
+        }
+        officiant.addCommand(OpenAuthScreenCommand())
+        officiant.executeCommands()
+    }
+
 
     private func setupUI() {
         setGestureRecognizer()

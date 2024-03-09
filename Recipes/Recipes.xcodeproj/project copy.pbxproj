@@ -40,7 +40,9 @@
 		57441A1E2B982B9E00A8A41F /* ShimmerRecipesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441A1D2B982B9D00A8A41F /* ShimmerRecipesCell.swift */; };
 		57441A202B982BF800A8A41F /* ShimmerLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441A1F2B982BF800A8A41F /* ShimmerLoadable.swift */; };
 		57441A262B98706000A8A41F /* StateShimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441A252B98706000A8A41F /* StateShimmer.swift */; };
+		57441A772B9A8CCE00A8A41F /* ProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441A762B9A8CCE00A8A41F /* ProfileDataManager.swift */; };
 		57441A822B9AE7EE00A8A41F /* ProfileMemento.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441A812B9AE7EE00A8A41F /* ProfileMemento.swift */; };
+		57441A842B9BC00A00A8A41F /* UserDefaultsWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441A832B9BC00A00A8A41F /* UserDefaultsWrapper.swift */; };
 		57F4EBB92B8F270B00ADA7AA /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBB82B8F270B00ADA7AA /* ProfileTableViewCell.swift */; };
 		57F4EBBB2B8F272100ADA7AA /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */; };
 		57F4EBBD2B8F273500ADA7AA /* ProfileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBBC2B8F273500ADA7AA /* ProfileButton.swift */; };
@@ -59,7 +61,6 @@
 		DA7FF19C2B9AD85A006EE0A6 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7FF19B2B9AD85A006EE0A6 /* Command.swift */; };
 		DA7FF19E2B9ADBD1006EE0A6 /* Receiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7FF19D2B9ADBD1006EE0A6 /* Receiver.swift */; };
 		DA7FF1A02B9ADC13006EE0A6 /* Invoker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7FF19F2B9ADC13006EE0A6 /* Invoker.swift */; };
-		DA7FF1A62B9BEC49006EE0A6 /* UserDefaultsWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7FF1A52B9BEC49006EE0A6 /* UserDefaultsWrapper.swift */; };
 		DA98ACF42B98465400125CBD /* Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA98ACF32B98465400125CBD /* Sort.swift */; };
 		DAAC3F872B8F183200D3B08D /* AuthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAC3F862B8F183200D3B08D /* AuthPresenter.swift */; };
 /* End PBXBuildFile section */
@@ -102,6 +103,7 @@
 		57441A252B98706000A8A41F /* StateShimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateShimmer.swift; sourceTree = "<group>"; };
 		57441A762B9A8CCE00A8A41F /* ProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataManager.swift; sourceTree = "<group>"; };
 		57441A812B9AE7EE00A8A41F /* ProfileMemento.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMemento.swift; sourceTree = "<group>"; };
+		57441A832B9BC00A00A8A41F /* UserDefaultsWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserDefaultsWrapper.swift; path = ../../../../../../../../Desktop/UserDefaultsWrapper.swift; sourceTree = "<group>"; };
 		57F4EBB82B8F270B00ADA7AA /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
 		57F4EBBC2B8F273500ADA7AA /* ProfileButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileButton.swift; sourceTree = "<group>"; };
@@ -120,7 +122,6 @@
 		DA7FF19B2B9AD85A006EE0A6 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		DA7FF19D2B9ADBD1006EE0A6 /* Receiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Receiver.swift; sourceTree = "<group>"; };
 		DA7FF19F2B9ADC13006EE0A6 /* Invoker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Invoker.swift; sourceTree = "<group>"; };
-		DA7FF1A52B9BEC49006EE0A6 /* UserDefaultsWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsWrapper.swift; sourceTree = "<group>"; };
 		DA98ACF32B98465400125CBD /* Sort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sort.swift; sourceTree = "<group>"; };
 		DAAC3F862B8F183200D3B08D /* AuthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -281,7 +282,7 @@
 			children = (
 				57441A762B9A8CCE00A8A41F /* ProfileDataManager.swift */,
 				57441A812B9AE7EE00A8A41F /* ProfileMemento.swift */,
-				DA7FF1A52B9BEC49006EE0A6 /* UserDefaultsWrapper.swift */,
+				57441A832B9BC00A00A8A41F /* UserDefaultsWrapper.swift */,
 			);
 			path = UserDefaultsManager;
 			sourceTree = "<group>";
@@ -519,6 +520,7 @@
 				574419762B92647400A8A41F /* RecipeDetailsPresentor.swift in Sources */,
 				574419812B92756D00A8A41F /* RecipeDescriptionTableViewCell.swift in Sources */,
 				5722C3162B8DBF4D00ED2AD2 /* ProfileViewController.swift in Sources */,
+				57441A842B9BC00A00A8A41F /* UserDefaultsWrapper.swift in Sources */,
 				5722C31A2B8DD28F00ED2AD2 /* FavoritesCoordinator.swift in Sources */,
 				574419782B92648000A8A41F /* Recipe.swift in Sources */,
 				57F4EBF52B902D1300ADA7AA /* RecipePresenter.swift in Sources */,
@@ -541,8 +543,11 @@
 				5722C30A2B8DBE0400ED2AD2 /* AuthCoordinator.swift in Sources */,
 				57441A822B9AE7EE00A8A41F /* ProfileMemento.swift in Sources */,
 				57071C762B90952F00425D68 /* BottomSheetPresenter.swift in Sources */,
+<<<<<<< HEAD
 				DA7FF19C2B9AD85A006EE0A6 /* Command.swift in Sources */,
-				DA7FF1A62B9BEC49006EE0A6 /* UserDefaultsWrapper.swift in Sources */,
+=======
+				57441A772B9A8CCE00A8A41F /* ProfileDataManager.swift in Sources */,
+>>>>>>> 1bb331909ce2a38613805b8e6b4bb208ba16086c
 				5722C3182B8DD27100ED2AD2 /* FavoritesViewController.swift in Sources */,
 				5722C3062B8DBDDB00ED2AD2 /* BaseCoordinator.swift in Sources */,
 				DA3F295A2B951D840004CFAE /* RecipesListViewController.swift in Sources */,

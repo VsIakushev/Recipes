@@ -40,8 +40,8 @@ final class ProfileTableViewCell: UITableViewCell {
     }
 
     func configureCell(info: ProfileInfo) {
-        userName = info.userName
-        userImage = info.userImage
+        userName = info.username
+        userImage = info.avatar
         addViews()
         setupUI()
         setConstraints()

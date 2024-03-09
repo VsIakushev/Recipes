@@ -22,7 +22,7 @@ final class FavoritesViewController: UIViewController {
 
     var recipes: [Recipes] = []
     var presenter: FavoritesPresenterProtocol?
-
+    var officiant: Invoker? = Invoker.shared
     // MARK: - Public Methods
 
     func setupUI() {
@@ -96,9 +96,22 @@ final class FavoritesViewController: UIViewController {
         setupUI()
         configureUI()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        order(command: OpenFavoritesRecipesScreenCommand())
+    }
 
     // MARK: - Private Methods
 
+    private func order(command: Command) {
+        guard let officiant = officiant else {
+            print("error")
+            return
+        }
+        officiant.addCommand(OpenFavoritesRecipesScreenCommand())
+        officiant.executeCommands()
+    }
+    
     private func configureUI() {
         getFavRecipes()
         view.backgroundColor = .white
@@ -240,9 +253,8 @@ extension FavoritesViewController: FavoritesViewControllerProtocol {
 }
 
 extension FavoritesViewController: RecipesViewProtocol {
-
     func timeButtonPressed(color: String, image: String) {}
-    
+
     func caloriesButtonPressed(color: String, image: String) {}
 
     func sortViewRecipes(recipes: [Recipes]) {}
