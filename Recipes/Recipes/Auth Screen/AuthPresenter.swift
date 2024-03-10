@@ -106,6 +106,11 @@ extension AuthPresenter: AuthorizationProtocol {
     }
     
     func checkAuthorization(email: String, password: String) {
+        user.username = ""
+               user.avatar = ""
+               user.email = ""
+//        zz@zzz.zz
+//        zzzzzzzz
         createNewUserIfNeeded()
         
         validateEmail(email: email)
