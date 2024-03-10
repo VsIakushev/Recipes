@@ -10,7 +10,7 @@ protocol FavoritesViewControllerProtocol: AnyObject {
     /// получить избранные рецепты
     func getFavRecipes()
     /// рецепты
-    var recipes: [Recipes] { get set }
+    var recipes: [Recipe] { get set }
 }
 
 /// протокол презентера
@@ -20,7 +20,7 @@ protocol FavoritesPresenterProtocol {
     /// получить количество избранных в масиве
     func getFavouritesCount() -> Int
     /// получить избранные рецепты
-    func getFavourites() -> [Recipes]
+    func getFavourites() -> [Recipe]
     /// удаление из избранных
     func removeFromFavourites(recipeIndex: Int)
     /// переход к экрану детального рецепта
@@ -32,7 +32,7 @@ final class FavoritesPresenter {
     // MARK: - Private Properties
 
     private weak var view: FavoritesViewControllerProtocol?
-    private var recipes = Recipes.favoritesRecipes
+    private var recipes = Recipe.favoritesRecipes
     private weak var favoritesCoordinator: FavoritesCoordinator?
 
     // MARK: - Initializers
@@ -47,15 +47,15 @@ final class FavoritesPresenter {
 
 extension FavoritesPresenter: FavoritesPresenterProtocol {
     func removeFromFavourites(recipeIndex: Int) {
-        let recipe = Recipes.favoritesRecipes.remove(at: recipeIndex)
+        let recipe = Recipe.favoritesRecipes.remove(at: recipeIndex)
         view?.recipes.remove(at: recipeIndex)
 
-        for var item in Recipes.allRecipes where item == recipe {
+        for var item in Recipe.allRecipes where item == recipe {
             item.isFavorite = false
         }
     }
 
-    func getFavourites() -> [Recipes] {
+    func getFavourites() -> [Recipe] {
         recipes
     }
 

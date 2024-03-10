@@ -109,8 +109,8 @@ extension AuthPresenter: AuthorizationProtocol {
         user.username = ""
                user.avatar = ""
                user.email = ""
-//        zz@zzz.zz
-//        zzzzzzzz
+//        qq@qqq.qq
+//        qqqqqqqq
         createNewUserIfNeeded()
         
         validateEmail(email: email)

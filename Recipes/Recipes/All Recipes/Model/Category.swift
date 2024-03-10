@@ -4,11 +4,11 @@
 import Foundation
 
 /// Категории
-struct Category {
-    /// Аватар категории
-    var avatarImageName: String
-    /// Название категории
-    var categoryTitle: String
-    /// Рецепты
-    var recepies: [Recipes]
-}
+//struct Category {
+//    /// Аватар категории
+//    var avatarImageName: String
+//    /// Название категории
+//    var categoryTitle: String
+//    /// Рецепты
+//    var recepies: [Recipe]
+//}

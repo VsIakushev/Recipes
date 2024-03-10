@@ -20,7 +20,7 @@ final class FavoritesViewController: UIViewController {
 
     // MARK: - Public Properties
 
-    var recipes: [Recipes] = []
+    var recipes: [Recipe] = []
     var presenter: FavoritesPresenterProtocol?
     var officiant: Invoker? = Invoker.shared
     // MARK: - Public Methods
@@ -257,13 +257,13 @@ extension FavoritesViewController: RecipesViewProtocol {
 
     func caloriesButtonPressed(color: String, image: String) {}
 
-    func sortViewRecipes(recipes: [Recipes]) {}
+    func sortViewRecipes(recipes: [Recipe]) {}
 
     func reloadTableView() {
         recipesTableView.reloadData()
     }
 
-    func getRecipes(recipes: [Recipes]) {}
+    func getRecipes(recipes: [Recipe]) {}
 
     func goToTheCategory() {}
 

@@ -4,7 +4,7 @@
 /// Протокол вью  всех рецептов
 protocol RecipesViewProtocol: AnyObject {
     /// получение рецептов
-    func getRecipes(recipes: [Recipes])
+    func getRecipes(recipes: [Recipe])
     /// переход на экран категорий
     func goToTheCategory()
     /// обновление таблицы
@@ -14,7 +14,7 @@ protocol RecipesViewProtocol: AnyObject {
     /// нажатие на кнопку сортировка по калориям
     func caloriesButtonPressed(color: String, image: String)
     /// отсортировать рецепты
-    func sortViewRecipes(recipes: [Recipes])
+    func sortViewRecipes(recipes: [Recipe])
 }
 
 /// Протокол презентера
@@ -22,19 +22,24 @@ protocol RecipeProtocol: AnyObject {
     /// получить рецепты
     func getReceipts()
     /// переход к деталям рецепта
-    func goToRecipeDetails()
+    func goToRecipeDetails(with recipe: Recipe)
     /// переход к категориям
     func goToCategory()
     /// поиск рецептов
     func searchRecipes(text: String)
     /// проверка поиска
-    func checkSearch() -> [Recipes]
+    func checkSearch() -> [Recipe]
     /// начать поиск
     func startSearch()
     /// стоп поиск
     func stopSearch()
     /// отсортировать рецепты
-    func sortRecipes(category: [Recipes])
+    func sortRecipes(category: [Recipe])
+    
+    
+    
+    func setSelectedRecipe(_ recipe: Recipe)
+
 }
 
 final class AllRecipesPresenter {
@@ -49,20 +54,25 @@ final class AllRecipesPresenter {
     private weak var view: RecipesViewProtocol?
 
     private weak var recipesCoordinator: RecipeCoordinator?
-    private var user: Recipes?
+    private var user: Recipe?
     private var isSearching = false
-    private var searchNames: [Recipes] = []
-    private var recipes = Recipes.allRecipes
+    private var searchNames: [Recipe] = []
+    private var recipes = Recipe.allRecipes
     private var sortedCalories = SortedCalories.none
     private var sortedTime = SortedTime.none
-    var sorted = Recipes.allRecipes
+    private var sorted = Recipe.allRecipes
+    private var recipeDetailsPresenter: RecipeDetailsPresenter?
+    
+    
+    private var selectedRecipe: Recipe?
+
 
     init(view: RecipesViewProtocol, coordinator: RecipeCoordinator) {
         self.view = view
         recipesCoordinator = coordinator
     }
 
-    func buttonCaloriesChange(category: [Recipes]) {
+    func buttonCaloriesChange(category: [Recipe]) {
         if sortedCalories == .none {
             sortedCalories = .caloriesLow
             view?.caloriesButtonPressed(color: Constants.background01, image: Constants.filterLow)
@@ -79,7 +89,7 @@ final class AllRecipesPresenter {
     }
 
     /// Метод меняющий состояниие кнопки таймера
-    func buttonTimeChange(category: [Recipes]) {
+    func buttonTimeChange(category: [Recipe]) {
         if sortedTime == .none {
             sortedTime = .timeLow
             view?.timeButtonPressed(color: Constants.background01, image: Constants.filterLow)
@@ -99,33 +109,46 @@ final class AllRecipesPresenter {
 // MARK: AllRecipesPresenter + RecipeProtocol
 
 extension AllRecipesPresenter: RecipeProtocol {
-    func sortRecipes(category: [Recipes]) {
-        let defaultRecipes = Recipes.allRecipes
+    func goToRecipeDetails(with recipe: Recipe) {
+        recipesCoordinator?.pushReceiptDetails(with: recipe)
+    }
+    
+    func setSelectedRecipe(_ recipe: Recipe) {
+        print(selectedRecipe)
+        selectedRecipe = recipe
+        print(selectedRecipe)
+
+        recipeDetailsPresenter?.receiveRecipe(selectedRecipe!)
+        
+    }
+    
+    func sortRecipes(category: [Recipe]) {
+        let defaultRecipes = Recipe.allRecipes
         var sorted = category
 
-        let sortCalories: ((Recipes, Recipes) -> Bool)?
+        let sortCalories: ((Recipe, Recipe) -> Bool)?
         switch sortedCalories {
         case .caloriesLow:
-            sortCalories = { Int($0.caloriesTitle) ?? 0 < Int($1.caloriesTitle) ?? 0 }
+            sortCalories = { $0.energicKcal < $1.energicKcal }
         case .caloriesHigh:
-            sortCalories = { Int($0.caloriesTitle) ?? 0 > Int($1.caloriesTitle) ?? 0 }
+            sortCalories = { $0.energicKcal > $1.energicKcal }
         default:
             sortCalories = nil
         }
 
-        let sortTime: ((Recipes, Recipes) -> Bool)?
+        let sortTime: ((Recipe, Recipe) -> Bool)?
         switch sortedTime {
         case .timeLow:
-            sortTime = { Int($0.cookingTimeTitle) ?? 0 < Int($1.cookingTimeTitle) ?? 0 }
+            sortTime = { $0.cookingTime < $1.cookingTime }
         case .timeHigh:
-            sortTime = { Int($0.cookingTimeTitle) ?? 0 > Int($1.cookingTimeTitle) ?? 0 }
+            sortTime = { $0.cookingTime > $1.cookingTime }
         default:
             sortTime = nil
         }
 
-        sorted = category.sorted { lhs, rhs in
+        sorted = category.sorted { (lhs: Recipe, rhs: Recipe) -> Bool in
             if let sortCalories = sortCalories, let sortTime = sortTime {
-                if lhs.caloriesTitle == rhs.caloriesTitle {
+                if lhs.energicKcal == rhs.energicKcal {
                     return sortTime(lhs, rhs)
                 } else {
                     return sortCalories(lhs, rhs)
@@ -142,7 +165,7 @@ extension AllRecipesPresenter: RecipeProtocol {
         self.sorted = sorted
     }
 
-    func checkSearch() -> [Recipes] {
+    func checkSearch() -> [Recipe] {
         if isSearching {
             return searchNames
         } else {
@@ -166,7 +189,7 @@ extension AllRecipesPresenter: RecipeProtocol {
             return
         }
         isSearching = true
-        searchNames = recipes.filter { $0.titleRecipies.lowercased().contains(text.lowercased()) }
+        searchNames = recipes.filter { $0.title.lowercased().contains(text.lowercased()) }
         view?.reloadTableView()
     }
 
@@ -175,11 +198,12 @@ extension AllRecipesPresenter: RecipeProtocol {
     }
 
     func getReceipts() {
-        let storage = Storage()
-        view?.getRecipes(recipes: storage.fishes)
+//        let storage = Storage()
+        view?.getRecipes(recipes: Recipe.allRecipes)
     }
 
-    func goToRecipeDetails() {
-        recipesCoordinator?.pushReceiptDetails()
-    }
+//    func goToRecipeDetails(with recipe: Recipe) {
+//        recipesCoordinator?.pushReceiptDetails(with: recipe)
+//
+//    }
 }

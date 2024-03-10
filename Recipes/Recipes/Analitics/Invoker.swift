@@ -10,6 +10,7 @@ import Foundation
 class Invoker {
     
     static let shared = Invoker()
+    private init() {}
     
     private var commands: [Command] = []
     

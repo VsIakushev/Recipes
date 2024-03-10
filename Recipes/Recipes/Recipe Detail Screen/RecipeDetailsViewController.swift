@@ -18,6 +18,7 @@ final class RecipeDetailsViewController: UIViewController {
 
     var presenter: RecipeDetailsPresenterProtocol?
     var officiant: Invoker? = Invoker.shared
+    let favoritesSingletone = FavoritesSingletone.shared
 
     // MARK: - Private Properties
 
@@ -127,8 +128,14 @@ extension RecipeDetailsViewController: RecipeDetailsViewControllerProtocol {
     }
 
     @objc func addToFavoritesTaped() {
-        presenter?.addToFavorites()
+        if let recipe = presenter?.recipe {
+                favoritesSingletone.addRecipeToFavorites(recipe)
+            presenter?.addToFavorites()
+            presenter?.receiveRecipe(recipe)
+            }
+        
     }
+
 }
 
 extension RecipeDetailsViewController: UITableViewDataSource {
@@ -148,7 +155,7 @@ extension RecipeDetailsViewController: UITableViewDataSource {
                 title: presenter.recipe.title,
                 image: presenter.recipe.image,
                 weight: presenter.recipe.weight,
-                cookingTime: presenter.recipe.cookintTime
+                cookingTime: presenter.recipe.cookingTime
             )
 
             return cell
