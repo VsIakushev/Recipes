@@ -19,6 +19,11 @@ final class RecipeDetailsViewController: UIViewController {
     var presenter: RecipeDetailsPresenterProtocol?
     var officiant: Invoker? = Invoker.shared
     let favoritesSingletone = FavoritesSingletone.shared
+    var recipe: Recipe? {
+            didSet {
+                setupNavigation()
+            }
+        }
 
     // MARK: - Private Properties
 
@@ -74,7 +79,7 @@ final class RecipeDetailsViewController: UIViewController {
         shareButton.tintColor = .black
 
         let addToFavoritesButton = UIBarButtonItem(
-            image: UIImage(named: "addfavorites"),
+            image: UIImage(named: recipe?.isFavorite ?? false ? "redFavorites" : "addfavorites"),
             style: .plain,
             target: self,
             action: #selector(addToFavoritesTaped)
@@ -128,14 +133,12 @@ extension RecipeDetailsViewController: RecipeDetailsViewControllerProtocol {
     }
 
     @objc func addToFavoritesTaped() {
-        if let recipe = presenter?.recipe {
-                favoritesSingletone.addRecipeToFavorites(recipe)
-            presenter?.addToFavorites()
-            presenter?.receiveRecipe(recipe)
-            }
-        
+        guard let recipe = favoritesSingletone.recipeFromList else {
+            return
+        }
+        print("After guard let: \(recipe)")
+        presenter?.addToFavorites()
     }
-
 }
 
 extension RecipeDetailsViewController: UITableViewDataSource {

@@ -63,6 +63,7 @@ final class RecipesListViewController: UIViewController {
     var categoryTitle: String = ""
     var presenter: AllRecipesPresenter?
     var officiant: Invoker? = Invoker.shared
+    var favoritesSingletone = FavoritesSingletone.shared
 
 
     // MARK: - Private Properties
@@ -194,17 +195,9 @@ extension RecipesListViewController {
 extension RecipesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        //presenter?.goToRecipeDetails()
         let selectedRecipe = recipes[indexPath.row]
-        print("\n\nAaaaaaAAAAAAAAAAaaaaaaaaaaAaAAAAAA\n\n")
-        print(selectedRecipe)
-        
-        presenter?.setSelectedRecipe(selectedRecipe)
-            presenter?.goToRecipeDetails(with: selectedRecipe)
-        
-
-
-        
+        favoritesSingletone.getRecipeFromList(selectedRecipe)
+        presenter?.goToRecipeDetails(with: selectedRecipe)
     }
 }
 

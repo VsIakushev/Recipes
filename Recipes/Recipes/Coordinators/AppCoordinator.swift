@@ -12,9 +12,9 @@ final class AppCoordinator: BaseCoodinator {
 
     override func start() {
         if "admin" == "admin" {
-            t​oAuth​()
+            toMain​()//t​oAuth​()
         } else {
-            toMain​()
+            t​oAuth​()//toMain​()
         }
     }
 

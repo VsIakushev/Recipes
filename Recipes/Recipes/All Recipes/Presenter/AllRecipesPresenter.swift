@@ -35,11 +35,6 @@ protocol RecipeProtocol: AnyObject {
     func stopSearch()
     /// отсортировать рецепты
     func sortRecipes(category: [Recipe])
-    
-    
-    
-    func setSelectedRecipe(_ recipe: Recipe)
-
 }
 
 final class AllRecipesPresenter {
@@ -62,10 +57,6 @@ final class AllRecipesPresenter {
     private var sortedTime = SortedTime.none
     private var sorted = Recipe.allRecipes
     private var recipeDetailsPresenter: RecipeDetailsPresenter?
-    
-    
-    private var selectedRecipe: Recipe?
-
 
     init(view: RecipesViewProtocol, coordinator: RecipeCoordinator) {
         self.view = view
@@ -113,17 +104,7 @@ extension AllRecipesPresenter: RecipeProtocol {
         recipesCoordinator?.pushReceiptDetails(with: recipe)
     }
     
-    func setSelectedRecipe(_ recipe: Recipe) {
-        print(selectedRecipe)
-        selectedRecipe = recipe
-        print(selectedRecipe)
-
-        recipeDetailsPresenter?.receiveRecipe(selectedRecipe!)
-        
-    }
-    
     func sortRecipes(category: [Recipe]) {
-        let defaultRecipes = Recipe.allRecipes
         var sorted = category
 
         let sortCalories: ((Recipe, Recipe) -> Bool)?
@@ -198,12 +179,6 @@ extension AllRecipesPresenter: RecipeProtocol {
     }
 
     func getReceipts() {
-//        let storage = Storage()
         view?.getRecipes(recipes: Recipe.allRecipes)
     }
-
-//    func goToRecipeDetails(with recipe: Recipe) {
-//        recipesCoordinator?.pushReceiptDetails(with: recipe)
-//
-//    }
 }

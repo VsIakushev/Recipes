@@ -99,6 +99,7 @@ final class FavoritesViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         order(command: OpenFavoritesRecipesScreenCommand())
+        getFavRecipes()
     }
 
     // MARK: - Private Methods
@@ -194,6 +195,7 @@ extension FavoritesViewController {
 // MARK: - UITableViewDelegate
 
 extension FavoritesViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -226,6 +228,7 @@ extension FavoritesViewController: UITableViewDataSource {
         ) as? RecipesCell,
             let favorites = presenter?.getFavourites()
         else { return UITableViewCell() }
+        print(favorites)
         cell.configure(with: favorites[indexPath.row])
         return cell
     }
@@ -249,6 +252,7 @@ extension FavoritesViewController: FavoritesViewControllerProtocol {
     func getFavRecipes() {
         recipes = presenter?.getFavourites() ?? []
         recipesTableView.reloadData()
+        presenter?.checkIfFavouritesEmpty()
     }
 }
 
@@ -269,8 +273,5 @@ extension FavoritesViewController: RecipesViewProtocol {
 
     func setTitle(_ title: String) {}
 
-    func getRecipes() {
-        // recipes = presenter?.getFavourites() ?? []
-//        recipesTableView.reloadData()
-    }
+    func getRecipes() {}
 }

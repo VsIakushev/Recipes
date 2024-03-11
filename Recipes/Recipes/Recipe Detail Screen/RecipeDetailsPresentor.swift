@@ -11,11 +11,6 @@ protocol RecipeDetailsViewControllerProtocol: AnyObject {
     func backButtonTapped()
     /// Вызов Алерта о функционале в разработке
     func showAlert()
-    
-    
-//    
-//    func addToFavoritesTaped(recipe: Recipe)
-
 }
 
 /// Протокол презентера экрана деталей рецепта
@@ -32,17 +27,8 @@ protocol RecipeDetailsPresenterProtocol {
     func closeDetailsScreen()
     /// добавление в избранное синглтон
     func addToFavoritesSingleton()
-    
-    func receiveRecipe(_ recipe: Recipe)
-    
-    
-    
-    func setSelectedRecipe(_ recipe: Recipe)
-
-    
-    
-
-
+    /// избранный рецепт
+    var favRecipe: Recipe? { get set }
 }
 
 /// Презентер экрана деталей рецепта
@@ -55,7 +41,9 @@ final class RecipeDetailsPresenter: RecipeDetailsPresenterProtocol {
     var recipe = Recipe.recipeExample()
     var recipeForFavorites: Recipe?
     var selectedRecipe: Recipe?
-
+    var favoritesSingletone = FavoritesSingletone.shared
+    var favRecipe: Recipe?
+    
     // MARK: - Private Properties
     
     private weak var view: RecipeDetailsViewControllerProtocol?
@@ -69,37 +57,25 @@ final class RecipeDetailsPresenter: RecipeDetailsPresenterProtocol {
 
     // MARK: - Public Methods
     
-    func setSelectedRecipe(_ recipe: Recipe) {
-            selectedRecipe = recipe
-        print(selectedRecipe ?? "НИЧЕГО НЕ ПРИШЛО!")
-        }
-    
-    func receiveRecipe(_ recipe: Recipe) {
-        self.recipe = recipe
-        print(recipe)
-    }
-    
-    
-
     func addToFavoritesSingleton() {
-        FavoritesSingletone.shared.addRecipeToFavorites(selectedRecipe!)
+        guard let selectedRecipe = selectedRecipe else {
+            return
+        }
+        
+        favoritesSingletone.addRecipeToFavorites(selectedRecipe)
     }
     
     func addToFavorites() {
-        guard let selectedRecipe = selectedRecipe else {
-                print("selectedRecipe is nil!")
-                return
-            }
-            
-            FavoritesSingletone.shared.addRecipeToFavorites(selectedRecipe)
-        print("\n\n\nZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ\n\n\n")
-        print(selectedRecipe)
+        guard let favRecipe = favoritesSingletone.recipeFromList else {
+            print("selectedRecipe is nil!")
+            return
+        }
         
-        //view?.showAlert()
+        favoritesSingletone.addRecipeToFavorites(favRecipe)
     }
-
+    
     func shareViaTelegram() {}
-
+    
     func closeDetailsScreen() {
         recipeCoordinator?.closeRecipeDetails()
     }

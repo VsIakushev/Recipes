@@ -10,15 +10,20 @@ import Foundation
 class FavoritesSingletone {
     static let shared = FavoritesSingletone()
     
-    private var favoritesList: [String: Recipe] = [:]
-    
+    var favoritesList: [Recipe] = []
+    var recipeFromList: Recipe?
     private init() {}
     
     
     func addRecipeToFavorites(_ recipe: Recipe) {
-            favoritesList[recipe.image] = recipe
-        print("\n\n\n\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX \(favoritesList)\n\n\n\n")
-
+        guard !favoritesList.contains(recipe) else {
+            return
         }
-
-}
+        
+        favoritesList.append(recipe)
+    }
+    
+        func getRecipeFromList(_ recipe: Recipe) {
+            recipeFromList = recipe
+        }
+    }

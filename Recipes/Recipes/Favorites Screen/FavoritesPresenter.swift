@@ -32,7 +32,7 @@ final class FavoritesPresenter {
     // MARK: - Private Properties
 
     private weak var view: FavoritesViewControllerProtocol?
-    private var recipes = Recipe.favoritesRecipes
+    private var recipes = FavoritesSingletone.shared.favoritesList
     private weak var favoritesCoordinator: FavoritesCoordinator?
 
     // MARK: - Initializers
@@ -47,16 +47,22 @@ final class FavoritesPresenter {
 
 extension FavoritesPresenter: FavoritesPresenterProtocol {
     func removeFromFavourites(recipeIndex: Int) {
-        let recipe = Recipe.favoritesRecipes.remove(at: recipeIndex)
-        view?.recipes.remove(at: recipeIndex)
+        guard let removedRecipe = view?.recipes.remove(at: recipeIndex) else {
+            return
+        }
+        
+        if let indexInFavoritesList = FavoritesSingletone.shared.favoritesList.firstIndex(of: removedRecipe) {
+                FavoritesSingletone.shared.favoritesList.remove(at: indexInFavoritesList)
+            }
 
-        for var item in Recipe.allRecipes where item == recipe {
+
+        for var item in Recipe.allRecipes where item == removedRecipe {
             item.isFavorite = false
         }
     }
 
     func getFavourites() -> [Recipe] {
-        recipes
+        return FavoritesSingletone.shared.favoritesList
     }
 
     func checkIfFavouritesEmpty() {
