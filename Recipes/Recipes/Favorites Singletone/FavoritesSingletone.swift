@@ -6,10 +6,10 @@
 //
 
 import Foundation
-
-class FavoritesSingletone {
+/// Синглтон
+final class FavoritesSingletone {
     static let shared = FavoritesSingletone()
-    
+    /// массив с избранными рецептами
     var favoritesList: [Recipe] = []
     var recipeFromList: Recipe?
     private init() {}
