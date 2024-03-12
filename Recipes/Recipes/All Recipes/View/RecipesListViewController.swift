@@ -59,10 +59,11 @@ final class RecipesListViewController: UIViewController {
 
     // MARK: - Public Properties
 
-    var recipes: [Recipes] = []
+    var recipes: [Recipe] = []
     var categoryTitle: String = ""
     var presenter: AllRecipesPresenter?
     var officiant: Invoker? = Invoker.shared
+    var favoritesSingletone = FavoritesSingletone.shared
 
 
     // MARK: - Private Properties
@@ -134,11 +135,11 @@ final class RecipesListViewController: UIViewController {
     }
 
     @objc private func caloriesButtonTapped() {
-        presenter?.buttonCaloriesChange(category: Recipes.allRecipes)
+        presenter?.buttonCaloriesChange(category: Recipe.allRecipes)
     }
 
     @objc private func timeButtonTapped() {
-        presenter?.buttonTimeChange(category: Recipes.allRecipes)
+        presenter?.buttonTimeChange(category: Recipe.allRecipes)
     }
 
     @objc private func backButtonTapped() {
@@ -194,7 +195,9 @@ extension RecipesListViewController {
 extension RecipesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        presenter?.goToRecipeDetails()
+        let selectedRecipe = recipes[indexPath.row]
+        favoritesSingletone.getRecipeFromList(selectedRecipe)
+        presenter?.goToRecipeDetails(with: selectedRecipe)
     }
 }
 
@@ -241,7 +244,7 @@ extension RecipesListViewController: RecipesViewProtocol {
         caloriesButton.setTitleColor(.black, for: .normal)
     }
 
-    func sortViewRecipes(recipes: [Recipes]) {
+    func sortViewRecipes(recipes: [Recipe]) {
         self.recipes = recipes
         print(recipes)
         print(self.recipes)
@@ -256,7 +259,7 @@ extension RecipesListViewController: RecipesViewProtocol {
         navigationController?.popViewController(animated: true)
     }
 
-    func getRecipes(recipes: [Recipes]) {
+    func getRecipes(recipes: [Recipe]) {
         self.recipes = recipes
         recipesTableView.reloadData()
     }

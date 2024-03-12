@@ -25,18 +25,27 @@ protocol RecipeDetailsPresenterProtocol {
     func shareViaTelegram()
     /// Отработка нажатия кнопки "Назад" и закрытие экрана
     func closeDetailsScreen()
+    /// добавление в избранное синглтон
+    func addToFavoritesSingleton()
+    /// избранный рецепт
+    var favRecipe: Recipe? { get set }
 }
 
 /// Презентер экрана деталей рецепта
 final class RecipeDetailsPresenter: RecipeDetailsPresenterProtocol {
+    
     weak var recipeCoordinator: RecipeCoordinator?
 
     // MARK: - Public Properties
 
     var recipe = Recipe.recipeExample()
-
+    var recipeForFavorites: Recipe?
+    var selectedRecipe: Recipe?
+    var favoritesSingletone = FavoritesSingletone.shared
+    var favRecipe: Recipe?
+    
     // MARK: - Private Properties
-
+    
     private weak var view: RecipeDetailsViewControllerProtocol?
 
     // MARK: - Initializers
@@ -47,13 +56,26 @@ final class RecipeDetailsPresenter: RecipeDetailsPresenterProtocol {
     }
 
     // MARK: - Public Methods
-
-    func addToFavorites() {
-        view?.showAlert()
+    
+    func addToFavoritesSingleton() {
+        guard let selectedRecipe = selectedRecipe else {
+            return
+        }
+        
+        favoritesSingletone.addRecipeToFavorites(selectedRecipe)
     }
-
+    
+    func addToFavorites() {
+        guard let favRecipe = favoritesSingletone.recipeFromList else {
+            print("selectedRecipe is nil!")
+            return
+        }
+        
+        favoritesSingletone.addRecipeToFavorites(favRecipe)
+    }
+    
     func shareViaTelegram() {}
-
+    
     func closeDetailsScreen() {
         recipeCoordinator?.closeRecipeDetails()
     }
