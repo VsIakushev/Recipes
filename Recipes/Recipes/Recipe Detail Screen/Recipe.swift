@@ -2,7 +2,7 @@
 // Copyright © RoadMap. All rights reserved.
 
 /// Данные рецепта
-struct Recipe: Equatable {
+struct Recipe: Equatable, Codable {
     /// Название рецепта
     let title: String
     /// Изображение для рецепта

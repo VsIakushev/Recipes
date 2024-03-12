@@ -79,7 +79,7 @@ final class RecipeDetailsViewController: UIViewController {
         shareButton.tintColor = .black
 
         let addToFavoritesButton = UIBarButtonItem(
-            image: UIImage(named: recipe?.isFavorite ?? false ? "redFavorites" : "addfavorites"),
+            image: UIImage(named: recipe?.isFavorite ?? false ? "favoritesred" : "addfavorites"),
             style: .plain,
             target: self,
             action: #selector(addToFavoritesTaped)
