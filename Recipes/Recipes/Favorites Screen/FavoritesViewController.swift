@@ -20,7 +20,7 @@ final class FavoritesViewController: UIViewController {
 
     // MARK: - Public Properties
 
-    var recipes: [Recipes] = []
+    var recipes: [Recipe] = []
     var presenter: FavoritesPresenterProtocol?
     var officiant: Invoker? = Invoker.shared
     // MARK: - Public Methods
@@ -99,6 +99,7 @@ final class FavoritesViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         order(command: OpenFavoritesRecipesScreenCommand())
+        getFavRecipes()
     }
 
     // MARK: - Private Methods
@@ -194,6 +195,7 @@ extension FavoritesViewController {
 // MARK: - UITableViewDelegate
 
 extension FavoritesViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -226,6 +228,7 @@ extension FavoritesViewController: UITableViewDataSource {
         ) as? RecipesCell,
             let favorites = presenter?.getFavourites()
         else { return UITableViewCell() }
+        print(favorites)
         cell.configure(with: favorites[indexPath.row])
         return cell
     }
@@ -249,6 +252,7 @@ extension FavoritesViewController: FavoritesViewControllerProtocol {
     func getFavRecipes() {
         recipes = presenter?.getFavourites() ?? []
         recipesTableView.reloadData()
+        presenter?.checkIfFavouritesEmpty()
     }
 }
 
@@ -257,20 +261,17 @@ extension FavoritesViewController: RecipesViewProtocol {
 
     func caloriesButtonPressed(color: String, image: String) {}
 
-    func sortViewRecipes(recipes: [Recipes]) {}
+    func sortViewRecipes(recipes: [Recipe]) {}
 
     func reloadTableView() {
         recipesTableView.reloadData()
     }
 
-    func getRecipes(recipes: [Recipes]) {}
+    func getRecipes(recipes: [Recipe]) {}
 
     func goToTheCategory() {}
 
     func setTitle(_ title: String) {}
 
-    func getRecipes() {
-        // recipes = presenter?.getFavourites() ?? []
-//        recipesTableView.reloadData()
-    }
+    func getRecipes() {}
 }
