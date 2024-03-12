@@ -92,11 +92,11 @@ final class RecipesCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func configure(with items: Recipes) {
-        recipeImageView.image = UIImage(named: items.avatarRecipie)
-        titleRecipeLabel.text = items.titleRecipies
-        timeLabel.text = items.cookingTimeTitle + Constants.timeLabelText
-        pizzaLabel.text = items.caloriesTitle + Constants.pizzaLabelText
+    func configure(with items: Recipe) {
+        recipeImageView.image = UIImage(named: items.image)
+        titleRecipeLabel.text = items.title
+        timeLabel.text = String(items.cookingTime) + Constants.timeLabelText
+        pizzaLabel.text = String(items.energicKcal) + Constants.pizzaLabelText
     }
 
     // MARK: - Private Methods

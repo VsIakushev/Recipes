@@ -35,11 +35,4 @@ struct ProfileInfo {
     /// Количество бонусов у пользователя
     @UserDefaultsWrapper(key: "bonuses", defaultValue: 0) var bonuses: Int
 
-//    init(userName: String, userImage: String, email: String, password: String, bonuses: Int) {
-//        self.username = userName
-//        self.avatar = userImage
-//        self.bonuses = bonuses
-//        self.email = email
-//        self.password = password
-//    }
 }
