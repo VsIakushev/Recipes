@@ -22,6 +22,9 @@ final class RecipeViewController: UIViewController {
 
     var presenter: RecipePresenterProtocol?
     var officiant: Invoker? = Invoker.shared
+    
+    let networkService = NetworkService()
+
     // MARK: - Life Cycles
 
     override func viewDidLoad() {
@@ -30,6 +33,16 @@ final class RecipeViewController: UIViewController {
         setupCollectionView()
         collectionView.delegate = self
         navigationController?.navigationBar.isHidden = true
+        
+        
+        networkService.getRecipes { result in
+            switch result {
+            case let .success(recipes):
+                print("Received recipes: \(recipes)")
+            case let .failure(error):
+                print("Error fetching recipes: \(error)")
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
