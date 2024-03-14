@@ -37,9 +37,9 @@ class AppBuilder {
         return view
     }
 
-    func makeRecipesListModule(coordinator: RecipeCoordinator) -> RecipesListViewController {
+    func makeRecipesListModule(coordinator: RecipeCoordinator, recipeType: RecipeType) -> RecipesListViewController {
         let view = RecipesListViewController()
-        let allRecipesPresenter = AllRecipesPresenter(view: view, coordinator: coordinator)
+        let allRecipesPresenter = AllRecipesPresenter(view: view, coordinator: coordinator, recipeType: recipeType)
         view.presenter = allRecipesPresenter
         view.setupUI()
         return view

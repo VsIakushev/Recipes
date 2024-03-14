@@ -15,7 +15,7 @@ final class RecipeCoordinator: BaseCoodinator {
     }
 
     func pushCategoryDetails(for category: String) {
-        let categoryViewController = appBuilder.makeRecipesListModule(coordinator: self)
+        let categoryViewController = appBuilder.makeRecipesListModule(coordinator: self, recipeType: RecipeType.pancake )
         rootController.pushViewController(categoryViewController, animated: true)
         categoryViewController.categoryTitle = category
     }

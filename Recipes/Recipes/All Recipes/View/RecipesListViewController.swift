@@ -77,18 +77,6 @@ final class RecipesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-
-        // TODO: временно тут, для тестирования запроса категории Суп
-//        networkService.getRecipes(dishType: "Soup") { result in
-//            switch result {
-//            case let .success(recipes):
-//                self.recipesNetwork = recipes
-//                print(self.recipesNetwork.count, " рецептов в сетевом массиве")
-//            case let .failure(error):
-//                print("Error fetching recipes: \(error)")
-//            }
-//        }
-
         hideSkeleton()
         hidesBottomBarWhenPushed = true
     }
@@ -96,7 +84,7 @@ final class RecipesListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         titleLabel.text = categoryTitle
-        recipesTableView.reloadData()
+//        recipesTableView.reloadData()
         order(command: OpenAllRecipesScreenCommand())
     }
 
@@ -261,7 +249,7 @@ extension RecipesListViewController: RecipesViewProtocol {
     }
 
     func sortViewRecipes(recipes: [RecipeNetwork]) {
-        self.recipes = recipes
+        self.recipesNetwork = recipes
         print(recipes)
         print(self.recipes)
         recipesTableView.reloadData()
@@ -276,11 +264,8 @@ extension RecipesListViewController: RecipesViewProtocol {
     }
 
     func getRecipes(recipes: [RecipeNetwork]) {
-        print("Получено вот столько рецептов - \(recipes.count)")
+//        print("Получено вот столько рецептов - \(recipes.count)")
         self.recipesNetwork = recipes
-//        DispatchQueue.main.async{
-//            self.recipesTableView.reloadData()
-//        }
     }
 }
 

@@ -15,6 +15,7 @@ final class RecipesCell: UITableViewCell {
 
     // MARK: - VIsual Components
 
+//    private var image = ""
     private let backgroundCellView: UIView = {
         let uiView = UIView()
         uiView.backgroundColor = UIColor.background06()
@@ -93,9 +94,12 @@ final class RecipesCell: UITableViewCell {
     // MARK: - Public Methods
 
     func configure(with items: RecipeNetwork) {
-        NetworkService.loadImage(from: image) { image in
+        NetworkService.loadImage(from: items.image) { image in
             DispatchQueue.main.async {
                 self.recipeImageView.image = image
+                self.recipeImageView.clipsToBounds = true
+                self.recipeImageView.layer.cornerRadius = 12
+                self.recipeImageView.contentMode = .scaleAspectFill
                 
             }
         }
@@ -146,6 +150,7 @@ final class RecipesCell: UITableViewCell {
     private func setupAnchorsRecipeImageView() {
         recipeImageView.leadingAnchor.constraint(equalTo: backgroundCellView.leadingAnchor, constant: 10)
             .isActive = true
+        recipeImageView.trailingAnchor.constraint(equalTo: backgroundCellView.trailingAnchor, constant: -230).isActive = true
         recipeImageView.topAnchor.constraint(equalTo: backgroundCellView.topAnchor, constant: 10).isActive = true
         recipeImageView.bottomAnchor.constraint(equalTo: backgroundCellView.bottomAnchor, constant: -10).isActive = true
     }
