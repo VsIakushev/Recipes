@@ -113,29 +113,6 @@ final class RecipesCell: UITableViewCell {
     }
 
     // MARK: - Private Methods
-    
-    private func loadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
-        guard let imageUrl = URL(string: urlString) else {
-            print("Invalid URL")
-            completion(nil)
-            return
-        }
-        let session = URLSession.shared
-        let task = session.dataTask(with: imageUrl) { (data, response, error) in
-            guard error == nil, let data = data else {
-                print("Failed to load image:", error?.localizedDescription ?? "Unknown error")
-                completion(nil)
-                return
-            }
-            if let image = UIImage(data: data) {
-                completion(image)
-            } else {
-                print("Failed to create image from data")
-                completion(nil)
-            }
-        }
-        task.resume()
-    }
 
     private func setupViews() {
         selectionStyle = .none

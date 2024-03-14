@@ -77,7 +77,9 @@ final class RecipesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        networkService.getRecipes { result in
+        
+        //TODO: временно тут, для тестирования запроса категории Суп
+        networkService.getRecipes(dishType: "soup") { result in
             switch result {
             case let .success(recipes):
                 self.recipesNetwork = recipes
@@ -86,6 +88,7 @@ final class RecipesListViewController: UIViewController {
                 print("Error fetching recipes: \(error)")
             }
         }
+        
         hideSkeleton()
         hidesBottomBarWhenPushed = true
     }

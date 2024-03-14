@@ -5,26 +5,73 @@
 //  Created by Vermut xxx on 14.03.2024.
 //
 
-import Foundation
+import UIKit
 
-    /// Протокол NetworkServiceProtocol
-    protocol NetworkServiceProtocol {
-        /// Получение детального рецепта
-        func getRecipeDetail(_ uri: String, completion: @escaping (Result<RecipeNetwork, Error>) -> Void)
-        /// Получение рецептов
-        func getRecipes(completion: @escaping (Result<[RecipeNetwork], Error>) -> Void)
-    }
+/// Протокол NetworkServiceProtocol
+protocol NetworkServiceProtocol {
+    /// Получение детального рецепта
+    func getRecipeDetail(uri: String, completion: @escaping (Result<RecipeNetwork, Error>) -> Void)
+    /// Получение рецептов
+    func getRecipes(dishType: String, completion: @escaping (Result<[RecipeNetwork], Error>) -> Void)
+}
 
+/// Сервис сетевых запросов
 final class NetworkService: NetworkServiceProtocol {
-    func getRecipeDetail(_ uri: String, completion: @escaping (Result<RecipeNetwork, Error>) -> Void) {
+    // MARK: - Constants
+    private enum Constants {
+        static let baseURL = "https://api.edamam.com/api/recipes/v2"
+        static let type = "public"
+        static let appID = "eb15e1ec"
+        static let appKey = "41b2ee9152e7908a48d4dffdd80361ea"
+    }
+    
+    /// Функция загрузки отдельного рецепта
+    func getRecipeDetail(uri: String, completion: @escaping (Result<RecipeNetwork, Error>) -> Void) {
+        var components = URLComponents(string: Constants.baseURL + "/by-uri")
+        components?.queryItems = [
+            URLQueryItem(name: "type", value: Constants.type),
+            URLQueryItem(name: "app_id", value: Constants.appID),
+            URLQueryItem(name: "app_key", value: Constants.appKey),
+            URLQueryItem(name: "uri", value: uri)
+        ]
+        
+        if let url = components?.url {
+
+            let task = URLSession.shared.dataTask(with: url) { data, _, error in
+                if let error = error {
+                    print("error: \(error.localizedDescription)")
+                    completion(.failure(error))
+                    return
+                }
+                guard let data = data else { return }
+                do {
+                    let object = try JSONDecoder().decode(ResponseDTO.self, from: data)
+                    if let recipe = object.hits.first?.recipe {
+//                        print(recipe)
+                        completion(.success(RecipeNetwork(dto: recipe )))
+                    }
+                } catch {
+                    print("error decoding data: \(error.localizedDescription)")
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
         
     }
     
-    func getRecipes(completion: @escaping (Result<[RecipeNetwork], Error>) -> Void) {
+    /// Функция загрузки массива рецептов определенной категории
+    func getRecipes(dishType: String, completion: @escaping (Result<[RecipeNetwork], Error>) -> Void) {
         
+        var components = URLComponents(string: Constants.baseURL)
+        components?.queryItems = [
+            URLQueryItem(name: "type", value: Constants.type),
+            URLQueryItem(name: "app_id", value: Constants.appID),
+            URLQueryItem(name: "app_key", value: Constants.appKey),
+            URLQueryItem(name: "dishType", value: dishType)
+        ]
         
-//        if let url = URL(string: "https://api.edamam.com/api/recipes/v2") {
-        if let url = URL(string: "https://api.edamam.com/api/recipes/v2?type=public&app_id=eb15e1ec&app_key=41b2ee9152e7908a48d4dffdd80361ea&dishType=Soup") {
+        if let url = components?.url {
             URLSession.shared.dataTask(with: url) { (data, response, error) in
                 if error != nil {
                     print("error in request")
@@ -36,26 +83,41 @@ final class NetworkService: NetworkServiceProtocol {
                         do {
                             let data = try
                             JSONDecoder().decode(ResponseDTO.self, from: responseData)
-                            print("recipe name", data.hits[0].recipe.label)
-                            print("recipe quantity", data.hits.count)
-                            // array recipes = .map
-//                            var recipes: [RecipeDTO] = []
-//                            for hit in data.hits {
-//                                recipes.append(hit.recipe)
-//                            }
-                            
                             let recipes = data.hits.map { RecipeNetwork(dto: $0.recipe)}
-//                            let result: Result<[RecipeNetwork], Error> = .success(recipes)
                             completion(.success(recipes))
-
+                            
                         } catch {
                             print(error)
                         }
-                        
-                        
                     }
                 }
             }.resume()
         }
     }
+    
+    
+    /// Функция загрузки изображений
+    static func loadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
+        guard let imageUrl = URL(string: urlString) else {
+            print("Invalid URL")
+            completion(nil)
+            return
+        }
+        let session = URLSession.shared
+        let task = session.dataTask(with: imageUrl) { (data, response, error) in
+            guard error == nil, let data = data else {
+                print("Failed to load image:", error?.localizedDescription ?? "Unknown error")
+                completion(nil)
+                return
+            }
+            if let image = UIImage(data: data) {
+                completion(image)
+            } else {
+                print("Failed to create image from data")
+                completion(nil)
+            }
+        }
+        task.resume()
+    }
+    
 }
