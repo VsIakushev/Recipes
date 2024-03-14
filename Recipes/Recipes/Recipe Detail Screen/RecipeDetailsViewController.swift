@@ -20,10 +20,10 @@ final class RecipeDetailsViewController: UIViewController {
     var officiant: Invoker? = Invoker.shared
     let favoritesSingletone = FavoritesSingletone.shared
     var recipe: Recipe? {
-            didSet {
-                setupNavigation()
-            }
+        didSet {
+            setupNavigation()
         }
+    }
 
     // MARK: - Private Properties
 
@@ -41,7 +41,7 @@ final class RecipeDetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         order(command: OpenDetailedRecipeScreenCommand())
     }
-    
+
     // MARK: - Public Methods
 
     func setupUI() {
@@ -49,7 +49,7 @@ final class RecipeDetailsViewController: UIViewController {
     }
 
     // MARK: - Private Methods
-    
+
     private func order(command: Command) {
         guard let officiant = officiant else {
             print("error")

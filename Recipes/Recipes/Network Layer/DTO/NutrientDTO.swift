@@ -1,11 +1,8 @@
-//
-//  NutrientsDTO.swift
-//  Recipes
-//
-//  Created by Vermut xxx on 14.03.2024.
-//
+// NutrientDTO.swift
+// Copyright © RoadMap. All rights reserved.
 
 import Foundation
+
 ///  Нутриенты
 struct NutrientDTO: Codable {
     /// Количество нутриентов

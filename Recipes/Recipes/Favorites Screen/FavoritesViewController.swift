@@ -23,6 +23,7 @@ final class FavoritesViewController: UIViewController {
     var recipes: [Recipe] = []
     var presenter: FavoritesPresenterProtocol?
     var officiant: Invoker? = Invoker.shared
+
     // MARK: - Public Methods
 
     func setupUI() {
@@ -96,7 +97,7 @@ final class FavoritesViewController: UIViewController {
         setupUI()
         configureUI()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         order(command: OpenFavoritesRecipesScreenCommand())
         getFavRecipes()
@@ -112,7 +113,7 @@ final class FavoritesViewController: UIViewController {
         officiant.addCommand(OpenFavoritesRecipesScreenCommand())
         officiant.executeCommands()
     }
-    
+
     private func configureUI() {
         getFavRecipes()
         view.backgroundColor = .white
@@ -195,7 +196,6 @@ extension FavoritesViewController {
 // MARK: - UITableViewDelegate
 
 extension FavoritesViewController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }

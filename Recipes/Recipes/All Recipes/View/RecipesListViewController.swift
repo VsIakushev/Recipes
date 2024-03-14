@@ -77,9 +77,9 @@ final class RecipesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        
-        //TODO: временно тут, для тестирования запроса категории Суп
-        networkService.getRecipes(dishType: "soup") { result in
+
+        // TODO: временно тут, для тестирования запроса категории Суп
+        networkService.getRecipes(dishType: "Soup") { result in
             switch result {
             case let .success(recipes):
                 self.recipesNetwork = recipes
@@ -88,7 +88,7 @@ final class RecipesListViewController: UIViewController {
                 print("Error fetching recipes: \(error)")
             }
         }
-        
+
         hideSkeleton()
         hidesBottomBarWhenPushed = true
     }
@@ -125,7 +125,7 @@ final class RecipesListViewController: UIViewController {
         officiant.addCommand(OpenAllRecipesScreenCommand())
         officiant.executeCommands()
     }
-    
+
     private func makeFilterButton(button: UIButton, title: String) {
         button.setTitle(title, for: .normal)
         button.setImage(Constants.filterIconImage, for: .normal)
@@ -233,7 +233,6 @@ extension RecipesListViewController: UITableViewDataSource {
                 for: indexPath
             ) as? RecipesCell
             else { return UITableViewCell() }
-//            cell.configure(with: recipes[indexPath.row])
             cell.configure(with: recipes[indexPath.row])
             return cell
         }

@@ -1,9 +1,5 @@
-//
-//  NetworkService.swift
-//  Recipes
-//
-//  Created by Vermut xxx on 14.03.2024.
-//
+// NetworkService.swift
+// Copyright © RoadMap. All rights reserved.
 
 import UIKit
 
@@ -18,13 +14,14 @@ protocol NetworkServiceProtocol {
 /// Сервис сетевых запросов
 final class NetworkService: NetworkServiceProtocol {
     // MARK: - Constants
+
     private enum Constants {
         static let baseURL = "https://api.edamam.com/api/recipes/v2"
         static let type = "public"
         static let appID = "eb15e1ec"
         static let appKey = "41b2ee9152e7908a48d4dffdd80361ea"
     }
-    
+
     /// Функция загрузки отдельного рецепта
     func getRecipeDetail(uri: String, completion: @escaping (Result<RecipeNetwork, Error>) -> Void) {
         var components = URLComponents(string: Constants.baseURL + "/by-uri")
@@ -34,9 +31,8 @@ final class NetworkService: NetworkServiceProtocol {
             URLQueryItem(name: "app_key", value: Constants.appKey),
             URLQueryItem(name: "uri", value: uri)
         ]
-        
-        if let url = components?.url {
 
+        if let url = components?.url {
             let task = URLSession.shared.dataTask(with: url) { data, _, error in
                 if let error = error {
                     print("error: \(error.localizedDescription)")
@@ -48,7 +44,7 @@ final class NetworkService: NetworkServiceProtocol {
                     let object = try JSONDecoder().decode(ResponseDTO.self, from: data)
                     if let recipe = object.hits.first?.recipe {
 //                        print(recipe)
-                        completion(.success(RecipeNetwork(dto: recipe )))
+                        completion(.success(RecipeNetwork(dto: recipe)))
                     }
                 } catch {
                     print("error decoding data: \(error.localizedDescription)")
@@ -57,12 +53,10 @@ final class NetworkService: NetworkServiceProtocol {
             }
             task.resume()
         }
-        
     }
-    
+
     /// Функция загрузки массива рецептов определенной категории
     func getRecipes(dishType: String, completion: @escaping (Result<[RecipeNetwork], Error>) -> Void) {
-        
         var components = URLComponents(string: Constants.baseURL)
         components?.queryItems = [
             URLQueryItem(name: "type", value: Constants.type),
@@ -70,22 +64,22 @@ final class NetworkService: NetworkServiceProtocol {
             URLQueryItem(name: "app_key", value: Constants.appKey),
             URLQueryItem(name: "dishType", value: dishType)
         ]
-        
+
         if let url = components?.url {
-            URLSession.shared.dataTask(with: url) { (data, response, error) in
+            URLSession.shared.dataTask(with: url) { data, response, error in
                 if error != nil {
                     print("error in request")
                 } else {
                     if let resp = response as? HTTPURLResponse,
                        resp.statusCode == 200,
-                       let responseData = data {
-                        
+                       let responseData = data
+                    {
                         do {
                             let data = try
-                            JSONDecoder().decode(ResponseDTO.self, from: responseData)
-                            let recipes = data.hits.map { RecipeNetwork(dto: $0.recipe)}
+                                JSONDecoder().decode(ResponseDTO.self, from: responseData)
+                            let recipes = data.hits.map { RecipeNetwork(dto: $0.recipe) }
                             completion(.success(recipes))
-                            
+
                         } catch {
                             print(error)
                         }
@@ -94,8 +88,7 @@ final class NetworkService: NetworkServiceProtocol {
             }.resume()
         }
     }
-    
-    
+
     /// Функция загрузки изображений
     static func loadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
         guard let imageUrl = URL(string: urlString) else {
@@ -104,7 +97,7 @@ final class NetworkService: NetworkServiceProtocol {
             return
         }
         let session = URLSession.shared
-        let task = session.dataTask(with: imageUrl) { (data, response, error) in
+        let task = session.dataTask(with: imageUrl) { data, response, error in
             guard error == nil, let data = data else {
                 print("Failed to load image:", error?.localizedDescription ?? "Unknown error")
                 completion(nil)
@@ -119,5 +112,4 @@ final class NetworkService: NetworkServiceProtocol {
         }
         task.resume()
     }
-    
 }

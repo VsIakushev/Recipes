@@ -70,7 +70,7 @@ struct Recipe: Equatable, Codable {
             """
         )
     }
-    
+
     static func exampleRecipes() -> [Recipe] {
         [
             Recipe(
@@ -144,4 +144,3 @@ struct Recipe: Equatable, Codable {
 
     static var allRecipes: [Recipe] = exampleRecipes()
 }
-

@@ -1,11 +1,8 @@
-//
-//  HitDTO.swift
-//  Recipes
-//
-//  Created by Vermut xxx on 14.03.2024.
-//
+// HitDTO.swift
+// Copyright © RoadMap. All rights reserved.
 
 import Foundation
+
 /// Структура элемента массива хит
 struct HitDTO: Codable {
     /// Рецепт

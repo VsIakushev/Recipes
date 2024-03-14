@@ -2,7 +2,7 @@
 // Copyright © RoadMap. All rights reserved.
 
 /// Профиль пользователя
-//struct ProfileInfo {
+// struct ProfileInfo {
 //    /// Имя пользователя
 //    var username: String
 //    /// Название изображения аватарки пользователя
@@ -21,7 +21,7 @@
 //        self.email = email
 //        self.password = password
 //    }
-//}
+// }
 
 struct ProfileInfo {
     /// Имя пользователя
@@ -34,5 +34,4 @@ struct ProfileInfo {
     @UserDefaultsWrapper(key: "password", defaultValue: "") var password: String
     /// Количество бонусов у пользователя
     @UserDefaultsWrapper(key: "bonuses", defaultValue: 0) var bonuses: Int
-
 }

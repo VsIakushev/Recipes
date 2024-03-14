@@ -1,11 +1,8 @@
-//
-//  Recipe.swift
-//  Recipes
-//
-//  Created by Vermut xxx on 14.03.2024.
-//
+// RecipeNetwork.swift
+// Copyright © RoadMap. All rights reserved.
 
 import Foundation
+
 /// Рецепт детальный
 struct RecipeNetwork: Codable {
     /// Идентификатор

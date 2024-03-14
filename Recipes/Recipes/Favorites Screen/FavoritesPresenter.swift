@@ -50,11 +50,10 @@ extension FavoritesPresenter: FavoritesPresenterProtocol {
         guard let removedRecipe = view?.recipes.remove(at: recipeIndex) else {
             return
         }
-        
-        if let indexInFavoritesList = FavoritesSingletone.shared.favoritesList.firstIndex(of: removedRecipe) {
-                FavoritesSingletone.shared.favoritesList.remove(at: indexInFavoritesList)
-            }
 
+        if let indexInFavoritesList = FavoritesSingletone.shared.favoritesList.firstIndex(of: removedRecipe) {
+            FavoritesSingletone.shared.favoritesList.remove(at: indexInFavoritesList)
+        }
 
         for var item in Recipe.allRecipes where item == removedRecipe {
             item.isFavorite = false
@@ -62,7 +61,7 @@ extension FavoritesPresenter: FavoritesPresenterProtocol {
     }
 
     func getFavourites() -> [Recipe] {
-        return FavoritesSingletone.shared.favoritesList
+        FavoritesSingletone.shared.favoritesList
     }
 
     func checkIfFavouritesEmpty() {

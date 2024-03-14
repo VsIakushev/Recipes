@@ -103,7 +103,7 @@ extension AllRecipesPresenter: RecipeProtocol {
     func goToRecipeDetails(with recipe: Recipe) {
         recipesCoordinator?.pushReceiptDetails(with: recipe)
     }
-    
+
     func sortRecipes(category: [Recipe]) {
         var sorted = category
 

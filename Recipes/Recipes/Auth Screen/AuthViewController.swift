@@ -200,13 +200,13 @@ final class AuthViewController: UIViewController {
         super.viewDidLayoutSubviews()
         setupBackgroundColor()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         order(command: OpenAuthScreenCommand())
     }
 
     // MARK: - Private Methods
-    
+
     private func order(command: Command) {
         guard let officiant = officiant else {
             print("error")
@@ -215,7 +215,6 @@ final class AuthViewController: UIViewController {
         officiant.addCommand(OpenAuthScreenCommand())
         officiant.executeCommands()
     }
-
 
     private func setupUI() {
         setGestureRecognizer()

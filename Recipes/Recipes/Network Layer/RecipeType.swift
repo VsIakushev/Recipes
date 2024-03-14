@@ -1,11 +1,8 @@
-//
-//  RecipeType.swift
-//  Recipes
-//
-//  Created by Vermut xxx on 14.03.2024.
-//
+// RecipeType.swift
+// Copyright © RoadMap. All rights reserved.
 
 import Foundation
+
 /// Типы еды
 enum RecipeType: String {
     /// Салат
