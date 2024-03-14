@@ -157,7 +157,7 @@ extension AllRecipesPresenter: RecipeProtocol {
         if isSearching {
             return searchNames
         } else {
-            return sorted
+            return recipesNetwork
         }
     }
     

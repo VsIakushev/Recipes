@@ -220,6 +220,7 @@ extension RecipesListViewController: UITableViewDelegate {
 extension RecipesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let searchNames = presenter?.checkSearch() else { return 0 }
+        print(searchNames.count)
         return searchNames.count
     }
 
