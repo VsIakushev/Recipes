@@ -12,7 +12,9 @@ final class AppCoordinator: BaseCoodinator {
 
     override func start() {
         if "admin" == "admin" {
-            t​oAuth​()
+            toMain​()
+            // TODO: Временно отключена авторизация, чтобы быстрее тестировать
+//            t​oAuth​()
         } else {
             toMain​()
         }
