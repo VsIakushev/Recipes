@@ -22,6 +22,9 @@ final class RecipeViewController: UIViewController {
 
     var presenter: RecipePresenterProtocol?
     var officiant: Invoker? = Invoker.shared
+    
+    var networkService = NetworkService()
+
     // MARK: - Life Cycles
 
     override func viewDidLoad() {
@@ -30,6 +33,17 @@ final class RecipeViewController: UIViewController {
         setupCollectionView()
         collectionView.delegate = self
         navigationController?.navigationBar.isHidden = true
+        
+        //TODO: временно тут, для тестирования запроса
+        networkService.getRecipeDetail(uri: "http://www.edamam.com/ontologies/edamam.owl#recipe_37b6f298818e8827d6eb0880ec8ea627") { result in
+            switch result {
+            case let .success(recipe):
+                
+                print("Received recipes: \(recipe.name)")
+            case let .failure(error):
+                print("Error fetching recipes: \(error)")
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

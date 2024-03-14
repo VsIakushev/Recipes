@@ -64,7 +64,9 @@ final class RecipesListViewController: UIViewController {
     var presenter: AllRecipesPresenter?
     var officiant: Invoker? = Invoker.shared
     var favoritesSingletone = FavoritesSingletone.shared
+    var recipesNetwork: [RecipeNetwork] = []
 
+    var networkService = NetworkService()
 
     // MARK: - Private Properties
 
@@ -75,6 +77,18 @@ final class RecipesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        
+        //TODO: временно тут, для тестирования запроса категории Суп
+        networkService.getRecipes(dishType: "soup") { result in
+            switch result {
+            case let .success(recipes):
+                self.recipesNetwork = recipes
+                print(self.recipesNetwork.count, " рецептов в сетевом массиве")
+            case let .failure(error):
+                print("Error fetching recipes: \(error)")
+            }
+        }
+        
         hideSkeleton()
         hidesBottomBarWhenPushed = true
     }
@@ -219,6 +233,7 @@ extension RecipesListViewController: UITableViewDataSource {
                 for: indexPath
             ) as? RecipesCell
             else { return UITableViewCell() }
+//            cell.configure(with: recipes[indexPath.row])
             cell.configure(with: recipes[indexPath.row])
             return cell
         }

@@ -91,12 +91,25 @@ final class RecipesCell: UITableViewCell {
     }
 
     // MARK: - Public Methods
-
     func configure(with items: Recipe) {
+//    func configure(with items: RecipeNetwork) {
         recipeImageView.image = UIImage(named: items.image)
+//        print(items.image)
+//        loadImage(from: items.image) { image in
+//            if let image = image {
+//                   // Используем загруженное изображение
+//                   DispatchQueue.main.async {
+//                       // Например, установим его в imageView
+//                       self.imageView?.image = image
+//                       self.setupViews()
+//                   }
+//               } else {
+//                  print("ошибка при загрузке изображения")
+//               }
+//        }
         titleRecipeLabel.text = items.title
         timeLabel.text = String(items.cookingTime) + Constants.timeLabelText
-        pizzaLabel.text = String(items.energicKcal) + Constants.pizzaLabelText
+        pizzaLabel.text = String(describing: items.energicKcal) + Constants.pizzaLabelText
     }
 
     // MARK: - Private Methods
