@@ -4,7 +4,7 @@
 import UIKit
 
 /// Протокол NetworkServiceProtocol
-protocol NetworkServiceProtocol {
+protocol NetworkServiceProtocol: AnyObject {
     /// Получение детального рецепта
     func getRecipeDetail(uri: String, completion: @escaping (Result<RecipeNetwork, Error>) -> Void)
     /// Получение рецептов
