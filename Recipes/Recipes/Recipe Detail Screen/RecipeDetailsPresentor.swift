@@ -11,14 +11,16 @@ protocol RecipeDetailsViewControllerProtocol: AnyObject {
     func backButtonTapped()
     /// Вызов Алерта о функционале в разработке
     func showAlert()
+    func reloadData()
 }
 
 /// Протокол презентера экрана деталей рецепта
 protocol RecipeDetailsPresenterProtocol {
     /// Данные рецепта
-    var recipe: Recipe { get set }
+//    var recipe: Recipe { get set }
+    var recipe: RecipeNetwork? { get set }
     /// Координатор Рецептов для навигации
-    var recipeCoordinator: RecipeCoordinator? { get set }
+//    var recipeCoordinator: RecipeCoordinator? { get set }
     /// Отработка нажатия кнопки "Добавить в избранное"
     func addToFavorites()
     /// Отработка нажатия кнопки "Поделиться в Телеграм"
@@ -29,15 +31,33 @@ protocol RecipeDetailsPresenterProtocol {
     func addToFavoritesSingleton()
     /// избранный рецепт
     var favRecipe: Recipe? { get set }
+    
+    func getRecipe()
 }
 
 /// Презентер экрана деталей рецепта
 final class RecipeDetailsPresenter: RecipeDetailsPresenterProtocol {
-    weak var recipeCoordinator: RecipeCoordinator?
+    func getRecipe() {
+        networkService?
+            .getRecipeDetail(
+                uri: "http://www.edamam.com/ontologies/edamam.owl#recipe_37b6f298818e8827d6eb0880ec8ea627"
+            ) { result in
+                switch result {
+                case let .success(recipe):
+                    self.recipe = recipe
+                    self.view?.reloadData()
+                case let .failure(error):
+                    print("Error fetching recipes: \(error)")
+                }
+            }
+    }
+    
+    private weak var recipeCoordinator: RecipeCoordinator?
+    private weak var networkService: NetworkServiceProtocol?
 
     // MARK: - Public Properties
 
-    var recipe = Recipe.recipeExample()
+    var recipe: RecipeNetwork?
     var recipeForFavorites: Recipe?
     var selectedRecipe: Recipe?
     var favoritesSingletone = FavoritesSingletone.shared
@@ -49,9 +69,10 @@ final class RecipeDetailsPresenter: RecipeDetailsPresenterProtocol {
 
     // MARK: - Initializers
 
-    init(view: RecipeDetailsViewControllerProtocol, coordinator: RecipeCoordinator) {
+    init(view: RecipeDetailsViewControllerProtocol, coordinator: RecipeCoordinator, networkService: NetworkServiceProtocol) {
         self.view = view
         recipeCoordinator = coordinator
+        self.networkService = networkService
     }
 
     // MARK: - Public Methods
@@ -73,7 +94,9 @@ final class RecipeDetailsPresenter: RecipeDetailsPresenterProtocol {
         favoritesSingletone.addRecipeToFavorites(favRecipe)
     }
 
-    func shareViaTelegram() {}
+    func shareViaTelegram() {
+        view?.showAlert()
+    }
 
     func closeDetailsScreen() {
         recipeCoordinator?.closeRecipeDetails()

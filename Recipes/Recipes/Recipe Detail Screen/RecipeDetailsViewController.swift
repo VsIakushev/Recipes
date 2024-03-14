@@ -33,6 +33,7 @@ final class RecipeDetailsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        getRecipe()
         setupUI()
         setupTableView()
         setupNavigation()
@@ -49,6 +50,10 @@ final class RecipeDetailsViewController: UIViewController {
     }
 
     // MARK: - Private Methods
+    
+    private func getRecipe() {
+        presenter?.getRecipe()
+    }
 
     private func order(command: Command) {
         guard let officiant = officiant else {
@@ -122,6 +127,12 @@ extension RecipeDetailsViewController: RecipeDetailsViewControllerProtocol {
         alertController.addAction(okAction)
         present(alertController, animated: true)
     }
+    
+    func reloadData() {
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+        }
+    }
 
     @objc func backButtonTapped() {
         print("go back")
@@ -129,7 +140,7 @@ extension RecipeDetailsViewController: RecipeDetailsViewControllerProtocol {
     }
 
     @objc func shareViaTelegramButtonTapped() {
-        /// для реализации в дальнейшем
+        presenter?.shareViaTelegram()
     }
 
     @objc func addToFavoritesTaped() {
@@ -154,13 +165,11 @@ extension RecipeDetailsViewController: UITableViewDataSource {
                 ) as? ImageTableViewCell,
                 let presenter = presenter
             else { return UITableViewCell() }
-            cell.configureCell(
-                title: presenter.recipe.title,
-                image: presenter.recipe.image,
-                weight: presenter.recipe.weight,
-                cookingTime: presenter.recipe.cookingTime
-            )
-
+            
+            cell.configureCell(title: presenter.recipe?.name ?? "",
+                               image: presenter.recipe?.image ?? "",
+                               weight: Int(presenter.recipe?.weight ?? 0),
+                               cookingTime: presenter.recipe?.cookingTime ?? 0)
             return cell
 
         } else if indexPath.row == 1 {
@@ -172,10 +181,10 @@ extension RecipeDetailsViewController: UITableViewDataSource {
                 let presenter = presenter
             else { return UITableViewCell() }
             cell.configureCell(
-                kcal: presenter.recipe.energicKcal,
-                carbohydrates: presenter.recipe.carbohydrates,
-                fats: presenter.recipe.fats,
-                proteins: presenter.recipe.proteins
+                kcal: Int(presenter.recipe?.calories ?? 0),
+                carbohydrates: presenter.recipe?.carbohydrates ?? 0,
+                fats: presenter.recipe?.fats ?? 0,
+                proteins: presenter.recipe?.proteins ?? 0
             )
             return cell
 
@@ -187,7 +196,7 @@ extension RecipeDetailsViewController: UITableViewDataSource {
                 ) as? RecipeDescriptionTableViewCell,
                 let presenter = presenter
             else { return UITableViewCell() }
-            cell.configureCell(text: presenter.recipe.recipeDescription)
+            cell.configureCell(text: (presenter.recipe?.ingredientLines.joined(separator: "\n")) ?? "")
 
             return cell
         }

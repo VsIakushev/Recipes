@@ -15,7 +15,8 @@ class AppBuilder {
 
     func makeRecipeDetailsModule(coordinator: RecipeCoordinator) -> RecipeDetailsViewController {
         let view = RecipeDetailsViewController()
-        let recipeDetailsPresenter = RecipeDetailsPresenter(view: view, coordinator: coordinator)
+        let networkService = NetworkService()
+        let recipeDetailsPresenter = RecipeDetailsPresenter(view: view, coordinator: coordinator, networkService: networkService)
         view.presenter = recipeDetailsPresenter
         view.setupUI()
         return view

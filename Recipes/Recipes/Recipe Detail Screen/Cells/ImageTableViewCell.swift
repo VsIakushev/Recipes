@@ -50,6 +50,14 @@ class ImageTableViewCell: UITableViewCell {
     private func addViews() {
         contentView.addSubview(recipeTitleLabel)
         contentView.addSubview(recipeImageView)
+        
+        NetworkService.loadImage(from: image) { image in
+            DispatchQueue.main.async {
+                self.recipeImageView.image = image
+                self.recipeImageView.layer.cornerRadius = 24
+                self.recipeImageView.clipsToBounds = true
+            }
+        }
 
         recipeImageView.addSubview(roundView)
         roundView.addSubview(potImageView)
@@ -65,6 +73,8 @@ class ImageTableViewCell: UITableViewCell {
         recipeTitleLabel.textAlignment = .center
         recipeTitleLabel.translatesAutoresizingMaskIntoConstraints = false
 
+        
+        
         recipeImageView.image = UIImage(named: image)
         recipeImageView.layer.cornerRadius = 24
         recipeImageView.contentMode = .scaleAspectFit

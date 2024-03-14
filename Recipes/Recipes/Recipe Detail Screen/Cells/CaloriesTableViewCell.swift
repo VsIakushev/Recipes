@@ -50,7 +50,8 @@ final class CaloriesTableViewCell: UITableViewCell {
 
     private func setupUI() {
         backgroundColor = .white
-
+        
+        contentView.removeAllSubviews()
         contentView.addSubview(stackView)
         stackView.alignment = .fill
         stackView.spacing = 5
@@ -125,5 +126,13 @@ final class CaloriesTableViewCell: UITableViewCell {
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 40),
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
         ])
+    }
+}
+
+extension UIView {
+    func removeAllSubviews() {
+        for subview in subviews {
+            subview.removeFromSuperview()
+        }
     }
 }
