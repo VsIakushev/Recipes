@@ -92,11 +92,16 @@ final class RecipesCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func configure(with items: Recipe) {
+    func configure(with items: RecipeNetwork) {
         recipeImageView.image = UIImage(named: items.image)
-        titleRecipeLabel.text = items.title
+        titleRecipeLabel.text = items.name
         timeLabel.text = String(items.cookingTime) + Constants.timeLabelText
-        pizzaLabel.text = String(items.energicKcal) + Constants.pizzaLabelText
+//        pizzaLabel.text = String(items.calories) + Constants.pizzaLabelText
+        if let calories = items.calories {
+            pizzaLabel.text = "\(calories)" + Constants.pizzaLabelText
+        } else {
+            pizzaLabel.text = "Unknown" + Constants.pizzaLabelText
+        }
     }
 
     // MARK: - Private Methods

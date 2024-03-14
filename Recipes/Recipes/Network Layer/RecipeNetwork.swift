@@ -4,7 +4,7 @@
 import Foundation
 
 /// Рецепт детальный
-struct RecipeNetwork: Codable {
+struct RecipeNetwork: Codable, Equatable {
     /// Идентификатор
     let uri: String
     /// Картинка
