@@ -23,7 +23,7 @@ final class RecipeViewController: UIViewController {
     var presenter: RecipePresenterProtocol?
     var officiant: Invoker? = Invoker.shared
     
-    let networkService = NetworkService()
+    var networkService = NetworkService()
 
     // MARK: - Life Cycles
 
@@ -38,7 +38,8 @@ final class RecipeViewController: UIViewController {
         networkService.getRecipes { result in
             switch result {
             case let .success(recipes):
-                print("Received recipes: \(recipes)")
+                
+                print("Received recipes: \(recipes[0].name)")
             case let .failure(error):
                 print("Error fetching recipes: \(error)")
             }

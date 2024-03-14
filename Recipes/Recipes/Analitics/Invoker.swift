@@ -20,7 +20,7 @@ class Invoker {
     func executeCommands() {
         for command in commands {
             command.execute()
-            print(commands.count)
+//            print(commands.count)
             writeCommandsToFile()
         }
     }
@@ -41,7 +41,7 @@ class Invoker {
         
         let fileURL = folderURL.appendingPathComponent("commands.txt")
         let commandsString = commands.map { $0.description() }.joined(separator: "\n")
-        print(folderURL)
+//        print(folderURL)
         
         do {
             try commandsString.write(to: fileURL, atomically: true, encoding: .utf8)

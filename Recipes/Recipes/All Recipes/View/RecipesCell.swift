@@ -91,15 +91,51 @@ final class RecipesCell: UITableViewCell {
     }
 
     // MARK: - Public Methods
-
     func configure(with items: Recipe) {
+//    func configure(with items: RecipeNetwork) {
         recipeImageView.image = UIImage(named: items.image)
+//        print(items.image)
+//        loadImage(from: items.image) { image in
+//            if let image = image {
+//                   // Используем загруженное изображение
+//                   DispatchQueue.main.async {
+//                       // Например, установим его в imageView
+//                       self.imageView?.image = image
+//                       self.setupViews()
+//                   }
+//               } else {
+//                  print("ошибка при загрузке изображения")
+//               }
+//        }
         titleRecipeLabel.text = items.title
         timeLabel.text = String(items.cookingTime) + Constants.timeLabelText
-        pizzaLabel.text = String(items.energicKcal) + Constants.pizzaLabelText
+        pizzaLabel.text = String(describing: items.energicKcal) + Constants.pizzaLabelText
     }
 
     // MARK: - Private Methods
+    
+    private func loadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
+        guard let imageUrl = URL(string: urlString) else {
+            print("Invalid URL")
+            completion(nil)
+            return
+        }
+        let session = URLSession.shared
+        let task = session.dataTask(with: imageUrl) { (data, response, error) in
+            guard error == nil, let data = data else {
+                print("Failed to load image:", error?.localizedDescription ?? "Unknown error")
+                completion(nil)
+                return
+            }
+            if let image = UIImage(data: data) {
+                completion(image)
+            } else {
+                print("Failed to create image from data")
+                completion(nil)
+            }
+        }
+        task.resume()
+    }
 
     private func setupViews() {
         selectionStyle = .none

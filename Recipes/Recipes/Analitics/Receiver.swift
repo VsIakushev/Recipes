@@ -8,27 +8,27 @@
 import Foundation
 
 class Receiver {
-        func openCategoryScreenCommand() {
-            print("открыл категории")
-        }
+    func openCategoryScreenCommand() {
+//        print("открыл категории")
+    }
     
     func openAllRecipesScreenCommand() {
-    print("открыл все рецепты")
+//        print("открыл все рецепты")
     }
     
     func openDetailedRecipeScreenCommand() {
-    print("открыл детальный рецепт")
+//        print("открыл детальный рецепт")
     }
     
     func openFavoritesRecipesScreenCommand() {
-    print("открыл избранные")
+//        print("открыл избранные")
     }
     
     func openProfileScreenCommand() {
-    print("открыл профиль")
+//        print("открыл профиль")
     }
     
     func openAuthScreenCommand() {
-    print("открыл авторизацию")
+//        print("открыл авторизацию")
     }
-} 
+}

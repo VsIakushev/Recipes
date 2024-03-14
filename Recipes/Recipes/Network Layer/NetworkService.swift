@@ -21,7 +21,10 @@ final class NetworkService: NetworkServiceProtocol {
     }
     
     func getRecipes(completion: @escaping (Result<[RecipeNetwork], Error>) -> Void) {
-        if let url = URL(string: "https://api.edamam.com/api/recipes/v2") {
+        
+        
+//        if let url = URL(string: "https://api.edamam.com/api/recipes/v2") {
+        if let url = URL(string: "https://api.edamam.com/api/recipes/v2?type=public&app_id=eb15e1ec&app_key=41b2ee9152e7908a48d4dffdd80361ea&dishType=Soup") {
             URLSession.shared.dataTask(with: url) { (data, response, error) in
                 if error != nil {
                     print("error in request")
@@ -30,14 +33,29 @@ final class NetworkService: NetworkServiceProtocol {
                        resp.statusCode == 200,
                        let responseData = data {
                         
-                        let recipes = try?
-                        JSONDecoder().decode([RecipeNetwork].self, from: responseData)
-                        print(recipes)
+                        do {
+                            let data = try
+                            JSONDecoder().decode(ResponseDTO.self, from: responseData)
+                            print("recipe name", data.hits[0].recipe.label)
+                            print("recipe quantity", data.hits.count)
+                            // array recipes = .map
+//                            var recipes: [RecipeDTO] = []
+//                            for hit in data.hits {
+//                                recipes.append(hit.recipe)
+//                            }
+                            
+                            let recipes = data.hits.map { RecipeNetwork(dto: $0.recipe)}
+//                            let result: Result<[RecipeNetwork], Error> = .success(recipes)
+                            completion(.success(recipes))
+
+                        } catch {
+                            print(error)
+                        }
+                        
+                        
                     }
                 }
             }.resume()
         }
     }
-    
-    
 }
