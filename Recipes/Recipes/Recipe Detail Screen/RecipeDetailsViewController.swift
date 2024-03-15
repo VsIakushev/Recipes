@@ -240,6 +240,10 @@ extension RecipeDetailsViewController: UITableViewDataSource {
                 withIdentifier: Constants.errorDetailsCellIdentifier,
                 for: indexPath
             ) as? ErrorDetailsCell else { return UITableViewCell() }
+            cell.reloadButtonAction = { [weak self] in
+                self?.presenter?.getRecipe()
+                print("reload pressed")
+            }
             return cell
         }
     }
