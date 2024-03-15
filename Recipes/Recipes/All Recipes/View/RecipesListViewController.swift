@@ -84,6 +84,7 @@ final class RecipesListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         titleLabel.text = categoryTitle
+        print(categoryTitle)
 //        recipesTableView.reloadData()
         order(command: OpenAllRecipesScreenCommand())
     }
@@ -264,8 +265,8 @@ extension RecipesListViewController: RecipesViewProtocol {
     }
 
     func getRecipes(recipes: [RecipeNetwork]) {
-//        print("Получено вот столько рецептов - \(recipes.count)")
         self.recipesNetwork = recipes
+        recipesTableView.reloadData()
     }
 }
 

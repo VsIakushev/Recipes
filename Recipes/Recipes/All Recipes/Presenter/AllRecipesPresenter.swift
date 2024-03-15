@@ -21,7 +21,7 @@ protocol RecipesViewProtocol: AnyObject {
 /// Протокол презентера
 protocol RecipeProtocol: AnyObject {
     /// получить рецепты
-    func getReceipts()
+    func getReceipts(searchString: String?)
     /// переход к деталям рецепта
     func goToRecipeDetails(with recipe: RecipeNetwork)
     /// переход к категориям
@@ -36,6 +36,8 @@ protocol RecipeProtocol: AnyObject {
     func stopSearch()
     /// отсортировать рецепты
     func sortRecipes(category: [RecipeNetwork])
+    /// Название категории
+    var categoryTitle: String { get }
     
 }
 
@@ -46,6 +48,7 @@ final class AllRecipesPresenter {
         static let filterHigh = "filterHigh"
         static let background06 = "background06"
         static let filterIcon = "filterIcon"
+        static let vegetarianText = "vegetarian"
     }
 
     private weak var view: RecipesViewProtocol?
@@ -54,21 +57,20 @@ final class AllRecipesPresenter {
     private var user: Recipe?
     private var isSearching = false
     private var searchNames: [RecipeNetwork] = []
-//    private var recipes = Recipe.allRecipes
     private var recipes: [RecipeNetwork] = []
     private var sortedCalories = SortedCalories.none
     private var sortedTime = SortedTime.none
-//    private var sorted = Recipe.allRecipes
     private var sorted: [RecipeNetwork] = []
     private var recipeDetailsPresenter: RecipeDetailsPresenter?
     private var networkService = NetworkService()
     var recipesNetwork: [RecipeNetwork] = []
-    var recipeType: RecipeType
+    var categoryTitle: String = ""
+    private var category: RecipeType
 
-
-    init(view: RecipesViewProtocol, coordinator: RecipeCoordinator, recipeType: RecipeType) {
+    init(view: RecipesViewProtocol, coordinator: RecipeCoordinator, categoryTitle: String, category: RecipeType) {
         self.view = view
-        self.recipeType = recipeType
+        self.categoryTitle = categoryTitle
+        self.category = category
         recipesCoordinator = coordinator
     }
 
@@ -109,6 +111,7 @@ final class AllRecipesPresenter {
 // MARK: AllRecipesPresenter + RecipeProtocol
 
 extension AllRecipesPresenter: RecipeProtocol {
+    
     func goToRecipeDetails(with recipe: RecipeNetwork) {
         recipesCoordinator?.pushReceiptDetails(with: recipe)
     }
@@ -117,7 +120,6 @@ extension AllRecipesPresenter: RecipeProtocol {
         var sorted: [RecipeNetwork]
 
         if sortedCalories == .none && sortedTime == .none {
-            // Если сортировка не включена, перемешиваем элементы массива
             sorted = category.shuffled()
         } else {
             sorted = category
@@ -185,6 +187,7 @@ extension AllRecipesPresenter: RecipeProtocol {
             view?.reloadTableView()
             return
         }
+        
         isSearching = true
         searchNames = recipesNetwork.filter { $0.name.lowercased().contains(text.lowercased()) }
         view?.reloadTableView()
@@ -194,20 +197,61 @@ extension AllRecipesPresenter: RecipeProtocol {
         view?.goToTheCategory()
     }
     
-    func getReceipts() {
-        //        view?.getRecipes(recipes: Recipe.allRecipes)
-        networkService.getRecipes(dishType: recipeType.rawValue) { result in
-            switch result {
-            case let .success(recipes):
-                self.recipesNetwork = recipes
-                print(self.recipesNetwork.count, " рецептов в сетевом массиве")
-                self.view?.getRecipes(recipes: recipes)
-                DispatchQueue.main.async{
-                    self.view?.reloadTableView()
-                }
 
-            case let .failure(error):
-                print("Error fetching recipes: \(error)")
+    func getReceipts(searchString: String? = nil) {
+        var health: String?
+
+        if category == .sideDish {
+            health = Constants.vegetarianText
+        }
+
+        if let searchString = searchString {
+            var query = category.rawValue
+            if !query.isEmpty {
+                query.append(" ")
+            }
+            query.append(searchString)
+            fetchRecipes(health: health, query: query)
+        } else {
+            fetchRecipes(health: health, query: category.rawValue)
+        }
+    }
+
+    private func fetchRecipes(health: String?, query: String?) {
+        networkService.getRecipes(dishType: category, health: health, query: query) { [weak self] result in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                switch result {
+                case let .success(recipes):
+                    self.recipesNetwork = recipes
+                    print(self.recipesNetwork.count, " рецептов в сетевом массиве")
+                    self.view?.getRecipes(recipes: recipes)
+                    DispatchQueue.main.async {
+                        self.view?.reloadTableView()
+                    }
+                    
+                case let .failure(error):
+                    print("Error fetching recipes: \(error)")
+                }
+            }
+        }
+    
+
+        networkService.getRecipes(dishType: category, health: health, query: query) { [weak self] result in
+            DispatchQueue.main.async {
+                guard let self else { return }
+                switch result {
+                case let .success(recipes):
+                    self.recipesNetwork = recipes
+                    print(self.recipesNetwork.count, " рецептов в сетевом массиве")
+                    self.view?.getRecipes(recipes: recipes)
+                    DispatchQueue.main.async{
+                        self.view?.reloadTableView()
+                    }
+                    
+                case let .failure(error):
+                    print("Error fetching recipes: \(error)")
+                }
             }
         }
     }

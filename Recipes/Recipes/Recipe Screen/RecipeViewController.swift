@@ -111,7 +111,10 @@ extension RecipeViewController: RecipeViewControllerProtocol {}
 
 extension RecipeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        presenter?.goToCategoryListScreen(for: presenter?.categories[indexPath.row].title ?? "")
+        guard let selectedCategory = presenter?.categories[indexPath.item] else {
+                return
+            }
+            presenter?.goToCategoryListScreen(for: selectedCategory.type, categoryName: selectedCategory.title)
     }
 }
 

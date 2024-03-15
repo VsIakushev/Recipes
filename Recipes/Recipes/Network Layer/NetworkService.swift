@@ -8,7 +8,9 @@ protocol NetworkServiceProtocol {
     /// Получение детального рецепта
     func getRecipeDetail(uri: String, completion: @escaping (Result<RecipeNetwork, Error>) -> Void)
     /// Получение рецептов
-    func getRecipes(dishType: String, completion: @escaping (Result<[RecipeNetwork], Error>) -> Void)
+    func getRecipes(dishType: RecipeType, health: String?,
+                    query: String?, completion: @escaping (Result<[RecipeNetwork], Error>) -> Void)
+
 }
 
 /// Сервис сетевых запросов
@@ -20,7 +22,24 @@ final class NetworkService: NetworkServiceProtocol {
         static let type = "public"
         static let appID = "eb15e1ec"
         static let appKey = "41b2ee9152e7908a48d4dffdd80361ea"
+        static let dishTypeKey = "dishType"
+                static let queryKey = "q"
+                static let healthKey = "health"
+                static let uriKey = "uri"
     }
+
+    private let baseUrlComponents = {
+            var component = URLComponents()
+            component.scheme = "https"
+            component.host = "api.edamam.com"
+            component.path = "/api/recipes/v2"
+            component.queryItems = [
+                .init(name: "app_id", value: Constants.appID),
+                .init(name: "app_key", value: Constants.appKey),
+                .init(name: "type", value: Constants.type)
+            ]
+            return component
+        }()
 
     /// Функция загрузки отдельного рецепта
     func getRecipeDetail(uri: String, completion: @escaping (Result<RecipeNetwork, Error>) -> Void) {
@@ -43,7 +62,6 @@ final class NetworkService: NetworkServiceProtocol {
                 do {
                     let object = try JSONDecoder().decode(ResponseDTO.self, from: data)
                     if let recipe = object.hits.first?.recipe {
-//                        print(recipe)
                         completion(.success(RecipeNetwork(dto: recipe)))
                     }
                 } catch {
@@ -56,37 +74,39 @@ final class NetworkService: NetworkServiceProtocol {
     }
 
     /// Функция загрузки массива рецептов определенной категории
-    func getRecipes(dishType: String, completion: @escaping (Result<[RecipeNetwork], Error>) -> Void) {
-        var components = URLComponents(string: Constants.baseURL)
-        components?.queryItems = [
-            URLQueryItem(name: "type", value: Constants.type),
-            URLQueryItem(name: "app_id", value: Constants.appID),
-            URLQueryItem(name: "app_key", value: Constants.appKey),
-            URLQueryItem(name: "dishType", value: dishType)
-        ]
-
-        if let url = components?.url {
-            URLSession.shared.dataTask(with: url) { data, response, error in
-                if error != nil {
-                    print("error in request")
-                } else {
-                    if let resp = response as? HTTPURLResponse,
-                       resp.statusCode == 200,
-                       let responseData = data
-                    {
-                        do {
-                            let data = try
-                                JSONDecoder().decode(ResponseDTO.self, from: responseData)
-                            let recipes = data.hits.map { RecipeNetwork(dto: $0.recipe) }
-                            completion(.success(recipes))
-
-                        } catch {
-                            print(error)
-                        }
-                    }
-                }
-            }.resume()
+    
+    func getRecipes(
+        dishType: RecipeType,
+        health: String?,
+        query: String?,
+        completion: @escaping (Result<[RecipeNetwork], Error>) -> Void
+    ) {
+        var baseUrlComponents = baseUrlComponents
+        baseUrlComponents.queryItems?.append(.init(name: Constants.dishTypeKey, value: dishType.dishCategory))
+        if let query = query {
+            baseUrlComponents.queryItems?.append(.init(name: Constants.queryKey, value: query))
         }
+        if let health = health {
+            baseUrlComponents.queryItems?.append(.init(name: Constants.healthKey, value: health))
+        }
+
+        guard let url = baseUrlComponents.url else { return }
+
+        URLSession.shared.dataTask(with: url) { data, _, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            guard let data = data else { return }
+
+            do {
+                let result = try JSONDecoder().decode(ResponseDTO.self, from: data)
+                let recipes = result.hits.map { RecipeNetwork(dto: $0.recipe) }
+                completion(.success(recipes))
+            } catch {
+                completion(.failure(error))
+            }
+        }.resume()
     }
 
     /// Функция загрузки изображений

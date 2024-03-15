@@ -4,18 +4,18 @@
 struct RecipeCategory {
     let title: String
     let image: String
+    let type: RecipeType
 
     static func createCategories() -> [RecipeCategory] {
         [
-            .init(title: "Salad", image: "salad"),
-            .init(title: "Soup", image: "soup"),
-            .init(title: "Chicken", image: "chicken"),
-            .init(title: "Meat", image: "meat"),
-            .init(title: "Fish", image: "fish"),
-            .init(title: "Side dish", image: "sidedish"),
-            .init(title: "Drinks", image: "drinks"),
-            .init(title: "Pancake", image: "pancakes"),
-            .init(title: "Desserts", image: "desserts"),
-        ]
+            .init(title: "Salad", image: "salad", type: .salad),
+            .init(title: "Soup", image: "soup", type: .soup),
+            .init(title: "Chicken", image: "chicken", type: .chicken),
+            .init(title: "Meat", image: "meat", type: .meat),
+            .init(title: "Fish", image: "fish", type: .fish),
+            .init(title: "Side dish", image: "sidedish", type: .sideDish),
+            .init(title: "Drinks", image: "drinks", type: .drinks),
+            .init(title: "Pancake", image: "pancakes", type: .pancake),
+            .init(title: "Desserts", image: "desserts", type: .desserts),        ]
     }
 }
