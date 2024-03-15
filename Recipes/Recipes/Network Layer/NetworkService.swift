@@ -92,10 +92,12 @@ final class NetworkService: NetworkServiceProtocol {
     /// Функция загрузки изображений
     static func loadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
         guard let imageUrl = URL(string: urlString) else {
-            print("Invalid URL")
+            print("Invalid image URL")
+            
             completion(nil)
             return
         }
+        print("image URL:", imageUrl)
         let session = URLSession.shared
         let task = session.dataTask(with: imageUrl) { data, response, error in
             guard error == nil, let data = data else {

@@ -42,6 +42,8 @@
 		57441A262B98706000A8A41F /* StateShimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441A252B98706000A8A41F /* StateShimmer.swift */; };
 		57441A822B9AE7EE00A8A41F /* ProfileMemento.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441A812B9AE7EE00A8A41F /* ProfileMemento.swift */; };
 		57441AA82B9BEF0400A8A41F /* ProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441AA72B9BEF0400A8A41F /* ProfileDataManager.swift */; };
+		5770C47B2BA3E42E004C9B90 /* ShimmerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5770C47A2BA3E42E004C9B90 /* ShimmerCell.swift */; };
+		5770C47D2BA3FCAB004C9B90 /* ErrorDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5770C47C2BA3FCAB004C9B90 /* ErrorDetailsCell.swift */; };
 		57F4EBB92B8F270B00ADA7AA /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBB82B8F270B00ADA7AA /* ProfileTableViewCell.swift */; };
 		57F4EBBB2B8F272100ADA7AA /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */; };
 		57F4EBBD2B8F273500ADA7AA /* ProfileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBBC2B8F273500ADA7AA /* ProfileButton.swift */; };
@@ -108,6 +110,8 @@
 		57441A252B98706000A8A41F /* StateShimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateShimmer.swift; sourceTree = "<group>"; };
 		57441A812B9AE7EE00A8A41F /* ProfileMemento.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMemento.swift; sourceTree = "<group>"; };
 		57441AA72B9BEF0400A8A41F /* ProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataManager.swift; sourceTree = "<group>"; };
+		5770C47A2BA3E42E004C9B90 /* ShimmerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerCell.swift; sourceTree = "<group>"; };
+		5770C47C2BA3FCAB004C9B90 /* ErrorDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDetailsCell.swift; sourceTree = "<group>"; };
 		57F4EBB82B8F270B00ADA7AA /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
 		57F4EBBC2B8F273500ADA7AA /* ProfileButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileButton.swift; sourceTree = "<group>"; };
@@ -209,14 +213,14 @@
 		5733135A2B73215B00092647 /* Recipes */ = {
 			isa = PBXGroup;
 			children = (
-				DA55B4042BA2098B00C73006 /* Network Layer */,
-				DABB747F2B9FE3440046C7E1 /* Singletone */,
-				DA7FF19A2B9AD81F006EE0A6 /* Analitics */,
 				5733135B2B73215B00092647 /* AppDelegate.swift */,
 				5733135D2B73215B00092647 /* SceneDelegate.swift */,
 				5722C30F2B8DBED000ED2AD2 /* MainTabBarViewController.swift */,
-				57441A752B9A8CB900A8A41F /* UserDefaultsManager */,
 				574419F22B97E43D00A8A41F /* Supporting Files */,
+				DA55B4042BA2098B00C73006 /* Network Layer */,
+				DABB747F2B9FE3440046C7E1 /* Singletone */,
+				DA7FF19A2B9AD81F006EE0A6 /* Analitics */,
+				57441A752B9A8CB900A8A41F /* UserDefaultsManager */,
 				DA0B3D692B8E041A00F7DE48 /* Auth Screen */,
 				57F4EBF32B902CEE00ADA7AA /* Recipe Screen */,
 				574419722B92644300A8A41F /* Recipe Detail Screen */,
@@ -270,6 +274,8 @@
 		5744197B2B9274E300A8A41F /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				5770C47A2BA3E42E004C9B90 /* ShimmerCell.swift */,
+				5770C47C2BA3FCAB004C9B90 /* ErrorDetailsCell.swift */,
 				5744197C2B92752800A8A41F /* ImageTableViewCell.swift */,
 				5744197E2B92754D00A8A41F /* CaloriesTableViewCell.swift */,
 				574419802B92756D00A8A41F /* RecipeDescriptionTableViewCell.swift */,
@@ -588,6 +594,7 @@
 				57071C762B90952F00425D68 /* BottomSheetPresenter.swift in Sources */,
 				DA7FF19C2B9AD85A006EE0A6 /* Command.swift in Sources */,
 				DA7FF1A62B9BEC49006EE0A6 /* UserDefaultsWrapper.swift in Sources */,
+				5770C47B2BA3E42E004C9B90 /* ShimmerCell.swift in Sources */,
 				5722C3182B8DD27100ED2AD2 /* FavoritesViewController.swift in Sources */,
 				57441AA82B9BEF0400A8A41F /* ProfileDataManager.swift in Sources */,
 				5722C3062B8DBDDB00ED2AD2 /* BaseCoordinator.swift in Sources */,
@@ -598,6 +605,7 @@
 				57071C7B2B90A1CD00425D68 /* ClosuresTypealiases.swift in Sources */,
 				5744197D2B92752800A8A41F /* ImageTableViewCell.swift in Sources */,
 				57F4EBEF2B8FEFEF00ADA7AA /* ProfileInfo.swift in Sources */,
+				5770C47D2BA3FCAB004C9B90 /* ErrorDetailsCell.swift in Sources */,
 				57F4EBEB2B8FDF8100ADA7AA /* ProfilePresenter.swift in Sources */,
 				57F4EBBB2B8F272100ADA7AA /* ButtonTableViewCell.swift in Sources */,
 			);
