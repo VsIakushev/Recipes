@@ -15,6 +15,7 @@ final class RecipesCell: UITableViewCell {
 
     // MARK: - VIsual Components
 
+//    private var image = ""
     private let backgroundCellView: UIView = {
         let uiView = UIView()
         uiView.backgroundColor = UIColor.background06()
@@ -92,11 +93,25 @@ final class RecipesCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func configure(with items: Recipe) {
-        recipeImageView.image = UIImage(named: items.image)
-        titleRecipeLabel.text = items.title
+    func configure(with items: RecipeNetwork) {
+        NetworkService.loadImage(from: items.image) { image in
+            DispatchQueue.main.async {
+                self.recipeImageView.image = image
+                self.recipeImageView.clipsToBounds = true
+                self.recipeImageView.layer.cornerRadius = 12
+                self.recipeImageView.contentMode = .scaleAspectFill
+                
+            }
+        }
+//        recipeImageView.image = UIImage(named: items.image)
+        titleRecipeLabel.text = items.name
         timeLabel.text = String(items.cookingTime) + Constants.timeLabelText
-        pizzaLabel.text = String(items.energicKcal) + Constants.pizzaLabelText
+//        pizzaLabel.text = String(items.calories) + Constants.pizzaLabelText
+        if let calories = items.calories {
+            pizzaLabel.text = "\(Int(calories))" + Constants.pizzaLabelText
+        } else {
+            pizzaLabel.text = "Unknown" + Constants.pizzaLabelText
+        }
     }
 
     // MARK: - Private Methods
@@ -135,6 +150,7 @@ final class RecipesCell: UITableViewCell {
     private func setupAnchorsRecipeImageView() {
         recipeImageView.leadingAnchor.constraint(equalTo: backgroundCellView.leadingAnchor, constant: 10)
             .isActive = true
+        recipeImageView.trailingAnchor.constraint(equalTo: backgroundCellView.trailingAnchor, constant: -230).isActive = true
         recipeImageView.topAnchor.constraint(equalTo: backgroundCellView.topAnchor, constant: 10).isActive = true
         recipeImageView.bottomAnchor.constraint(equalTo: backgroundCellView.bottomAnchor, constant: -10).isActive = true
     }

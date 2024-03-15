@@ -14,10 +14,10 @@ final class RecipeCoordinator: BaseCoodinator {
         rootController = UINavigationController(rootViewController: view)
     }
 
-    func pushCategoryDetails(for category: String) {
-        let categoryViewController = appBuilder.makeRecipesListModule(coordinator: self)
+    func pushCategoryDetails(for category: RecipeType, categoryName: String) {
+        let categoryViewController = appBuilder.makeRecipesListModule(coordinator: self, categoryTitle: categoryName, category: category)
         rootController.pushViewController(categoryViewController, animated: true)
-        categoryViewController.categoryTitle = category
+        categoryViewController.categoryTitle = categoryName
     }
 
     func closeRecipeDetails() {
@@ -29,7 +29,7 @@ final class RecipeCoordinator: BaseCoodinator {
         rootController.pushViewController(profileViewController, animated: true)
     }
 
-    func pushReceiptDetails(with recipe: Recipe) {
+    func pushReceiptDetails(with recipe: RecipeNetwork) {
         let recipeDetailViewController = appBuilder.makeRecipeDetailsModule(coordinator: self)
         recipeDetailViewController.recipe = recipe
         rootController.pushViewController(recipeDetailViewController, animated: true)

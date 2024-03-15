@@ -85,7 +85,7 @@ final class RecipeDetailsPresenter: RecipeDetailsPresenterProtocol {
 
 //    var recipe: RecipeNetwork?
     var recipeForFavorites: Recipe?
-    var selectedRecipe: Recipe?
+    var selectedRecipe: RecipeNetwork?
     var favoritesSingletone = FavoritesSingletone.shared
     var favRecipe: Recipe?
 

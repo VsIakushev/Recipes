@@ -9,7 +9,7 @@ protocol RecipePresenterProtocol {
     /// Категории Рецептов
     var categories: [RecipeCategory] { get set }
     /// Переход на экран Категории рецептов
-    func goToCategoryListScreen(for category: String)
+    func goToCategoryListScreen(for category: RecipeType, categoryName: String)
 }
 
 /// Презентер экрана Рецептов
@@ -32,8 +32,8 @@ final class RecipePresenter: RecipePresenterProtocol {
 
     // MARK: - Public Methods
 
-    func goToCategoryListScreen(for category: String) {
-        recipeCoordinator?.pushCategoryDetails(for: category)
+    func goToCategoryListScreen(for category: RecipeType, categoryName: String) {
+        recipeCoordinator?.pushCategoryDetails(for: category, categoryName: categoryName)
     }
 
     func onTap() {

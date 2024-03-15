@@ -59,7 +59,7 @@ final class RecipesListViewController: UIViewController {
 
     // MARK: - Public Properties
 
-    var recipes: [Recipe] = []
+    var recipes: [RecipeNetwork] = []
     var categoryTitle: String = ""
     var presenter: AllRecipesPresenter?
     var officiant: Invoker? = Invoker.shared
@@ -77,18 +77,6 @@ final class RecipesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-
-        // TODO: временно тут, для тестирования запроса категории Суп
-        networkService.getRecipes(dishType: "Soup") { result in
-            switch result {
-            case let .success(recipes):
-                self.recipesNetwork = recipes
-                print(self.recipesNetwork.count, " рецептов в сетевом массиве")
-            case let .failure(error):
-                print("Error fetching recipes: \(error)")
-            }
-        }
-
         hideSkeleton()
         hidesBottomBarWhenPushed = true
     }
@@ -96,7 +84,8 @@ final class RecipesListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         titleLabel.text = categoryTitle
-        recipesTableView.reloadData()
+        print(categoryTitle)
+//        recipesTableView.reloadData()
         order(command: OpenAllRecipesScreenCommand())
     }
 
@@ -149,11 +138,11 @@ final class RecipesListViewController: UIViewController {
     }
 
     @objc private func caloriesButtonTapped() {
-        presenter?.buttonCaloriesChange(category: Recipe.allRecipes)
+        presenter?.buttonCaloriesChange(category: recipesNetwork)
     }
 
     @objc private func timeButtonTapped() {
-        presenter?.buttonTimeChange(category: Recipe.allRecipes)
+        presenter?.buttonTimeChange(category: recipesNetwork)
     }
 
     @objc private func backButtonTapped() {
@@ -209,7 +198,7 @@ extension RecipesListViewController {
 extension RecipesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let selectedRecipe = recipes[indexPath.row]
+        let selectedRecipe = recipesNetwork[indexPath.row]
         favoritesSingletone.getRecipeFromList(selectedRecipe)
         presenter?.goToRecipeDetails(with: selectedRecipe)
     }
@@ -220,6 +209,7 @@ extension RecipesListViewController: UITableViewDelegate {
 extension RecipesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let searchNames = presenter?.checkSearch() else { return 0 }
+        print(searchNames.count)
         return searchNames.count
     }
 
@@ -233,8 +223,9 @@ extension RecipesListViewController: UITableViewDataSource {
                 for: indexPath
             ) as? RecipesCell
             else { return UITableViewCell() }
-            cell.configure(with: recipes[indexPath.row])
+            cell.configure(with: recipesNetwork[indexPath.row])
             return cell
+            
         }
     }
 
@@ -258,8 +249,8 @@ extension RecipesListViewController: RecipesViewProtocol {
         caloriesButton.setTitleColor(.black, for: .normal)
     }
 
-    func sortViewRecipes(recipes: [Recipe]) {
-        self.recipes = recipes
+    func sortViewRecipes(recipes: [RecipeNetwork]) {
+        self.recipesNetwork = recipes
         print(recipes)
         print(self.recipes)
         recipesTableView.reloadData()
@@ -273,8 +264,8 @@ extension RecipesListViewController: RecipesViewProtocol {
         navigationController?.popViewController(animated: true)
     }
 
-    func getRecipes(recipes: [Recipe]) {
-        self.recipes = recipes
+    func getRecipes(recipes: [RecipeNetwork]) {
+        self.recipesNetwork = recipes
         recipesTableView.reloadData()
     }
 }
