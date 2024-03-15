@@ -31,6 +31,7 @@ final class RecipeCoordinator: BaseCoodinator {
 
     func pushReceiptDetails(with recipe: RecipeNetwork) {
         let recipeDetailViewController = appBuilder.makeRecipeDetailsModule(coordinator: self)
+        recipeDetailViewController.recipe = recipe
         rootController.pushViewController(recipeDetailViewController, animated: true)
     }
 }

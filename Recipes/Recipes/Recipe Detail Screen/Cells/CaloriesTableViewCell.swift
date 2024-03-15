@@ -24,22 +24,22 @@ final class CaloriesTableViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func configureCell(kcal: Int, carbohydrates: Double, fats: Double, proteins: Double) {
+    func configureCell(recipe: RecipeNetwork) {
         kcalView = createCellElement(
             title: Constants.calories,
-            parameter: "\(kcal) kcal"
+            parameter: "\(recipe.calories) kcal"
         )
         carbonhedratesView = createCellElement(
             title: Constants.carbohydrates,
-            parameter: "\(String(format: "%.2f", carbohydrates)) g"
+            parameter: "\(String(format: "%.2f", recipe.carbohydrates ?? 0)) g"
         )
         fatsView = createCellElement(
             title: Constants.fats,
-            parameter: "\(String(format: "%.2f", fats)) g"
+            parameter: "\(String(format: "%.2f", recipe.fats ?? 0)) g"
         )
         proteinsView = createCellElement(
             title: Constants.proteins,
-            parameter: "\(String(format: "%.2f", proteins)) g"
+            parameter: "\(String(format: "%.2f", recipe.proteins ?? 0)) g"
         )
 
         stackView = UIStackView(arrangedSubviews: [kcalView, carbonhedratesView, fatsView, proteinsView])
@@ -50,7 +50,8 @@ final class CaloriesTableViewCell: UITableViewCell {
 
     private func setupUI() {
         backgroundColor = .white
-
+        
+        contentView.removeAllSubviews()
         contentView.addSubview(stackView)
         stackView.alignment = .fill
         stackView.spacing = 5
@@ -125,5 +126,13 @@ final class CaloriesTableViewCell: UITableViewCell {
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 40),
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
         ])
+    }
+}
+
+extension UIView {
+    func removeAllSubviews() {
+        for subview in subviews {
+            subview.removeFromSuperview()
+        }
     }
 }

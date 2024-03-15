@@ -34,12 +34,12 @@ class ImageTableViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func configureCell(title: String, image: String, weight: Int, cookingTime: Int) {
+    func configureCell(recipe: RecipeNetwork) {
         backgroundColor = .white
-        self.title = title
-        self.image = image
-        self.weight = weight
-        self.cookingTime = cookingTime
+        self.title = recipe.name
+        self.image = recipe.image
+        self.weight = Int(recipe.weight)
+        self.cookingTime = recipe.cookingTime
         addViews()
         setupUI()
         setConstraints()
@@ -50,7 +50,14 @@ class ImageTableViewCell: UITableViewCell {
     private func addViews() {
         contentView.addSubview(recipeTitleLabel)
         contentView.addSubview(recipeImageView)
-
+        
+        NetworkService.loadImage(from: image) { image in
+            DispatchQueue.main.async {
+                self.recipeImageView.image = image
+                self.recipeImageView.layer.cornerRadius = 24
+                self.recipeImageView.clipsToBounds = true
+            }
+        }
         recipeImageView.addSubview(roundView)
         roundView.addSubview(potImageView)
         roundView.addSubview(weightLabel)
@@ -65,6 +72,8 @@ class ImageTableViewCell: UITableViewCell {
         recipeTitleLabel.textAlignment = .center
         recipeTitleLabel.translatesAutoresizingMaskIntoConstraints = false
 
+        
+        
         recipeImageView.image = UIImage(named: image)
         recipeImageView.layer.cornerRadius = 24
         recipeImageView.contentMode = .scaleAspectFit

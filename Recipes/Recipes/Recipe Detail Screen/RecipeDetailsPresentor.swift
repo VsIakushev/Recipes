@@ -1,6 +1,8 @@
 // RecipeDetailsPresentor.swift
 // Copyright © RoadMap. All rights reserved.
 
+import Foundation
+
 /// Протокол экрана деталей рецепта
 protocol RecipeDetailsViewControllerProtocol: AnyObject {
     /// Передача в презентер что была нажата кнопка "Поделиться в Телеграм"
@@ -11,33 +13,77 @@ protocol RecipeDetailsViewControllerProtocol: AnyObject {
     func backButtonTapped()
     /// Вызов Алерта о функционале в разработке
     func showAlert()
+    func reloadData()
+    func updateState()
+    func didRefreshData()
 }
 
 /// Протокол презентера экрана деталей рецепта
 protocol RecipeDetailsPresenterProtocol {
+    
+    var state: ViewState<RecipeNetwork> { get }
+    
     /// Данные рецепта
-    var recipe: Recipe { get set }
+//    var recipe: Recipe { get set }
+//    var recipe: RecipeNetwork? { get set }
     /// Координатор Рецептов для навигации
-    var recipeCoordinator: RecipeCoordinator? { get set }
+    var recipeUri: String? { get }
     /// Отработка нажатия кнопки "Добавить в избранное"
     func addToFavorites()
     /// Отработка нажатия кнопки "Поделиться в Телеграм"
     func shareViaTelegram()
     /// Отработка нажатия кнопки "Назад" и закрытие экрана
     func closeDetailsScreen()
-    /// добавление в избранное синглтон
+    /// Добавление в избранное синглтон
     func addToFavoritesSingleton()
-    /// избранный рецепт
+    /// Избранный рецепт
     var favRecipe: Recipe? { get set }
+    /// Загрузка выбранного рецепта по сети
+    func getRecipe()
 }
 
 /// Презентер экрана деталей рецепта
 final class RecipeDetailsPresenter: RecipeDetailsPresenterProtocol {
-    weak var recipeCoordinator: RecipeCoordinator?
+    var state: ViewState<RecipeNetwork> = .loading {
+        didSet {
+           
+                self.view?.updateState()
+            
+        }
+    }
+    
+    //TODO: - реализовать передачу uri сюда при переходе с экрана категорий
+    var recipeUri: String?
+    
+    func getRecipe() {
+        state = .loading
+        networkService?
+            .getRecipeDetail(
+                //TODO: - реализовать передачу ссылки
+//                uri: recipeUri ?? ""
+                uri: "http://www.edamam.com/ontologies/edamam.owl#recipe_37b6f298818e8827d6eb0880ec8ea627"
+                
+            ) { result in
+                switch result {
+                case let .success(recipe):
+//                    self.recipe = recipe
+                    
+                    self.state = .data(recipe)
+//                    self.view?.didRefreshData()
+                    
+                case let .failure(error):
+                    self.state = .error(error)
+                    print("Error fetching recipes: \(error)")
+                }
+            }
+    }
+    
+    private weak var recipeCoordinator: RecipeCoordinator?
+    private var networkService: NetworkServiceProtocol?
 
     // MARK: - Public Properties
 
-    var recipe = Recipe.recipeExample()
+//    var recipe: RecipeNetwork?
     var recipeForFavorites: Recipe?
     var selectedRecipe: RecipeNetwork?
     var favoritesSingletone = FavoritesSingletone.shared
@@ -49,9 +95,10 @@ final class RecipeDetailsPresenter: RecipeDetailsPresenterProtocol {
 
     // MARK: - Initializers
 
-    init(view: RecipeDetailsViewControllerProtocol, coordinator: RecipeCoordinator) {
+    init(view: RecipeDetailsViewControllerProtocol, coordinator: RecipeCoordinator, networkService: NetworkServiceProtocol) {
         self.view = view
         recipeCoordinator = coordinator
+        self.networkService = networkService
     }
 
     // MARK: - Public Methods
@@ -73,7 +120,9 @@ final class RecipeDetailsPresenter: RecipeDetailsPresenterProtocol {
         favoritesSingletone.addRecipeToFavorites(favRecipe)
     }
 
-    func shareViaTelegram() {}
+    func shareViaTelegram() {
+        view?.showAlert()
+    }
 
     func closeDetailsScreen() {
         recipeCoordinator?.closeRecipeDetails()
