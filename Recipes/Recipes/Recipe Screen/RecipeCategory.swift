@@ -16,6 +16,7 @@ struct RecipeCategory {
             .init(title: "Side dish", image: "sidedish", type: .sideDish),
             .init(title: "Drinks", image: "drinks", type: .drinks),
             .init(title: "Pancake", image: "pancakes", type: .pancake),
-            .init(title: "Desserts", image: "desserts", type: .desserts),        ]
+            .init(title: "Desserts", image: "desserts", type: .desserts),
+        ]
     }
 }

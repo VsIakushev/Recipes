@@ -84,8 +84,6 @@ final class RecipesListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         titleLabel.text = categoryTitle
-        print(categoryTitle)
-//        recipesTableView.reloadData()
         order(command: OpenAllRecipesScreenCommand())
     }
 
@@ -209,7 +207,6 @@ extension RecipesListViewController: UITableViewDelegate {
 extension RecipesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let searchNames = presenter?.checkSearch() else { return 0 }
-        print(searchNames.count)
         return searchNames.count
     }
 
@@ -225,7 +222,6 @@ extension RecipesListViewController: UITableViewDataSource {
             else { return UITableViewCell() }
             cell.configure(with: recipesNetwork[indexPath.row])
             return cell
-            
         }
     }
 
@@ -250,9 +246,7 @@ extension RecipesListViewController: RecipesViewProtocol {
     }
 
     func sortViewRecipes(recipes: [Recipe]) {
-        self.recipesNetwork = recipes
-        print(recipes)
-        print(self.recipes)
+        recipesNetwork = recipes
         recipesTableView.reloadData()
     }
 
@@ -265,7 +259,7 @@ extension RecipesListViewController: RecipesViewProtocol {
     }
 
     func getRecipes(recipes: [Recipe]) {
-        self.recipesNetwork = recipes
+        recipesNetwork = recipes
         recipesTableView.reloadData()
     }
 }

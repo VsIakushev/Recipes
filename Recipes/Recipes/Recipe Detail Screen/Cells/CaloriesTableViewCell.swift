@@ -50,7 +50,7 @@ final class CaloriesTableViewCell: UITableViewCell {
 
     private func setupUI() {
         backgroundColor = .white
-        
+
         contentView.removeAllSubviews()
         contentView.addSubview(stackView)
         stackView.alignment = .fill

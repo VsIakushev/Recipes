@@ -6,7 +6,7 @@ import UIKit
 /// Экран детального описания рецепта
 final class RecipeDetailsViewController: UIViewController {
     // MARK: - Constants
-    
+
     private enum Constants {
         static let imageCellIdentifier = "ImageCell"
         static let caloriesCellIdentifier = "CaloriesCell"
@@ -15,9 +15,9 @@ final class RecipeDetailsViewController: UIViewController {
         static let errorDetailsCellIdentifier = "errorDetailsCellIdentifier"
         static let numberOfSections = 3
     }
-    
+
     // MARK: - Public Properties
-    
+
     var presenter: RecipeDetailsPresenterProtocol?
     var officiant: Invoker? = Invoker.shared
     let favoritesSingletone = FavoritesSingletone.shared
@@ -26,14 +26,14 @@ final class RecipeDetailsViewController: UIViewController {
             setupNavigation()
         }
     }
-    
+
     // MARK: - Private Properties
-    
+
     private lazy var tableView = UITableView()
     private let refreshControl = UIRefreshControl()
-    
+
     // MARK: - Life Cycles
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         getRecipe()
@@ -41,23 +41,23 @@ final class RecipeDetailsViewController: UIViewController {
         setupTableView()
         setupNavigation()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         order(command: OpenDetailedRecipeScreenCommand())
     }
-    
+
     // MARK: - Public Methods
-    
+
     func setupUI() {
         view.backgroundColor = .cyan
     }
-    
+
     // MARK: - Private Methods
-    
+
     private func getRecipe() {
         presenter?.getRecipe()
     }
-    
+
     private func order(command: Command) {
         guard let officiant = officiant else {
             print("error")
@@ -66,7 +66,7 @@ final class RecipeDetailsViewController: UIViewController {
         officiant.addCommand(OpenDetailedRecipeScreenCommand())
         officiant.executeCommands()
     }
-    
+
     private func setupNavigation() {
         let backButton = UIBarButtonItem(
             image: UIImage(systemName: "arrow.backward"),
@@ -75,9 +75,9 @@ final class RecipeDetailsViewController: UIViewController {
             action: #selector(backButtonTapped)
         )
         backButton.tintColor = .black
-        
+
         navigationItem.leftBarButtonItem = backButton
-        
+
         let shareButton = UIBarButtonItem(
             image: UIImage(named: "telegram"),
             style: .plain,
@@ -85,7 +85,7 @@ final class RecipeDetailsViewController: UIViewController {
             action: #selector(shareViaTelegramButtonTapped)
         )
         shareButton.tintColor = .black
-        
+
         let addToFavoritesButton = UIBarButtonItem(
             image: UIImage(named: recipe?.isFavorite ?? false ? "favoritesred" : "addfavorites"),
             style: .plain,
@@ -93,10 +93,10 @@ final class RecipeDetailsViewController: UIViewController {
             action: #selector(addToFavoritesTaped)
         )
         addToFavoritesButton.tintColor = .black
-        
+
         navigationItem.rightBarButtonItems = [addToFavoritesButton, shareButton]
-        }
-    
+    }
+
     private func setupTableView() {
         view.addSubview(tableView)
         tableView.frame = view.bounds
@@ -105,15 +105,15 @@ final class RecipeDetailsViewController: UIViewController {
         tableView.dataSource = self
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-        
+
         tableView.register(ImageTableViewCell.self, forCellReuseIdentifier: Constants.imageCellIdentifier)
         tableView.register(CaloriesTableViewCell.self, forCellReuseIdentifier: Constants.caloriesCellIdentifier)
         tableView.register(RecipeDescriptionTableViewCell.self, forCellReuseIdentifier: Constants.recipeCellIdentifier)
         tableView.register(ErrorDetailsCell.self, forCellReuseIdentifier: Constants.errorDetailsCellIdentifier)
         tableView.register(ShimmerCell.self, forCellReuseIdentifier: Constants.imageShimmerCellIdentifier)
-        
+
         tableView.dataSource = self
-        
+
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -122,15 +122,13 @@ final class RecipeDetailsViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
     }
-    
-        
+
     @objc private func refreshData() {
-                self.getRecipe()
+        getRecipe()
     }
 }
 
 extension RecipeDetailsViewController: RecipeDetailsViewControllerProtocol {
-    
     func updateState() {
         switch presenter?.state {
         case .loading:
@@ -146,7 +144,7 @@ extension RecipeDetailsViewController: RecipeDetailsViewControllerProtocol {
             break
         }
     }
-    
+
     func showAlert() {
         let alertController = UIAlertController(
             title: "Предупреждение!",
@@ -157,21 +155,21 @@ extension RecipeDetailsViewController: RecipeDetailsViewControllerProtocol {
         alertController.addAction(okAction)
         present(alertController, animated: true)
     }
-    
+
     func reloadData() {
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
         }
     }
-    
+
     @objc func backButtonTapped() {
         presenter?.closeDetailsScreen()
     }
-    
+
     @objc func shareViaTelegramButtonTapped() {
         presenter?.shareViaTelegram()
     }
-    
+
     @objc func addToFavoritesTaped() {
         guard let recipe = favoritesSingletone.recipeFromList else {
             return
@@ -184,7 +182,6 @@ extension RecipeDetailsViewController: RecipeDetailsViewControllerProtocol {
 
 extension RecipeDetailsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         switch presenter?.state {
         case .data:
             Constants.numberOfSections
@@ -192,52 +189,57 @@ extension RecipeDetailsViewController: UITableViewDataSource {
             1
         }
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         switch presenter?.state {
-        case .data(let recipe):
+        case let .data(recipe):
             if indexPath.row == 0 {
                 guard let cell = tableView
                     .dequeueReusableCell(
                         withIdentifier: Constants.imageCellIdentifier, for: indexPath
                     ) as? ImageTableViewCell,
-                      let presenter = presenter
+                    let presenter = presenter
                 else { return UITableViewCell() }
-                
+
                 cell.configureCell(recipe: recipe)
-             
+
                 return cell
-                
+
             } else if indexPath.row == 1 {
                 guard let cell = tableView
                     .dequeueReusableCell(
                         withIdentifier: Constants.caloriesCellIdentifier,
                         for: indexPath
                     ) as? CaloriesTableViewCell,
-                      let presenter = presenter
+                    let presenter = presenter
                 else { return UITableViewCell() }
                 cell.configureCell(recipe: recipe)
                 return cell
-                
+
             } else {
                 guard let cell = tableView
                     .dequeueReusableCell(
                         withIdentifier: Constants.recipeCellIdentifier,
                         for: indexPath
                     ) as? RecipeDescriptionTableViewCell,
-                      let presenter = presenter
+                    let presenter = presenter
                 else { return UITableViewCell() }
                 cell.configureCell(recipe: recipe)
-                
+
                 return cell
             }
         case .loading:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.imageShimmerCellIdentifier, for: indexPath) as? ShimmerCell else { return UITableViewCell() }
-            
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: Constants.imageShimmerCellIdentifier,
+                for: indexPath
+            ) as? ShimmerCell else { return UITableViewCell() }
+
             return cell
         case .noData, .error, .none:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.errorDetailsCellIdentifier, for: indexPath) as? ErrorDetailsCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: Constants.errorDetailsCellIdentifier,
+                for: indexPath
+            ) as? ErrorDetailsCell else { return UITableViewCell() }
             return cell
         }
     }

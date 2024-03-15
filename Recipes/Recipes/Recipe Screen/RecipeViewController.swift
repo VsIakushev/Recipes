@@ -35,18 +35,18 @@ final class RecipeViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
 
         // TODO: временно тут, для тестирования запроса
-        networkService
-            .getRecipeDetail(
-                uri: "http://www.edamam.com/ontologies/edamam.owl#recipe_37b6f298818e8827d6eb0880ec8ea627"
-            ) { result in
-                switch result {
-                case let .success(recipe):
-
-                    print("Received recipes: \(recipe.name)")
-                case let .failure(error):
-                    print("Error fetching recipes: \(error)")
-                }
-            }
+//        networkService
+//            .getRecipeDetail(
+//                uri: "http://www.edamam.com/ontologies/edamam.owl#recipe_37b6f298818e8827d6eb0880ec8ea627"
+//            ) { result in
+//                switch result {
+//                case let .success(recipe):
+//
+//                    print("Received recipes: \(recipe.name)")
+//                case let .failure(error):
+//                    print("Error fetching recipes: \(error)")
+//                }
+//            }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -112,9 +112,9 @@ extension RecipeViewController: RecipeViewControllerProtocol {}
 extension RecipeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let selectedCategory = presenter?.categories[indexPath.item] else {
-                return
-            }
-            presenter?.goToCategoryListScreen(for: selectedCategory.type, categoryName: selectedCategory.title)
+            return
+        }
+        presenter?.goToCategoryListScreen(for: selectedCategory.type, categoryName: selectedCategory.title)
     }
 }
 

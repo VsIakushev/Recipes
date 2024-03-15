@@ -1,23 +1,17 @@
-//
-//  ShimmerDetailsCell.swift
-//  Recipes
-//
-//  Created by Vitaliy Iakushev on 14.03.2024.
-//
+// ShimmerCell.swift
+// Copyright © RoadMap. All rights reserved.
 
 import UIKit
 
 /// Ячейка Шиммера, для отображения в момент загрузки данных
 class ShimmerCell: UITableViewCell {
-
     // MARK: - Visual Components
 
     private let shimmerLabelView = UIView()
     private let shimmerImageView = UIView()
     private let shimmerCaloriesView = UIView()
     private let shimmerRecipeView = UIView()
-    
-    
+
     private let shimmerImageLayer = CAGradientLayer()
     private let shimmerLabelLayer = CAGradientLayer()
     private let shimmerCaloriesLayer = CAGradientLayer()
@@ -42,16 +36,15 @@ class ShimmerCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         shimmerLabelLayer.frame = shimmerLabelView.bounds
-        
+
         shimmerImageLayer.frame = shimmerImageView.bounds
         shimmerImageLayer.cornerRadius = 24
-        
+
         shimmerCaloriesLayer.frame = shimmerCaloriesView.bounds
         shimmerCaloriesLayer.cornerRadius = 16
-        
+
         shimmerRecipeLayer.frame = shimmerRecipeView.bounds
         shimmerRecipeLayer.cornerRadius = 24
-        
     }
 
     // MARK: - Private Methods
@@ -60,15 +53,15 @@ class ShimmerCell: UITableViewCell {
         shimmerLabelLayer.startPoint = CGPoint(x: 0, y: 0.5)
         shimmerLabelLayer.endPoint = CGPoint(x: 1, y: 0.5)
         shimmerLabelView.layer.addSublayer(shimmerLabelLayer)
-        
+
         shimmerCaloriesLayer.startPoint = CGPoint(x: 0, y: 0.5)
         shimmerCaloriesLayer.endPoint = CGPoint(x: 1, y: 0.5)
         shimmerCaloriesView.layer.addSublayer(shimmerCaloriesLayer)
-        
+
         shimmerImageLayer.startPoint = CGPoint(x: 0, y: 0.5)
         shimmerImageLayer.endPoint = CGPoint(x: 1, y: 0.5)
         shimmerImageView.layer.addSublayer(shimmerImageLayer)
-        
+
         shimmerRecipeLayer.startPoint = CGPoint(x: 0, y: 0.5)
         shimmerRecipeLayer.endPoint = CGPoint(x: 1, y: 0.5)
         shimmerRecipeView.layer.addSublayer(shimmerRecipeLayer)
@@ -100,7 +93,7 @@ class ShimmerCell: UITableViewCell {
             shimmerLabelView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             shimmerLabelView.widthAnchor.constraint(equalToConstant: 350),
             shimmerLabelView.heightAnchor.constraint(equalToConstant: 23),
-        
+
             shimmerImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 45),
             shimmerImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -45),
             shimmerImageView.topAnchor.constraint(equalTo: topAnchor, constant: 43),
@@ -108,22 +101,22 @@ class ShimmerCell: UITableViewCell {
             shimmerImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             shimmerImageView.widthAnchor.constraint(equalToConstant: 300),
             shimmerImageView.heightAnchor.constraint(equalToConstant: 300),
-            
+
             shimmerCaloriesView.centerXAnchor.constraint(equalTo: centerXAnchor),
             shimmerCaloriesView.topAnchor.constraint(equalTo: shimmerImageView.bottomAnchor, constant: 20),
             shimmerCaloriesView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40),
             shimmerCaloriesView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40),
             shimmerCaloriesView.widthAnchor.constraint(equalToConstant: 310),
             shimmerCaloriesView.heightAnchor.constraint(equalToConstant: 74),
-            
+
             shimmerRecipeView.widthAnchor.constraint(equalTo: widthAnchor),
             shimmerRecipeView.heightAnchor.constraint(equalToConstant: 400),
             shimmerRecipeView.topAnchor.constraint(equalTo: shimmerCaloriesView.bottomAnchor, constant: 20),
-            
+
         ])
     }
 }
 
 // MARK: - ShimmerDetailsCell  + ShimmerLoadable
-extension ShimmerCell: ShimmerLoadable {}
 
+extension ShimmerCell: ShimmerLoadable {}

@@ -228,7 +228,6 @@ extension FavoritesViewController: UITableViewDataSource {
         ) as? RecipesCell,
             let favorites = presenter?.getFavourites()
         else { return UITableViewCell() }
-        print(favorites)
         cell.configure(with: favorites[indexPath.row])
         return cell
     }

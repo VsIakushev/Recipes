@@ -24,7 +24,7 @@ enum RecipeType: String {
     /// Гарнир
     case sideDish
 
-    var dishCategory: String{
+    var dishCategory: String {
         switch self {
         case .chicken, .meat, .fish, .sideDish:
             return "Main Course"
@@ -62,5 +62,4 @@ enum RecipeType: String {
 //            return "desserts"
 //        }
 //    }
-
 }

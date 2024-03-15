@@ -2,6 +2,7 @@
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
+
 /// Протокол вью  всех рецептов
 protocol RecipesViewProtocol: AnyObject {
     /// получение рецептов
@@ -38,7 +39,6 @@ protocol RecipeProtocol: AnyObject {
     func sortRecipes(category: [Recipe])
     /// Название категории
     var categoryTitle: String { get }
-    
 }
 
 final class AllRecipesPresenter {
@@ -57,13 +57,12 @@ final class AllRecipesPresenter {
     private var user: Recipe?
     private var isSearching = false
     private var searchNames: [Recipe] = []
-    private var recipes: [Recipe] = []
     private var sortedCalories = SortedCalories.none
     private var sortedTime = SortedTime.none
     private var sorted: [Recipe] = []
     private var recipeDetailsPresenter: RecipeDetailsPresenter?
     private var networkService = NetworkService()
-    var recipesNetwork: [Recipe] = []
+    var recipes: [Recipe] = []
     var categoryTitle: String = ""
     private var category: RecipeType
 
@@ -111,15 +110,14 @@ final class AllRecipesPresenter {
 // MARK: AllRecipesPresenter + RecipeProtocol
 
 extension AllRecipesPresenter: RecipeProtocol {
-    
     func goToRecipeDetails(with recipe: Recipe) {
         recipesCoordinator?.pushReceiptDetails(with: recipe)
     }
-    
+
     func sortRecipes(category: [Recipe]) {
         var sorted: [Recipe]
 
-        if sortedCalories == .none && sortedTime == .none {
+        if sortedCalories == .none, sortedTime == .none {
             sorted = category.shuffled()
         } else {
             sorted = category
@@ -168,18 +166,18 @@ extension AllRecipesPresenter: RecipeProtocol {
         if isSearching {
             return searchNames
         } else {
-            return recipesNetwork
+            return recipes
         }
     }
-    
+
     func startSearch() {
         isSearching = true
     }
-    
+
     func stopSearch() {
         isSearching = false
     }
-    
+
     func searchRecipes(text: String) {
         guard !text.isEmpty else {
             isSearching = false
@@ -187,16 +185,15 @@ extension AllRecipesPresenter: RecipeProtocol {
             view?.reloadTableView()
             return
         }
-        
+
         isSearching = true
-        searchNames = recipesNetwork.filter { $0.name.lowercased().contains(text.lowercased()) }
+        searchNames = recipes.filter { $0.name.lowercased().contains(text.lowercased()) }
         view?.reloadTableView()
     }
-    
+
     func goToCategory() {
         view?.goToTheCategory()
     }
-    
 
     func getReceipts(searchString: String? = nil) {
         var health: String?
@@ -223,32 +220,29 @@ extension AllRecipesPresenter: RecipeProtocol {
                 guard let self = self else { return }
                 switch result {
                 case let .success(recipes):
-                    self.recipesNetwork = recipes
-                    print(self.recipesNetwork.count, " рецептов в сетевом массиве")
+                    self.recipes = recipes
                     self.view?.getRecipes(recipes: recipes)
                     DispatchQueue.main.async {
                         self.view?.reloadTableView()
                     }
-                    
+
                 case let .failure(error):
                     print("Error fetching recipes: \(error)")
                 }
             }
         }
-    
 
         networkService.getRecipes(dishType: category, health: health, query: query) { [weak self] result in
             DispatchQueue.main.async {
                 guard let self else { return }
                 switch result {
                 case let .success(recipes):
-                    self.recipesNetwork = recipes
-                    print(self.recipesNetwork.count, " рецептов в сетевом массиве")
+                    self.recipes = recipes
                     self.view?.getRecipes(recipes: recipes)
-                    DispatchQueue.main.async{
+                    DispatchQueue.main.async {
                         self.view?.reloadTableView()
                     }
-                    
+
                 case let .failure(error):
                     print("Error fetching recipes: \(error)")
                 }

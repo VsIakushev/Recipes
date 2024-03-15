@@ -41,40 +41,44 @@ protocol RecipeDetailsPresenterProtocol {
 
 /// Презентер экрана деталей рецепта
 final class RecipeDetailsPresenter: RecipeDetailsPresenterProtocol {
-    
     // MARK: - Public Properties
-    
+
     var state: ViewState<Recipe> = .loading {
         didSet {
-            self.view?.updateState()
+            view?.updateState()
         }
     }
+
     var recipeUri: String?
     var recipeForFavorites: Recipe?
     var selectedRecipe: Recipe?
     var favoritesSingletone = FavoritesSingletone.shared
     var favRecipe: Recipe?
-    
+
     // MARK: - Private Properties
-    
+
     private weak var view: RecipeDetailsViewControllerProtocol?
     private weak var recipeCoordinator: RecipeCoordinator?
     private var networkService: NetworkServiceProtocol?
-    
+
     // MARK: - Initializers
-    
-    init(view: RecipeDetailsViewControllerProtocol, coordinator: RecipeCoordinator, networkService: NetworkServiceProtocol) {
+
+    init(
+        view: RecipeDetailsViewControllerProtocol,
+        coordinator: RecipeCoordinator,
+        networkService: NetworkServiceProtocol
+    ) {
         self.view = view
         recipeCoordinator = coordinator
         self.networkService = networkService
     }
-    
+
     // MARK: - Public Methods
-    
+
     func getRecipe() {
         state = .loading
         networkService?
-            .getRecipeDetail( uri: recipeUri ?? "") { result in
+            .getRecipeDetail(uri: recipeUri ?? "") { result in
                 switch result {
                 case let .success(recipe):
                     self.state = .data(recipe)
@@ -84,28 +88,28 @@ final class RecipeDetailsPresenter: RecipeDetailsPresenterProtocol {
                 }
             }
     }
-    
+
     func addToFavoritesSingleton() {
         guard let selectedRecipe = selectedRecipe else {
             return
         }
-        
+
         favoritesSingletone.addRecipeToFavorites(selectedRecipe)
     }
-    
+
     func addToFavorites() {
         guard let favRecipe = favoritesSingletone.recipeFromList else {
             print("selectedRecipe is nil!")
             return
         }
-        
+
         favoritesSingletone.addRecipeToFavorites(favRecipe)
     }
-    
+
     func shareViaTelegram() {
         view?.showAlert()
     }
-    
+
     func closeDetailsScreen() {
         recipeCoordinator?.closeRecipeDetails()
     }

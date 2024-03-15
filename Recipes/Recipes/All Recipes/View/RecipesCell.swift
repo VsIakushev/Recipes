@@ -100,7 +100,6 @@ final class RecipesCell: UITableViewCell {
                 self.recipeImageView.clipsToBounds = true
                 self.recipeImageView.layer.cornerRadius = 12
                 self.recipeImageView.contentMode = .scaleAspectFill
-                
             }
         }
 //        recipeImageView.image = UIImage(named: items.image)
@@ -150,7 +149,8 @@ final class RecipesCell: UITableViewCell {
     private func setupAnchorsRecipeImageView() {
         recipeImageView.leadingAnchor.constraint(equalTo: backgroundCellView.leadingAnchor, constant: 10)
             .isActive = true
-        recipeImageView.trailingAnchor.constraint(equalTo: backgroundCellView.trailingAnchor, constant: -230).isActive = true
+        recipeImageView.trailingAnchor.constraint(equalTo: backgroundCellView.trailingAnchor, constant: -230)
+            .isActive = true
         recipeImageView.topAnchor.constraint(equalTo: backgroundCellView.topAnchor, constant: 10).isActive = true
         recipeImageView.bottomAnchor.constraint(equalTo: backgroundCellView.bottomAnchor, constant: -10).isActive = true
     }

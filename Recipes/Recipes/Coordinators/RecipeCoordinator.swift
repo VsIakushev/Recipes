@@ -15,7 +15,11 @@ final class RecipeCoordinator: BaseCoodinator {
     }
 
     func pushCategoryDetails(for category: RecipeType, categoryName: String) {
-        let categoryViewController = appBuilder.makeRecipesListModule(coordinator: self, categoryTitle: categoryName, category: category)
+        let categoryViewController = appBuilder.makeRecipesListModule(
+            coordinator: self,
+            categoryTitle: categoryName,
+            category: category
+        )
         rootController.pushViewController(categoryViewController, animated: true)
         categoryViewController.categoryTitle = categoryName
     }

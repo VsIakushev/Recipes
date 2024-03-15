@@ -16,7 +16,11 @@ class AppBuilder {
     func makeRecipeDetailsModule(coordinator: RecipeCoordinator, uri: String) -> RecipeDetailsViewController {
         let view = RecipeDetailsViewController()
         let networkService = NetworkService()
-        let recipeDetailsPresenter = RecipeDetailsPresenter(view: view, coordinator: coordinator, networkService: networkService)
+        let recipeDetailsPresenter = RecipeDetailsPresenter(
+            view: view,
+            coordinator: coordinator,
+            networkService: networkService
+        )
         recipeDetailsPresenter.recipeUri = uri
         view.presenter = recipeDetailsPresenter
         view.setupUI()
@@ -39,10 +43,19 @@ class AppBuilder {
         return view
     }
 
-    func makeRecipesListModule(coordinator: RecipeCoordinator, categoryTitle: String, category: RecipeType) -> RecipesListViewController {
+    func makeRecipesListModule(
+        coordinator: RecipeCoordinator,
+        categoryTitle: String,
+        category: RecipeType
+    ) -> RecipesListViewController {
         let view = RecipesListViewController()
-        
-        let allRecipesPresenter = AllRecipesPresenter(view: view, coordinator: coordinator, categoryTitle: categoryTitle, category: category)
+
+        let allRecipesPresenter = AllRecipesPresenter(
+            view: view,
+            coordinator: coordinator,
+            categoryTitle: categoryTitle,
+            category: category
+        )
         view.presenter = allRecipesPresenter
         view.setupUI()
         return view

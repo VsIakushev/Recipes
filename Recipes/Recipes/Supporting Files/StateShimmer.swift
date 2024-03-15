@@ -2,14 +2,13 @@
 // Copyright © RoadMap. All rights reserved.
 
 ///  Состояния шимера
-//TODO: - удалить когда будет реализован Стейт ниже
+// TODO: - удалить когда будет реализован Стейт ниже
 enum StateShimer {
     /// Загрузка данных
     case loading
     /// Загружено
     case done
 }
-
 
 /// Состояние данных
 enum ViewState<Model> {

@@ -8,9 +8,12 @@ protocol NetworkServiceProtocol: AnyObject {
     /// Получение детального рецепта
     func getRecipeDetail(uri: String, completion: @escaping (Result<Recipe, Error>) -> Void)
     /// Получение рецептов
-    func getRecipes(dishType: RecipeType, health: String?,
-                    query: String?, completion: @escaping (Result<[Recipe], Error>) -> Void)
-
+    func getRecipes(
+        dishType: RecipeType,
+        health: String?,
+        query: String?,
+        completion: @escaping (Result<[Recipe], Error>) -> Void
+    )
 }
 
 /// Сервис сетевых запросов
@@ -23,23 +26,23 @@ final class NetworkService: NetworkServiceProtocol {
         static let appID = "eb15e1ec"
         static let appKey = "41b2ee9152e7908a48d4dffdd80361ea"
         static let dishTypeKey = "dishType"
-                static let queryKey = "q"
-                static let healthKey = "health"
-                static let uriKey = "uri"
+        static let queryKey = "q"
+        static let healthKey = "health"
+        static let uriKey = "uri"
     }
 
     private let baseUrlComponents = {
-            var component = URLComponents()
-            component.scheme = "https"
-            component.host = "api.edamam.com"
-            component.path = "/api/recipes/v2"
-            component.queryItems = [
-                .init(name: "app_id", value: Constants.appID),
-                .init(name: "app_key", value: Constants.appKey),
-                .init(name: "type", value: Constants.type)
-            ]
-            return component
-        }()
+        var component = URLComponents()
+        component.scheme = "https"
+        component.host = "api.edamam.com"
+        component.path = "/api/recipes/v2"
+        component.queryItems = [
+            .init(name: "app_id", value: Constants.appID),
+            .init(name: "app_key", value: Constants.appKey),
+            .init(name: "type", value: Constants.type)
+        ]
+        return component
+    }()
 
     /// Функция загрузки отдельного рецепта
     func getRecipeDetail(uri: String, completion: @escaping (Result<Recipe, Error>) -> Void) {
@@ -56,14 +59,12 @@ final class NetworkService: NetworkServiceProtocol {
                 if let error = error {
                     DispatchQueue.main.async {
                         completion(.failure(error))
-                        return
                     }
                 }
                 guard let data = data else { return }
                 do {
                     let object = try JSONDecoder().decode(ResponseDTO.self, from: data)
                     if let recipe = object.hits.first?.recipe {
-
                         DispatchQueue.main.async {
                             completion(.success(Recipe(dto: recipe)))
                         }
@@ -79,7 +80,7 @@ final class NetworkService: NetworkServiceProtocol {
     }
 
     /// Функция загрузки массива рецептов определенной категории
-    
+
     func getRecipes(
         dishType: RecipeType,
         health: String?,
@@ -118,11 +119,9 @@ final class NetworkService: NetworkServiceProtocol {
     static func loadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
         guard let imageUrl = URL(string: urlString) else {
             print("Invalid image URL")
-            
             completion(nil)
             return
         }
-        print("image URL:", imageUrl)
         let session = URLSession.shared
         let task = session.dataTask(with: imageUrl) { data, response, error in
             guard error == nil, let data = data else {
