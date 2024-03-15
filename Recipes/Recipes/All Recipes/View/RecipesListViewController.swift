@@ -59,12 +59,12 @@ final class RecipesListViewController: UIViewController {
 
     // MARK: - Public Properties
 
-    var recipes: [RecipeNetwork] = []
+    var recipes: [Recipe] = []
     var categoryTitle: String = ""
     var presenter: AllRecipesPresenter?
     var officiant: Invoker? = Invoker.shared
     var favoritesSingletone = FavoritesSingletone.shared
-    var recipesNetwork: [RecipeNetwork] = []
+    var recipesNetwork: [Recipe] = []
 
     var networkService = NetworkService()
 
@@ -249,7 +249,7 @@ extension RecipesListViewController: RecipesViewProtocol {
         caloriesButton.setTitleColor(.black, for: .normal)
     }
 
-    func sortViewRecipes(recipes: [RecipeNetwork]) {
+    func sortViewRecipes(recipes: [Recipe]) {
         self.recipesNetwork = recipes
         print(recipes)
         print(self.recipes)
@@ -264,7 +264,7 @@ extension RecipesListViewController: RecipesViewProtocol {
         navigationController?.popViewController(animated: true)
     }
 
-    func getRecipes(recipes: [RecipeNetwork]) {
+    func getRecipes(recipes: [Recipe]) {
         self.recipesNetwork = recipes
         recipesTableView.reloadData()
     }

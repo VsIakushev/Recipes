@@ -5,7 +5,7 @@ import Foundation
 /// Протокол вью  всех рецептов
 protocol RecipesViewProtocol: AnyObject {
     /// получение рецептов
-    func getRecipes(recipes: [RecipeNetwork])
+    func getRecipes(recipes: [Recipe])
     /// переход на экран категорий
     func goToTheCategory()
     /// обновление таблицы
@@ -15,7 +15,7 @@ protocol RecipesViewProtocol: AnyObject {
     /// нажатие на кнопку сортировка по калориям
     func caloriesButtonPressed(color: String, image: String)
     /// отсортировать рецепты
-    func sortViewRecipes(recipes: [RecipeNetwork])
+    func sortViewRecipes(recipes: [Recipe])
 }
 
 /// Протокол презентера
@@ -23,19 +23,19 @@ protocol RecipeProtocol: AnyObject {
     /// получить рецепты
     func getReceipts(searchString: String?)
     /// переход к деталям рецепта
-    func goToRecipeDetails(with recipe: RecipeNetwork)
+    func goToRecipeDetails(with recipe: Recipe)
     /// переход к категориям
     func goToCategory()
     /// поиск рецептов
     func searchRecipes(text: String)
     /// проверка поиска
-    func checkSearch() -> [RecipeNetwork]
+    func checkSearch() -> [Recipe]
     /// начать поиск
     func startSearch()
     /// стоп поиск
     func stopSearch()
     /// отсортировать рецепты
-    func sortRecipes(category: [RecipeNetwork])
+    func sortRecipes(category: [Recipe])
     /// Название категории
     var categoryTitle: String { get }
     
@@ -56,14 +56,14 @@ final class AllRecipesPresenter {
     private weak var recipesCoordinator: RecipeCoordinator?
     private var user: Recipe?
     private var isSearching = false
-    private var searchNames: [RecipeNetwork] = []
-    private var recipes: [RecipeNetwork] = []
+    private var searchNames: [Recipe] = []
+    private var recipes: [Recipe] = []
     private var sortedCalories = SortedCalories.none
     private var sortedTime = SortedTime.none
-    private var sorted: [RecipeNetwork] = []
+    private var sorted: [Recipe] = []
     private var recipeDetailsPresenter: RecipeDetailsPresenter?
     private var networkService = NetworkService()
-    var recipesNetwork: [RecipeNetwork] = []
+    var recipesNetwork: [Recipe] = []
     var categoryTitle: String = ""
     private var category: RecipeType
 
@@ -74,7 +74,7 @@ final class AllRecipesPresenter {
         recipesCoordinator = coordinator
     }
 
-    func buttonCaloriesChange(category: [RecipeNetwork]) {
+    func buttonCaloriesChange(category: [Recipe]) {
         if sortedCalories == .none {
             sortedCalories = .caloriesLow
             view?.caloriesButtonPressed(color: Constants.background01, image: Constants.filterLow)
@@ -91,7 +91,7 @@ final class AllRecipesPresenter {
     }
 
     /// Метод меняющий состояниие кнопки таймера
-    func buttonTimeChange(category: [RecipeNetwork]) {
+    func buttonTimeChange(category: [Recipe]) {
         if sortedTime == .none {
             sortedTime = .timeLow
             view?.timeButtonPressed(color: Constants.background01, image: Constants.filterLow)
@@ -112,19 +112,19 @@ final class AllRecipesPresenter {
 
 extension AllRecipesPresenter: RecipeProtocol {
     
-    func goToRecipeDetails(with recipe: RecipeNetwork) {
+    func goToRecipeDetails(with recipe: Recipe) {
         recipesCoordinator?.pushReceiptDetails(with: recipe)
     }
     
-    func sortRecipes(category: [RecipeNetwork]) {
-        var sorted: [RecipeNetwork]
+    func sortRecipes(category: [Recipe]) {
+        var sorted: [Recipe]
 
         if sortedCalories == .none && sortedTime == .none {
             sorted = category.shuffled()
         } else {
             sorted = category
 
-            let sortCalories: ((RecipeNetwork, RecipeNetwork) -> Bool)?
+            let sortCalories: ((Recipe, Recipe) -> Bool)?
             switch sortedCalories {
             case .caloriesLow:
                 sortCalories = { $0.calories ?? 0 < $1.calories ?? 0 }
@@ -134,7 +134,7 @@ extension AllRecipesPresenter: RecipeProtocol {
                 sortCalories = nil
             }
 
-            let sortTime: ((RecipeNetwork, RecipeNetwork) -> Bool)?
+            let sortTime: ((Recipe, Recipe) -> Bool)?
             switch sortedTime {
             case .timeLow:
                 sortTime = { $0.cookingTime < $1.cookingTime }
@@ -144,7 +144,7 @@ extension AllRecipesPresenter: RecipeProtocol {
                 sortTime = nil
             }
 
-            sorted = category.sorted { (lhs: RecipeNetwork, rhs: RecipeNetwork) -> Bool in
+            sorted = category.sorted { (lhs: Recipe, rhs: Recipe) -> Bool in
                 if let sortCalories = sortCalories, let sortTime = sortTime {
                     if lhs.calories == rhs.calories {
                         return sortTime(lhs, rhs)
@@ -164,7 +164,7 @@ extension AllRecipesPresenter: RecipeProtocol {
         self.sorted = sorted
     }
 
-    func checkSearch() -> [RecipeNetwork] {
+    func checkSearch() -> [Recipe] {
         if isSearching {
             return searchNames
         } else {

@@ -93,7 +93,7 @@ final class RecipesCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func configure(with items: RecipeNetwork) {
+    func configure(with items: Recipe) {
         NetworkService.loadImage(from: items.image) { image in
             DispatchQueue.main.async {
                 self.recipeImageView.image = image

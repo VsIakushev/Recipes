@@ -12,10 +12,10 @@ final class FavoritesSingletone {
     private var favoritesListData: Data
 
     // Массив рецептов
-    var favoritesList: [RecipeNetwork] {
+    var favoritesList: [Recipe] {
         get {
             // Попытка декодирования сохраненных данных в массив Recipe
-            if let decodedFavoritesList = try? PropertyListDecoder().decode([RecipeNetwork].self, from: favoritesListData) {
+            if let decodedFavoritesList = try? PropertyListDecoder().decode([Recipe].self, from: favoritesListData) {
                 return decodedFavoritesList
             } else {
                 // В случае ошибки возвращаем пустой массив
@@ -31,11 +31,11 @@ final class FavoritesSingletone {
         }
     }
 
-    var recipeFromList: RecipeNetwork?
+    var recipeFromList: Recipe?
 
     private init() {}
 
-    func addRecipeToFavorites(_ recipe: RecipeNetwork) {
+    func addRecipeToFavorites(_ recipe: Recipe) {
         guard !favoritesList.contains(recipe) else {
             return
         }
@@ -43,7 +43,7 @@ final class FavoritesSingletone {
         favoritesList.append(recipe)
     }
 
-    func getRecipeFromList(_ recipe: RecipeNetwork) {
+    func getRecipeFromList(_ recipe: Recipe) {
         recipeFromList = recipe
     }
 }

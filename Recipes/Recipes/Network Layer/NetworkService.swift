@@ -6,10 +6,10 @@ import UIKit
 /// Протокол NetworkServiceProtocol
 protocol NetworkServiceProtocol: AnyObject {
     /// Получение детального рецепта
-    func getRecipeDetail(uri: String, completion: @escaping (Result<RecipeNetwork, Error>) -> Void)
+    func getRecipeDetail(uri: String, completion: @escaping (Result<Recipe, Error>) -> Void)
     /// Получение рецептов
     func getRecipes(dishType: RecipeType, health: String?,
-                    query: String?, completion: @escaping (Result<[RecipeNetwork], Error>) -> Void)
+                    query: String?, completion: @escaping (Result<[Recipe], Error>) -> Void)
 
 }
 
@@ -42,7 +42,7 @@ final class NetworkService: NetworkServiceProtocol {
         }()
 
     /// Функция загрузки отдельного рецепта
-    func getRecipeDetail(uri: String, completion: @escaping (Result<RecipeNetwork, Error>) -> Void) {
+    func getRecipeDetail(uri: String, completion: @escaping (Result<Recipe, Error>) -> Void) {
         var components = URLComponents(string: Constants.baseURL + "/by-uri")
         components?.queryItems = [
             URLQueryItem(name: "type", value: Constants.type),
@@ -65,7 +65,7 @@ final class NetworkService: NetworkServiceProtocol {
                     if let recipe = object.hits.first?.recipe {
 
                         DispatchQueue.main.async {
-                            completion(.success(RecipeNetwork(dto: recipe)))
+                            completion(.success(Recipe(dto: recipe)))
                         }
                     }
                 } catch {
@@ -84,7 +84,7 @@ final class NetworkService: NetworkServiceProtocol {
         dishType: RecipeType,
         health: String?,
         query: String?,
-        completion: @escaping (Result<[RecipeNetwork], Error>) -> Void
+        completion: @escaping (Result<[Recipe], Error>) -> Void
     ) {
         var baseUrlComponents = baseUrlComponents
         baseUrlComponents.queryItems?.append(.init(name: Constants.dishTypeKey, value: dishType.dishCategory))
@@ -106,7 +106,7 @@ final class NetworkService: NetworkServiceProtocol {
 
             do {
                 let result = try JSONDecoder().decode(ResponseDTO.self, from: data)
-                let recipes = result.hits.map { RecipeNetwork(dto: $0.recipe) }
+                let recipes = result.hits.map { Recipe(dto: $0.recipe) }
                 completion(.success(recipes))
             } catch {
                 completion(.failure(error))

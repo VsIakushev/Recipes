@@ -34,7 +34,7 @@ class ImageTableViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func configureCell(recipe: RecipeNetwork) {
+    func configureCell(recipe: Recipe) {
         backgroundColor = .white
         self.title = recipe.name
         self.image = recipe.image

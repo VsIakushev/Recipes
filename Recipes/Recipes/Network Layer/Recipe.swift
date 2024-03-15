@@ -4,7 +4,7 @@
 import Foundation
 
 /// Рецепт детальный
-struct RecipeNetwork {
+struct Recipe: Equatable, Codable {
     /// Идентификатор
     let uri: String
     /// Картинка
@@ -25,6 +25,8 @@ struct RecipeNetwork {
     let proteins: Double?
     /// Список ингридиентов
     let ingredientLines: [String]
+    /// Избранное или нет
+    var isFavorite: Bool = false
 
     init(dto: RecipeDTO) {
         uri = dto.uri

@@ -52,12 +52,6 @@ final class RecipeDetailsViewController: UIViewController {
         view.backgroundColor = .cyan
     }
     
-    func didRefreshData() {
-        DispatchQueue.main.async {
-//            self.tableView.refreshControl?.endRefreshing()
-        }
-    }
-    
     // MARK: - Private Methods
     
     private func getRecipe() {
@@ -101,7 +95,7 @@ final class RecipeDetailsViewController: UIViewController {
         addToFavoritesButton.tintColor = .black
         
         navigationItem.rightBarButtonItems = [addToFavoritesButton, shareButton]
-    }
+        }
     
     private func setupTableView() {
         view.addSubview(tableView)
@@ -131,9 +125,7 @@ final class RecipeDetailsViewController: UIViewController {
     
         
     @objc private func refreshData() {
-//        DispatchQueue.main.async {
                 self.getRecipe()
-//            }
     }
 }
 
@@ -142,7 +134,6 @@ extension RecipeDetailsViewController: RecipeDetailsViewControllerProtocol {
     func updateState() {
         switch presenter?.state {
         case .loading:
-//            tableView.reloadData()
             break
         case .data:
             tableView.reloadData()
@@ -152,7 +143,7 @@ extension RecipeDetailsViewController: RecipeDetailsViewControllerProtocol {
         case .error:
             tableView.reloadData()
         case .none:
-            print("some none case")
+            break
         }
     }
     
@@ -174,7 +165,6 @@ extension RecipeDetailsViewController: RecipeDetailsViewControllerProtocol {
     }
     
     @objc func backButtonTapped() {
-        print("go back")
         presenter?.closeDetailsScreen()
     }
     
@@ -186,7 +176,8 @@ extension RecipeDetailsViewController: RecipeDetailsViewControllerProtocol {
         guard let recipe = favoritesSingletone.recipeFromList else {
             return
         }
-        print("After guard let: \(recipe)")
+        navigationItem.rightBarButtonItems?[0].image = UIImage(named: "favoritesred")
+        navigationItem.rightBarButtonItems?[0].tintColor = .background03()
         presenter?.addToFavorites()
     }
 }
@@ -207,10 +198,6 @@ extension RecipeDetailsViewController: UITableViewDataSource {
         switch presenter?.state {
         case .data(let recipe):
             if indexPath.row == 0 {
-                
-//                guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.imageShimmerCellIdentifier, for: indexPath) as? ImageShimmerCell else { return UITableViewCell() }
-//                return cell
-                
                 guard let cell = tableView
                     .dequeueReusableCell(
                         withIdentifier: Constants.imageCellIdentifier, for: indexPath
@@ -252,8 +239,6 @@ extension RecipeDetailsViewController: UITableViewDataSource {
         case .noData, .error, .none:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.errorDetailsCellIdentifier, for: indexPath) as? ErrorDetailsCell else { return UITableViewCell() }
             return cell
-            
         }
-        
     }
 }

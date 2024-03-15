@@ -13,19 +13,16 @@ protocol RecipeDetailsViewControllerProtocol: AnyObject {
     func backButtonTapped()
     /// Вызов Алерта о функционале в разработке
     func showAlert()
+    /// Перезагрузить данные в таблице
     func reloadData()
+    /// Обновить состояние загрузки данных
     func updateState()
-    func didRefreshData()
 }
 
 /// Протокол презентера экрана деталей рецепта
 protocol RecipeDetailsPresenterProtocol {
-    
-    var state: ViewState<RecipeNetwork> { get }
-    
-    /// Данные рецепта
-//    var recipe: Recipe { get set }
-//    var recipe: RecipeNetwork? { get set }
+    /// Состояние загрузки данных
+    var state: ViewState<Recipe> { get }
     /// Координатор Рецептов для навигации
     var recipeUri: String? { get }
     /// Отработка нажатия кнопки "Добавить в избранное"
@@ -44,33 +41,43 @@ protocol RecipeDetailsPresenterProtocol {
 
 /// Презентер экрана деталей рецепта
 final class RecipeDetailsPresenter: RecipeDetailsPresenterProtocol {
-    var state: ViewState<RecipeNetwork> = .loading {
+    
+    // MARK: - Public Properties
+    
+    var state: ViewState<Recipe> = .loading {
         didSet {
-           
-                self.view?.updateState()
-            
+            self.view?.updateState()
         }
     }
-    
-    //TODO: - реализовать передачу uri сюда при переходе с экрана категорий
     var recipeUri: String?
+    var recipeForFavorites: Recipe?
+    var selectedRecipe: Recipe?
+    var favoritesSingletone = FavoritesSingletone.shared
+    var favRecipe: Recipe?
+    
+    // MARK: - Private Properties
+    
+    private weak var view: RecipeDetailsViewControllerProtocol?
+    private weak var recipeCoordinator: RecipeCoordinator?
+    private var networkService: NetworkServiceProtocol?
+    
+    // MARK: - Initializers
+    
+    init(view: RecipeDetailsViewControllerProtocol, coordinator: RecipeCoordinator, networkService: NetworkServiceProtocol) {
+        self.view = view
+        recipeCoordinator = coordinator
+        self.networkService = networkService
+    }
+    
+    // MARK: - Public Methods
     
     func getRecipe() {
         state = .loading
         networkService?
-            .getRecipeDetail(
-                //TODO: - реализовать передачу ссылки
-//                uri: recipeUri ?? ""
-                uri: "http://www.edamam.com/ontologies/edamam.owl#recipe_37b6f298818e8827d6eb0880ec8ea627"
-                
-            ) { result in
+            .getRecipeDetail( uri: recipeUri ?? "") { result in
                 switch result {
                 case let .success(recipe):
-//                    self.recipe = recipe
-                    
                     self.state = .data(recipe)
-//                    self.view?.didRefreshData()
-                    
                 case let .failure(error):
                     self.state = .error(error)
                     print("Error fetching recipes: \(error)")
@@ -78,52 +85,27 @@ final class RecipeDetailsPresenter: RecipeDetailsPresenterProtocol {
             }
     }
     
-    private weak var recipeCoordinator: RecipeCoordinator?
-    private var networkService: NetworkServiceProtocol?
-
-    // MARK: - Public Properties
-
-//    var recipe: RecipeNetwork?
-    var recipeForFavorites: Recipe?
-    var selectedRecipe: RecipeNetwork?
-    var favoritesSingletone = FavoritesSingletone.shared
-    var favRecipe: Recipe?
-
-    // MARK: - Private Properties
-
-    private weak var view: RecipeDetailsViewControllerProtocol?
-
-    // MARK: - Initializers
-
-    init(view: RecipeDetailsViewControllerProtocol, coordinator: RecipeCoordinator, networkService: NetworkServiceProtocol) {
-        self.view = view
-        recipeCoordinator = coordinator
-        self.networkService = networkService
-    }
-
-    // MARK: - Public Methods
-
     func addToFavoritesSingleton() {
         guard let selectedRecipe = selectedRecipe else {
             return
         }
-
+        
         favoritesSingletone.addRecipeToFavorites(selectedRecipe)
     }
-
+    
     func addToFavorites() {
         guard let favRecipe = favoritesSingletone.recipeFromList else {
             print("selectedRecipe is nil!")
             return
         }
-
+        
         favoritesSingletone.addRecipeToFavorites(favRecipe)
     }
-
+    
     func shareViaTelegram() {
         view?.showAlert()
     }
-
+    
     func closeDetailsScreen() {
         recipeCoordinator?.closeRecipeDetails()
     }

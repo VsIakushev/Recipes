@@ -24,10 +24,10 @@ final class CaloriesTableViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func configureCell(recipe: RecipeNetwork) {
+    func configureCell(recipe: Recipe) {
         kcalView = createCellElement(
             title: Constants.calories,
-            parameter: "\(recipe.calories) kcal"
+            parameter: "\(Int(recipe.calories ?? 0)) kcal"
         )
         carbonhedratesView = createCellElement(
             title: Constants.carbohydrates,

@@ -27,8 +27,8 @@ final class FavoritesCoordinator: BaseCoodinator {
         rootController.pushViewController(recipeViewController, animated: true)
     }
 
-    func pushReceiptDetails() {
-        let recipeDetailVC = appBuilder.makeRecipeDetailsModule(coordinator: recipeCoordinator)
+    func pushReceiptDetails(recipe: Recipe) {
+        let recipeDetailVC = appBuilder.makeRecipeDetailsModule(coordinator: recipeCoordinator, uri: recipe.uri)
         rootController.pushViewController(recipeDetailVC, animated: true)
     }
 }
