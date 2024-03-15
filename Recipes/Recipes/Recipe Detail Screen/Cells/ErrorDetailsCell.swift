@@ -9,6 +9,7 @@ class ErrorDetailsCell: UITableViewCell {
     private enum Constants {
         static let failedText = "Failed to load data"
         static let lightningImageName = "lightning"
+        static let reloadText = " Reload"
     }
 
     // MARK: - Visual Components
@@ -34,6 +35,19 @@ class ErrorDetailsCell: UITableViewCell {
         label.textAlignment = .center
         return label
     }()
+    
+    private let reloadButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "reload"), for: .normal)
+        button.setTitle(Constants.reloadText, for: .normal)
+        button.setTitleColor(.text03(), for: .normal)
+        button.setTitleColor(.background08(), for: .focused)
+        button.backgroundColor = .background06()
+        button.layer.cornerRadius = 12
+        return button
+    }()
+    
+    var reloadButtonAction: VoidHandler?
 
     // MARK: - Initializers
 
@@ -56,12 +70,16 @@ class ErrorDetailsCell: UITableViewCell {
         addSubview(lightningBackgroundView)
         addSubview(failedLabel)
         lightningBackgroundView.addSubview(lightningImageView)
+        addSubview(reloadButton)
+        
+        reloadButton.addTarget(self, action: #selector(reloadButtonPressed), for: .touchUpInside)
     }
 
     private func setConstraints() {
         lightningBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         failedLabel.translatesAutoresizingMaskIntoConstraints = false
         lightningImageView.translatesAutoresizingMaskIntoConstraints = false
+        reloadButton.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             contentView.heightAnchor.constraint(equalToConstant: 600),
@@ -79,8 +97,18 @@ class ErrorDetailsCell: UITableViewCell {
             failedLabel.widthAnchor.constraint(equalToConstant: 350),
             failedLabel.heightAnchor.constraint(equalToConstant: 16),
             failedLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            failedLabel.topAnchor.constraint(equalTo: lightningBackgroundView.bottomAnchor, constant: 17)
+            failedLabel.topAnchor.constraint(equalTo: lightningBackgroundView.bottomAnchor, constant: 17),
+            
+            reloadButton.widthAnchor.constraint(equalToConstant: 150),
+            reloadButton.heightAnchor.constraint(equalToConstant: 32),
+            reloadButton.topAnchor.constraint(equalTo: failedLabel.bottomAnchor, constant: 25),
+            reloadButton.centerXAnchor.constraint(equalTo: centerXAnchor)
 
         ])
+    }
+    
+    @objc private func reloadButtonPressed() {
+        
+        reloadButtonAction?()
     }
 }
