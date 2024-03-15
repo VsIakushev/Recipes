@@ -15,6 +15,7 @@ protocol RecipeDetailsViewControllerProtocol: AnyObject {
     func showAlert()
     func reloadData()
     func updateState()
+    func didRefreshData()
 }
 
 /// Протокол презентера экрана деталей рецепта
@@ -24,7 +25,7 @@ protocol RecipeDetailsPresenterProtocol {
     
     /// Данные рецепта
 //    var recipe: Recipe { get set }
-    var recipe: RecipeNetwork? { get set }
+//    var recipe: RecipeNetwork? { get set }
     /// Координатор Рецептов для навигации
     var recipeUri: String? { get }
     /// Отработка нажатия кнопки "Добавить в избранное"
@@ -45,9 +46,9 @@ protocol RecipeDetailsPresenterProtocol {
 final class RecipeDetailsPresenter: RecipeDetailsPresenterProtocol {
     var state: ViewState<RecipeNetwork> = .loading {
         didSet {
-            DispatchQueue.main.async { [weak self] in
-                self?.view?.updateState()
-            }
+           
+                self.view?.updateState()
+            
         }
     }
     
@@ -65,8 +66,10 @@ final class RecipeDetailsPresenter: RecipeDetailsPresenterProtocol {
             ) { result in
                 switch result {
                 case let .success(recipe):
-                    self.recipe = recipe
+//                    self.recipe = recipe
+                    
                     self.state = .data(recipe)
+//                    self.view?.didRefreshData()
                     
                 case let .failure(error):
                     self.state = .error(error)
@@ -76,11 +79,11 @@ final class RecipeDetailsPresenter: RecipeDetailsPresenterProtocol {
     }
     
     private weak var recipeCoordinator: RecipeCoordinator?
-    private weak var networkService: NetworkServiceProtocol?
+    private var networkService: NetworkServiceProtocol?
 
     // MARK: - Public Properties
 
-    var recipe: RecipeNetwork?
+//    var recipe: RecipeNetwork?
     var recipeForFavorites: Recipe?
     var selectedRecipe: Recipe?
     var favoritesSingletone = FavoritesSingletone.shared

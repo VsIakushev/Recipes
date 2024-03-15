@@ -35,20 +35,23 @@ final class NetworkService: NetworkServiceProtocol {
         if let url = components?.url {
             let task = URLSession.shared.dataTask(with: url) { data, _, error in
                 if let error = error {
-                    print("error: \(error.localizedDescription)")
-                    completion(.failure(error))
-                    return
+                    DispatchQueue.main.async {
+                        completion(.failure(error))
+                        return
+                    }
                 }
                 guard let data = data else { return }
                 do {
                     let object = try JSONDecoder().decode(ResponseDTO.self, from: data)
                     if let recipe = object.hits.first?.recipe {
-//                        print(recipe)
-                        completion(.success(RecipeNetwork(dto: recipe)))
+                        DispatchQueue.main.async {
+                            completion(.success(RecipeNetwork(dto: recipe)))
+                        }
                     }
                 } catch {
-                    print("error decoding data: \(error.localizedDescription)")
-                    completion(.failure(error))
+                    DispatchQueue.main.async {
+                        completion(.failure(error))
+                    }
                 }
             }
             task.resume()

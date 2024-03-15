@@ -30,6 +30,7 @@ final class RecipeDetailsViewController: UIViewController {
     // MARK: - Private Properties
     
     private lazy var tableView = UITableView()
+    private let refreshControl = UIRefreshControl()
     
     // MARK: - Life Cycles
     
@@ -49,6 +50,12 @@ final class RecipeDetailsViewController: UIViewController {
     
     func setupUI() {
         view.backgroundColor = .cyan
+    }
+    
+    func didRefreshData() {
+        DispatchQueue.main.async {
+//            self.tableView.refreshControl?.endRefreshing()
+        }
     }
     
     // MARK: - Private Methods
@@ -102,6 +109,8 @@ final class RecipeDetailsViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.dataSource = self
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         
         tableView.register(ImageTableViewCell.self, forCellReuseIdentifier: Constants.imageCellIdentifier)
         tableView.register(CaloriesTableViewCell.self, forCellReuseIdentifier: Constants.caloriesCellIdentifier)
@@ -119,14 +128,25 @@ final class RecipeDetailsViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
     }
+    
+        
+    @objc private func refreshData() {
+//        DispatchQueue.main.async {
+                self.getRecipe()
+//            }
+    }
 }
 
 extension RecipeDetailsViewController: RecipeDetailsViewControllerProtocol {
     
     func updateState() {
         switch presenter?.state {
-        case .loading, .data:
+        case .loading:
+//            tableView.reloadData()
+            break
+        case .data:
             tableView.reloadData()
+            tableView.refreshControl?.endRefreshing()
         case .noData:
             tableView.reloadData()
         case .error:
@@ -185,7 +205,7 @@ extension RecipeDetailsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         switch presenter?.state {
-        case .data:
+        case .data(let recipe):
             if indexPath.row == 0 {
                 
 //                guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.imageShimmerCellIdentifier, for: indexPath) as? ImageShimmerCell else { return UITableViewCell() }
@@ -198,10 +218,8 @@ extension RecipeDetailsViewController: UITableViewDataSource {
                       let presenter = presenter
                 else { return UITableViewCell() }
                 
-                cell.configureCell(title: presenter.recipe?.name ?? "",
-                                   image: presenter.recipe?.image ?? "",
-                                   weight: Int(presenter.recipe?.weight ?? 0),
-                                   cookingTime: presenter.recipe?.cookingTime ?? 0)
+                cell.configureCell(recipe: recipe)
+             
                 return cell
                 
             } else if indexPath.row == 1 {
@@ -212,12 +230,7 @@ extension RecipeDetailsViewController: UITableViewDataSource {
                     ) as? CaloriesTableViewCell,
                       let presenter = presenter
                 else { return UITableViewCell() }
-                cell.configureCell(
-                    kcal: Int(presenter.recipe?.calories ?? 0),
-                    carbohydrates: presenter.recipe?.carbohydrates ?? 0,
-                    fats: presenter.recipe?.fats ?? 0,
-                    proteins: presenter.recipe?.proteins ?? 0
-                )
+                cell.configureCell(recipe: recipe)
                 return cell
                 
             } else {
@@ -228,7 +241,7 @@ extension RecipeDetailsViewController: UITableViewDataSource {
                     ) as? RecipeDescriptionTableViewCell,
                       let presenter = presenter
                 else { return UITableViewCell() }
-                cell.configureCell(text: (presenter.recipe?.ingredientLines.joined(separator: "\n")) ?? "")
+                cell.configureCell(recipe: recipe)
                 
                 return cell
             }
