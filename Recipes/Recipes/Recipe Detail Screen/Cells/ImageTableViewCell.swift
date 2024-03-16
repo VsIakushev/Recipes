@@ -14,7 +14,8 @@ class ImageTableViewCell: UITableViewCell {
         static let timerIcon = "timer1"
     }
 
-    // MARK: - Public Properties
+    // MARK: - Private Properties
+    private let imageCacheService = ImageCacheProxy()
 
     private var title = ""
     private var image = ""
@@ -51,13 +52,24 @@ class ImageTableViewCell: UITableViewCell {
         contentView.addSubview(recipeTitleLabel)
         contentView.addSubview(recipeImageView)
 
-        NetworkService.loadImage(from: image) { image in
-            DispatchQueue.main.async {
-                self.recipeImageView.image = image
-                self.recipeImageView.layer.cornerRadius = 24
-                self.recipeImageView.clipsToBounds = true
+        if let imageURL = URL(string: image) {
+            
+            imageCacheService.loadImage(from: imageURL) { [weak self] image in
+                DispatchQueue.main.async {
+                    self?.recipeImageView.image = image
+                    self?.recipeImageView.layer.cornerRadius = 24
+                    self?.recipeImageView.clipsToBounds = true
+                }
             }
         }
+        
+//        NetworkService.loadImage(from: image) { image in
+//            DispatchQueue.main.async {
+//                self.recipeImageView.image = image
+//                self.recipeImageView.layer.cornerRadius = 24
+//                self.recipeImageView.clipsToBounds = true
+//            }
+//        }
         recipeImageView.addSubview(roundView)
         roundView.addSubview(potImageView)
         roundView.addSubview(weightLabel)
