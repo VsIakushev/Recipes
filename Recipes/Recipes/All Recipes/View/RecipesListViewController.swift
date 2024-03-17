@@ -194,7 +194,7 @@ extension RecipesListViewController: UITableViewDelegate {
         guard case .data(let recipes) = presenter?.state else { return }
         guard indexPath.row < recipes.count else { return }
         let selectedRecipe = recipes[indexPath.row]
-        //TODO: - закинуть рецепт в синглтон
+        favoritesSingletone.getRecipeFromList(selectedRecipe)
         presenter?.goToRecipeDetails(with: selectedRecipe)
     }
 }
