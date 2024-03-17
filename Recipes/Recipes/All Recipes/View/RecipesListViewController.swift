@@ -69,20 +69,16 @@ final class RecipesListViewController: UIViewController {
     var officiant: Invoker? = Invoker.shared
     var favoritesSingletone = FavoritesSingletone.shared
     var recipesNetwork: [Recipe] = []
-
     var networkService = NetworkService()
 
     // MARK: - Private Properties
 
-//    private var stateShimer = StateShimer.loading
 
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-//        presenter?.state = .loading
-//        hideSkeleton()
         hidesBottomBarWhenPushed = true
     }
 
@@ -143,7 +139,6 @@ final class RecipesListViewController: UIViewController {
 
     @objc private func caloriesButtonTapped() {
         presenter?.buttonCaloriesChange(category: recipesNetwork)
-        print(recipesNetwork)
     }
 
     @objc private func timeButtonTapped() {
@@ -189,14 +184,6 @@ extension RecipesListViewController {
         timeButton.widthAnchor.constraint(equalToConstant: 90).isActive = true
         timeButton.heightAnchor.constraint(equalToConstant: 36).isActive = true
     }
-
-    internal func hideSkeleton() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-//            self.stateShimer = .done
-            self.presenter?.state = .data(self.recipesNetwork)
-            self.recipesTableView.reloadData()
-        }
-    }
 }
 
 // MARK: - UITableViewDelegate
@@ -204,29 +191,12 @@ extension RecipesListViewController {
 extension RecipesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-//        let selectedRecipe = recipesNetwork[indexPath.row]
-//        favoritesSingletone.getRecipeFromList(selectedRecipe)
-//        presenter?.goToRecipeDetails(with: selectedRecipe)
-        // Проверяем, актуальный ли источник данных используется в таблице
-//            guard let recipes = presenter?.checkSearch() else { return }
-//
-//            // Проверяем, что индекс находится в пределах массива
-//            guard indexPath.row < recipes.count else { return }
-//
-//            // Получаем выбранный рецепт
-//            let selectedRecipe = recipes[indexPath.row]
-//
-//            // Переходим к деталям рецепта
-//            presenter?.goToRecipeDetails(with: selectedRecipe)
         // Проверяем, актуальный ли источник данных используется в таблице
         guard case .data(let recipes) = presenter?.state else { return }
-        
         // Проверяем, что индекс находится в пределах массива
         guard indexPath.row < recipes.count else { return }
-        
         // Получаем выбранный рецепт
         let selectedRecipe = recipes[indexPath.row]
-        
         // Переходим к деталям рецепта
         presenter?.goToRecipeDetails(with: selectedRecipe)
 
@@ -237,35 +207,28 @@ extension RecipesListViewController: UITableViewDelegate {
 
 extension RecipesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let searchNames = presenter?.checkSearch() else { return 0 }
-        return searchNames.count
-//        guard case .data(let recipes) = presenter?.state else { return 0 }
-//                // Возвращаем количество рецептов в массиве
-//                return recipes.count
+        switch presenter?.state {
+        case .loading:
+            return 7
+        case .data(let recipes):
+            return recipes.count
+        case .none:
+            print("")
+        case .some(.noData):
+            print("")
+
+        case .some(.error(_)):
+            print("")
+        }
+        return 0
     }
 
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        switch stateShimer {
-//        case .loading:
-//            return ShimmerRecipesCell()
-//        case .done:
-//            guard let cell = tableView.dequeueReusableCell(
-//                withIdentifier: Constants.cellIdendefire,
-//                for: indexPath
-//            ) as? RecipesCell
-//            else { return UITableViewCell() }
-//            cell.configure(with: recipesNetwork[indexPath.row])
-//            return cell
-//        }
-//    }
     func updateState() {
         guard let presenter else { return }
         switch presenter.state {
         case .loading:
-//            presenter.state = .loading
-            hideSkeleton()
-//            break
-//            stateShimer = .loading
+            recipesTableView.reloadData()
+
 
             
         case .data:
@@ -286,20 +249,23 @@ extension RecipesListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch presenter?.state {
+        
         case .loading:
             print("LOADING")
-//            presenter?.state = .loading
-            hideSkeleton()
-            return ShimmerRecipesCell()
-        
-        case .data(let data):
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: Constants.skeletonCellIdIdentifier,
+                for: indexPath
+            ) as? ShimmerRecipesCell else { return UITableViewCell() }
+            return cell
+            
+        case .data(let recipes):
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: Constants.cellIdendefire,
                 for: indexPath
             ) as? RecipesCell else { return UITableViewCell() }
-            cell.configure(with: recipesNetwork[indexPath.row])
+            cell.configure(with: recipes[indexPath.row])
             return cell
-            
+
         case .noData:
             tableView.reloadData()
             return UITableViewCell()
@@ -342,37 +308,25 @@ extension RecipesListViewController: RecipesViewProtocol {
         recipesTableView.reloadData()
     }
     
-
     func goToTheCategory() {
         navigationController?.popViewController(animated: true)
     }
 
     func getRecipes(recipes: [Recipe]) {
-        print("RECIPES \(recipes)")
         recipesNetwork = recipes
-        print("RECIPESNETWORK \(recipesNetwork)")
-
         recipesTableView.reloadData()
     }
-    
+
     @objc private func refreshData() {
         getRecipes(recipes: recipesNetwork)
         recipesTableView.refreshControl?.endRefreshing()
-
     }
-    
-   
 }
 
 extension RecipesListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.count >= 3 {
             presenter?.searchRecipes(text: searchText)
-//            stateShimer = .loading
-            presenter?.state = .loading
-            hideSkeleton()
-        } else {
-            presenter?.searchRecipes(text: "")
         }
     }
 

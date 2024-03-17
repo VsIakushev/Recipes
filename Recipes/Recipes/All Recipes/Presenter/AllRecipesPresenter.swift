@@ -19,8 +19,6 @@ protocol RecipesViewProtocol: AnyObject {
     func sortViewRecipes(recipes: [Recipe])
     /// Обновление состояния вью
     func updateState()
-    
-//    func hideSkeleton()
 }
 
 /// Протокол презентера
@@ -37,8 +35,6 @@ protocol RecipeProtocol: AnyObject {
     func checkSearch() -> [Recipe]
     /// начать поиск
     func startSearch()
-    /// стоп поиск
-//    func stopSearch()
     /// отсортировать рецепты
     func sortRecipes(category: [Recipe])
     /// Название категории
@@ -62,15 +58,12 @@ final class AllRecipesPresenter {
     var state: ViewState<[Recipe]> = .loading {
         didSet {
             view?.updateState()
-//            view?.reloadTableView()
         }
     }
     
     private weak var view: RecipesViewProtocol?
     private weak var recipesCoordinator: RecipeCoordinator?
-//    private var user: Recipe?
     private var isSearching = false
-//    private var searchNames: [Recipe] = []
     private var sortedCalories = SortedCalories.none
     private var sortedTime = SortedTime.none
     private var originalRecipes: [Recipe] = []
@@ -130,7 +123,6 @@ extension AllRecipesPresenter: RecipeProtocol {
 
     func sortRecipes(category: [Recipe]) {
         var sorted: [Recipe]
-        print("CCCCCAAAAAATTTTTEEEEEGGGGGOOOOORRRRRRYYYYY \(recipes)")
 
         if sortedCalories == .none, sortedTime == .none {
             sorted = recipes.shuffled()
@@ -172,7 +164,6 @@ extension AllRecipesPresenter: RecipeProtocol {
                 return false
             }
         }
-        print("SOOOOOOORRRRRRTTTTTTEEEEEEDDDD\(sorted)")
 
         view?.sortViewRecipes(recipes: sorted)
         view?.reloadTableView()
@@ -182,13 +173,11 @@ extension AllRecipesPresenter: RecipeProtocol {
    
     func searchRecipes(text: String) {
         if text.isEmpty {
-            // Если текст поиска пустой, восстанавливаем исходный список рецептов
             isSearching = false
-            recipes = originalRecipes // Предполагается, что у вас есть переменная originalRecipes, которая хранит исходный список рецептов
+            recipes = originalRecipes
         } else {
-            // Фильтруем рецепты по тексту поиска
             isSearching = true
-            recipes = originalRecipes.filter { $0.name.lowercased().contains(text.lowercased()) }
+            getReceipts(searchString: text)
         }
         view?.reloadTableView()
     }
@@ -196,45 +185,18 @@ extension AllRecipesPresenter: RecipeProtocol {
     func checkSearch() -> [Recipe] {
         return isSearching ? recipes : originalRecipes
     }
-    
-    
-    
-//    func checkSearch() -> [Recipe] {
-//        if isSearching {
-//            return recipes
-//        } else {
-//            return recipes
-//        }
-//    }
 
     func startSearch() {
         isSearching = true
     }
 
-//    func stopSearch() {
-//        isSearching = false
-//    }
-
-//    func searchRecipes(text: String) {
-//        guard !text.isEmpty else {
-//            isSearching = false
-//            recipes = []
-////            view?.reloadTableView()
-//            return
-//        }
-//
-//        isSearching = true
-//        recipes = recipes.filter { $0.name.lowercased().contains(text.lowercased()) }
-////        view?.reloadTableView()
-//    }
 
     func goToCategory() {
         view?.goToTheCategory()
     }
 
     func getReceipts(searchString: String? = nil) {
-        print("GET RECIPEEEEEEES")
-//        state = .loading
+        state = .loading
 
         var health: String?
 
@@ -249,30 +211,18 @@ extension AllRecipesPresenter: RecipeProtocol {
             }
             query.append(searchString)
             fetchRecipes(health: health, query: query)
-            print("11111111111")
         } else {
             fetchRecipes(health: health, query: category.rawValue)
-            print("22222222222")
         }
     }
 
     private func fetchRecipes(health: String?, query: String?) {
-        state = .loading
         networkService.getRecipes(dishType: category, health: health, query: query) { [weak self] result in
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 switch result {
                 case let .success(recipes):
                     self.state = .data(recipes)
-                    self.recipes = recipes
-                    self.originalRecipes = recipes // Сохранение оригинального списка рецептов
-                    self.view?.getRecipes(recipes: recipes)
-                    DispatchQueue.main.async {
-//                        print("Hiding skeleton view")
-//                        self.view?.reloadTableView()
-//                        self.view?.hideSkeleton()
-                    }
-
                 case let .failure(error):
                     self.state = .error(error)
                     print("Error fetching recipes: \(error)")
