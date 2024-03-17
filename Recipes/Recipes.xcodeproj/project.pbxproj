@@ -43,9 +43,9 @@
 		57441AA82B9BEF0400A8A41F /* ProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441AA72B9BEF0400A8A41F /* ProfileDataManager.swift */; };
 		5770C47B2BA3E42E004C9B90 /* ShimmerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5770C47A2BA3E42E004C9B90 /* ShimmerCell.swift */; };
 		5770C47D2BA3FCAB004C9B90 /* ErrorDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5770C47C2BA3FCAB004C9B90 /* ErrorDetailsCell.swift */; };
-		5770C4A92BA516D9004C9B90 /* ImageCacheServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5770C4A82BA516D9004C9B90 /* ImageCacheServiceProtocol.swift */; };
 		5770C4AB2BA516F6004C9B90 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5770C4AA2BA516F6004C9B90 /* ImageCacheService.swift */; };
 		5770C4AD2BA51717004C9B90 /* ImageCacheProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5770C4AC2BA51717004C9B90 /* ImageCacheProxy.swift */; };
+		5770C4AF2BA74EF4004C9B90 /* ImageCacheServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5770C4AE2BA74EF4004C9B90 /* ImageCacheServiceProtocol.swift */; };
 		57F4EBB92B8F270B00ADA7AA /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBB82B8F270B00ADA7AA /* ProfileTableViewCell.swift */; };
 		57F4EBBB2B8F272100ADA7AA /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */; };
 		57F4EBBD2B8F273500ADA7AA /* ProfileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBBC2B8F273500ADA7AA /* ProfileButton.swift */; };
@@ -113,9 +113,9 @@
 		57441AA72B9BEF0400A8A41F /* ProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataManager.swift; sourceTree = "<group>"; };
 		5770C47A2BA3E42E004C9B90 /* ShimmerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerCell.swift; sourceTree = "<group>"; };
 		5770C47C2BA3FCAB004C9B90 /* ErrorDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDetailsCell.swift; sourceTree = "<group>"; };
-		5770C4A82BA516D9004C9B90 /* ImageCacheServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageCacheServiceProtocol.swift; path = ../../../../../../../../../Desktop/ImageCacheServiceProtocol.swift; sourceTree = "<group>"; };
 		5770C4AA2BA516F6004C9B90 /* ImageCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
 		5770C4AC2BA51717004C9B90 /* ImageCacheProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheProxy.swift; sourceTree = "<group>"; };
+		5770C4AE2BA74EF4004C9B90 /* ImageCacheServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheServiceProtocol.swift; sourceTree = "<group>"; };
 		57F4EBB82B8F270B00ADA7AA /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
 		57F4EBBC2B8F273500ADA7AA /* ProfileButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileButton.swift; sourceTree = "<group>"; };
@@ -311,8 +311,8 @@
 		5770C4A72BA516B6004C9B90 /* LoadImage Service */ = {
 			isa = PBXGroup;
 			children = (
-				5770C4A82BA516D9004C9B90 /* ImageCacheServiceProtocol.swift */,
 				5770C4AA2BA516F6004C9B90 /* ImageCacheService.swift */,
+				5770C4AE2BA74EF4004C9B90 /* ImageCacheServiceProtocol.swift */,
 				5770C4AC2BA51717004C9B90 /* ImageCacheProxy.swift */,
 			);
 			path = "LoadImage Service";
@@ -571,7 +571,6 @@
 				57441A262B98706000A8A41F /* StateShimmer.swift in Sources */,
 				5733135C2B73215B00092647 /* AppDelegate.swift in Sources */,
 				5722C3102B8DBED000ED2AD2 /* MainTabBarViewController.swift in Sources */,
-				5770C4A92BA516D9004C9B90 /* ImageCacheServiceProtocol.swift in Sources */,
 				DA3F295C2B951DB60004CFAE /* RecipesCell.swift in Sources */,
 				5722C3142B8DBF2A00ED2AD2 /* RecipeViewController.swift in Sources */,
 				DA3F295E2B951DD00004CFAE /* AllRecipesPresenter.swift in Sources */,
@@ -609,6 +608,7 @@
 				57441A822B9AE7EE00A8A41F /* ProfileMemento.swift in Sources */,
 				57071C762B90952F00425D68 /* BottomSheetPresenter.swift in Sources */,
 				DA7FF19C2B9AD85A006EE0A6 /* Command.swift in Sources */,
+				5770C4AF2BA74EF4004C9B90 /* ImageCacheServiceProtocol.swift in Sources */,
 				DA7FF1A62B9BEC49006EE0A6 /* UserDefaultsWrapper.swift in Sources */,
 				5770C47B2BA3E42E004C9B90 /* ShimmerCell.swift in Sources */,
 				5722C3182B8DD27100ED2AD2 /* FavoritesViewController.swift in Sources */,
