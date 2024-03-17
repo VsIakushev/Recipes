@@ -17,6 +17,10 @@ protocol RecipesViewProtocol: AnyObject {
     func caloriesButtonPressed(color: String, image: String)
     /// отсортировать рецепты
     func sortViewRecipes(recipes: [Recipe])
+    /// Обновление состояния вью
+    func updateState()
+    
+//    func hideSkeleton()
 }
 
 /// Протокол презентера
@@ -34,11 +38,13 @@ protocol RecipeProtocol: AnyObject {
     /// начать поиск
     func startSearch()
     /// стоп поиск
-    func stopSearch()
+//    func stopSearch()
     /// отсортировать рецепты
     func sortRecipes(category: [Recipe])
     /// Название категории
     var categoryTitle: String { get }
+    /// Состояние загрузки данных
+    var state: ViewState<[Recipe]> { get }
 }
 
 final class AllRecipesPresenter {
@@ -50,16 +56,24 @@ final class AllRecipesPresenter {
         static let filterIcon = "filterIcon"
         static let vegetarianText = "vegetarian"
     }
-
+    
+//MARK: - Public Properties
+    
+    var state: ViewState<[Recipe]> = .loading {
+        didSet {
+            view?.updateState()
+//            view?.reloadTableView()
+        }
+    }
+    
     private weak var view: RecipesViewProtocol?
-
     private weak var recipesCoordinator: RecipeCoordinator?
-    private var user: Recipe?
+//    private var user: Recipe?
     private var isSearching = false
-    private var searchNames: [Recipe] = []
+//    private var searchNames: [Recipe] = []
     private var sortedCalories = SortedCalories.none
     private var sortedTime = SortedTime.none
-    private var sorted: [Recipe] = []
+    private var originalRecipes: [Recipe] = []
     private var recipeDetailsPresenter: RecipeDetailsPresenter?
     private var networkService = NetworkService()
     var recipes: [Recipe] = []
@@ -116,11 +130,12 @@ extension AllRecipesPresenter: RecipeProtocol {
 
     func sortRecipes(category: [Recipe]) {
         var sorted: [Recipe]
+        print("CCCCCAAAAAATTTTTEEEEEGGGGGOOOOORRRRRRYYYYY \(recipes)")
 
         if sortedCalories == .none, sortedTime == .none {
-            sorted = category.shuffled()
+            sorted = recipes.shuffled()
         } else {
-            sorted = category
+            sorted = recipes
 
             let sortCalories: ((Recipe, Recipe) -> Bool)?
             switch sortedCalories {
@@ -142,7 +157,7 @@ extension AllRecipesPresenter: RecipeProtocol {
                 sortTime = nil
             }
 
-            sorted = category.sorted { (lhs: Recipe, rhs: Recipe) -> Bool in
+            sorted = recipes.sorted { (lhs: Recipe, rhs: Recipe) -> Bool in
                 if let sortCalories = sortCalories, let sortTime = sortTime {
                     if lhs.calories == rhs.calories {
                         return sortTime(lhs, rhs)
@@ -157,45 +172,70 @@ extension AllRecipesPresenter: RecipeProtocol {
                 return false
             }
         }
+        print("SOOOOOOORRRRRRTTTTTTEEEEEEDDDD\(sorted)")
 
         view?.sortViewRecipes(recipes: sorted)
-        self.sorted = sorted
+        view?.reloadTableView()
+        self.recipes = sorted
+    }
+
+   
+    func searchRecipes(text: String) {
+        if text.isEmpty {
+            // Если текст поиска пустой, восстанавливаем исходный список рецептов
+            isSearching = false
+            recipes = originalRecipes // Предполагается, что у вас есть переменная originalRecipes, которая хранит исходный список рецептов
+        } else {
+            // Фильтруем рецепты по тексту поиска
+            isSearching = true
+            recipes = originalRecipes.filter { $0.name.lowercased().contains(text.lowercased()) }
+        }
+        view?.reloadTableView()
     }
 
     func checkSearch() -> [Recipe] {
-        if isSearching {
-            return searchNames
-        } else {
-            return recipes
-        }
+        return isSearching ? recipes : originalRecipes
     }
+    
+    
+    
+//    func checkSearch() -> [Recipe] {
+//        if isSearching {
+//            return recipes
+//        } else {
+//            return recipes
+//        }
+//    }
 
     func startSearch() {
         isSearching = true
     }
 
-    func stopSearch() {
-        isSearching = false
-    }
+//    func stopSearch() {
+//        isSearching = false
+//    }
 
-    func searchRecipes(text: String) {
-        guard !text.isEmpty else {
-            isSearching = false
-            searchNames = []
-            view?.reloadTableView()
-            return
-        }
-
-        isSearching = true
-        searchNames = recipes.filter { $0.name.lowercased().contains(text.lowercased()) }
-        view?.reloadTableView()
-    }
+//    func searchRecipes(text: String) {
+//        guard !text.isEmpty else {
+//            isSearching = false
+//            recipes = []
+////            view?.reloadTableView()
+//            return
+//        }
+//
+//        isSearching = true
+//        recipes = recipes.filter { $0.name.lowercased().contains(text.lowercased()) }
+////        view?.reloadTableView()
+//    }
 
     func goToCategory() {
         view?.goToTheCategory()
     }
 
     func getReceipts(searchString: String? = nil) {
+        print("GET RECIPEEEEEEES")
+//        state = .loading
+
         var health: String?
 
         if category == .sideDish {
@@ -209,41 +249,32 @@ extension AllRecipesPresenter: RecipeProtocol {
             }
             query.append(searchString)
             fetchRecipes(health: health, query: query)
+            print("11111111111")
         } else {
             fetchRecipes(health: health, query: category.rawValue)
+            print("22222222222")
         }
     }
 
     private func fetchRecipes(health: String?, query: String?) {
+        state = .loading
         networkService.getRecipes(dishType: category, health: health, query: query) { [weak self] result in
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 switch result {
                 case let .success(recipes):
+                    self.state = .data(recipes)
                     self.recipes = recipes
+                    self.originalRecipes = recipes // Сохранение оригинального списка рецептов
                     self.view?.getRecipes(recipes: recipes)
                     DispatchQueue.main.async {
-                        self.view?.reloadTableView()
+//                        print("Hiding skeleton view")
+//                        self.view?.reloadTableView()
+//                        self.view?.hideSkeleton()
                     }
 
                 case let .failure(error):
-                    print("Error fetching recipes: \(error)")
-                }
-            }
-        }
-
-        networkService.getRecipes(dishType: category, health: health, query: query) { [weak self] result in
-            DispatchQueue.main.async {
-                guard let self else { return }
-                switch result {
-                case let .success(recipes):
-                    self.recipes = recipes
-                    self.view?.getRecipes(recipes: recipes)
-                    DispatchQueue.main.async {
-                        self.view?.reloadTableView()
-                    }
-
-                case let .failure(error):
+                    self.state = .error(error)
                     print("Error fetching recipes: \(error)")
                 }
             }

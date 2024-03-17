@@ -184,9 +184,9 @@ extension RecipeDetailsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch presenter?.state {
         case .data:
-            Constants.numberOfSections
+            return Constants.numberOfSections
         case .loading, .noData, .error, .none:
-            1
+            return 1
         }
     }
 

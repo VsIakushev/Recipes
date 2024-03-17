@@ -3,12 +3,12 @@
 
 ///  Состояния шимера
 // TODO: - удалить когда будет реализован Стейт ниже
-enum StateShimer {
-    /// Загрузка данных
-    case loading
-    /// Загружено
-    case done
-}
+//enum StateShimer {
+//    /// Загрузка данных
+//    case loading
+//    /// Загружено
+//    case done
+//}
 
 /// Состояние данных
 enum ViewState<Model> {
