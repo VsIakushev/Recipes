@@ -24,7 +24,12 @@ final class RecipesListViewController: UIViewController {
     let timeButton = UIButton()
     private let refreshControl = UIRefreshControl()
 
-
+    private lazy var recipesListMessagesView = {
+            let view = RecipesListMessagesView()
+            view.addTarget(self, action: #selector(reloadButtonTapped))
+            return view
+        }()
+    
     private lazy var recipesTableView: UITableView = {
         let table = UITableView()
         table.delegate = self
@@ -148,6 +153,10 @@ final class RecipesListViewController: UIViewController {
     @objc private func backButtonTapped() {
         presenter?.goToCategory()
     }
+    
+    @objc private func reloadButtonTapped() {
+            presenter?.getReceipts()
+        }
 }
 
 // MARK: - Extension
@@ -208,15 +217,9 @@ extension RecipesListViewController: UITableViewDataSource {
             return 7
         case .data(let recipes):
             return recipes.count
-        case .none:
-            print("")
-        case .some(.noData):
-            print("")
-
-        case .some(.error(_)):
-            print("")
+        case .noData, .error, .none:
+            return 0
         }
-        return 0
     }
 
     func updateState() {
@@ -224,26 +227,22 @@ extension RecipesListViewController: UITableViewDataSource {
         switch presenter.state {
         case .loading:
             recipesTableView.reloadData()
+            recipesListMessagesView.switchState(.hidden)
         case .data:
             recipesTableView.reloadData()
             recipesTableView.refreshControl?.endRefreshing()
+            recipesListMessagesView.switchState(.hidden)
         case .noData:
-//            recipesTableView.reloadData()
-            print("")
+            recipesListMessagesView.switchState(.nothingFound)
         case .error:
-//            recipesTableView.reloadData()
-            print("")
-//        case .none:
-//            break
+            recipesListMessagesView.switchState(.error)
         }
-//        recipesTableView.reloadData()
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch presenter?.state {
-        
+            
         case .loading:
-            print("LOADING")
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: Constants.skeletonCellIdIdentifier,
                 for: indexPath
@@ -257,18 +256,16 @@ extension RecipesListViewController: UITableViewDataSource {
             ) as? RecipesCell else { return UITableViewCell() }
             cell.configure(with: recipes[indexPath.row])
             return cell
+            
+        case .noData, .error, .none:
+            break
+        
 
-        case .noData:
-            tableView.reloadData()
-            return UITableViewCell()
+//        case .none:
+//            fatalError("Unexpected state")
        
-        case .error:
-            tableView.reloadData()
-            return UITableViewCell()
-
-        case .none:
-            fatalError("Unexpected state")
         }
+        return UITableViewCell()
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

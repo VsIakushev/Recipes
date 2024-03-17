@@ -69,6 +69,8 @@
 		DA98ACF42B98465400125CBD /* Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA98ACF32B98465400125CBD /* Sort.swift */; };
 		DAAC3F872B8F183200D3B08D /* AuthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAC3F862B8F183200D3B08D /* AuthPresenter.swift */; };
 		DABB74812B9FE36B0046C7E1 /* FavoritesSingletone.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABB74802B9FE36B0046C7E1 /* FavoritesSingletone.swift */; };
+		DAE5BCC32BA74CFE0088E31B /* RecipesListMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE5BCC22BA74CFE0088E31B /* RecipesListMessagesView.swift */; };
+		DAE5BCC52BA7511F0088E31B /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE5BCC42BA7511F0088E31B /* Button.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -136,6 +138,8 @@
 		DA98ACF32B98465400125CBD /* Sort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sort.swift; sourceTree = "<group>"; };
 		DAAC3F862B8F183200D3B08D /* AuthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPresenter.swift; sourceTree = "<group>"; };
 		DABB74802B9FE36B0046C7E1 /* FavoritesSingletone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesSingletone.swift; sourceTree = "<group>"; };
+		DAE5BCC22BA74CFE0088E31B /* RecipesListMessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesListMessagesView.swift; sourceTree = "<group>"; };
+		DAE5BCC42BA7511F0088E31B /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -373,6 +377,8 @@
 			isa = PBXGroup;
 			children = (
 				DA3F29592B951D840004CFAE /* RecipesListViewController.swift */,
+				DAE5BCC22BA74CFE0088E31B /* RecipesListMessagesView.swift */,
+				DAE5BCC42BA7511F0088E31B /* Button.swift */,
 				DA3F295B2B951DB60004CFAE /* RecipesCell.swift */,
 				57441A1D2B982B9D00A8A41F /* ShimmerRecipesCell.swift */,
 			);
@@ -575,6 +581,7 @@
 				57F4EBED2B8FE18500ADA7AA /* AppBuilder.swift in Sources */,
 				5722C30C2B8DBE1B00ED2AD2 /* RecipeCoordinator.swift in Sources */,
 				57F4EBB92B8F270B00ADA7AA /* ProfileTableViewCell.swift in Sources */,
+				DAE5BCC32BA74CFE0088E31B /* RecipesListMessagesView.swift in Sources */,
 				57441A1E2B982B9E00A8A41F /* ShimmerRecipesCell.swift in Sources */,
 				574419712B91A95B00A8A41F /* CategotyCollectionViewCell.swift in Sources */,
 				5722C3082B8DBDEF00ED2AD2 /* AppCoordinator.swift in Sources */,
@@ -582,6 +589,7 @@
 				57F4EBF82B902DAA00ADA7AA /* FavoritesPresenter.swift in Sources */,
 				574419F42B97E46B00A8A41F /* Fonts.swift in Sources */,
 				57F4EBBF2B8F275500ADA7AA /* BottomSheetViewController.swift in Sources */,
+				DAE5BCC52BA7511F0088E31B /* Button.swift in Sources */,
 				5733135E2B73215B00092647 /* SceneDelegate.swift in Sources */,
 				574419F62B97E47300A8A41F /* Colors.swift in Sources */,
 				5722C30A2B8DBE0400ED2AD2 /* AuthCoordinator.swift in Sources */,

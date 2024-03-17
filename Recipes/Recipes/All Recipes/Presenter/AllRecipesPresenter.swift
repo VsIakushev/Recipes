@@ -231,7 +231,9 @@ extension AllRecipesPresenter: RecipeProtocol {
                 guard let self = self else { return }
                 switch result {
                 case let .success(recipes):
-                    self.state = .data(recipes)
+//                    self.state = .data(recipes)
+                    self.state = !recipes.isEmpty ? .data(recipes) : .noData
+
                 case let .failure(error):
                     self.state = .error(error)
                     print("Error fetching recipes: \(error)")
