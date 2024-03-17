@@ -5,8 +5,6 @@ import Foundation
 
 /// Протокол вью  всех рецептов
 protocol RecipesViewProtocol: AnyObject {
-    /// получение рецептов
-    func getRecipes(recipes: [Recipe])
     /// переход на экран категорий
     func goToTheCategory()
     /// обновление таблицы
@@ -15,8 +13,6 @@ protocol RecipesViewProtocol: AnyObject {
     func timeButtonPressed(color: String, image: String)
     /// нажатие на кнопку сортировка по калориям
     func caloriesButtonPressed(color: String, image: String)
-    /// отсортировать рецепты
-    func sortViewRecipes(recipes: [Recipe])
     /// Обновление состояния вью
     func updateState()
 }
@@ -36,7 +32,7 @@ protocol RecipeProtocol: AnyObject {
     /// начать поиск
     func startSearch()
     /// отсортировать рецепты
-    func sortRecipes(category: [Recipe])
+    func sortRecipes(recipes: [Recipe])
     /// Название категории
     var categoryTitle: String { get }
     /// Состояние загрузки данных
@@ -80,37 +76,52 @@ final class AllRecipesPresenter {
         recipesCoordinator = coordinator
     }
 
-    func buttonCaloriesChange(category: [Recipe]) {
-        if sortedCalories == .none {
+    func buttonCaloriesChange() {
+        guard case .data(let recipes) = state else { return }
+        switch sortedCalories {
+        case .none:
             sortedCalories = .caloriesLow
             view?.caloriesButtonPressed(color: Constants.background01, image: Constants.filterLow)
-            sortRecipes(category: category)
-        } else if sortedCalories == .caloriesLow {
+        case .caloriesLow:
             sortedCalories = .caloriesHigh
             view?.caloriesButtonPressed(color: Constants.background01, image: Constants.filterHigh)
-            sortRecipes(category: category)
-        } else if sortedCalories == .caloriesHigh {
+        case .caloriesHigh:
             sortedCalories = .none
             view?.caloriesButtonPressed(color: Constants.background06, image: Constants.filterIcon)
-            sortRecipes(category: category)
         }
+        sortRecipes(recipes: recipes)
     }
 
     /// Метод меняющий состояниие кнопки таймера
-    func buttonTimeChange(category: [Recipe]) {
+    func buttonTimeChange(recipes: [Recipe]) {
         if sortedTime == .none {
             sortedTime = .timeLow
             view?.timeButtonPressed(color: Constants.background01, image: Constants.filterLow)
-            sortRecipes(category: category)
+            sortRecipes(recipes: recipes)
         } else if sortedTime == .timeLow {
             view?.timeButtonPressed(color: Constants.background01, image: Constants.filterHigh)
             sortedTime = .timeHigh
-            sortRecipes(category: category)
+            sortRecipes(recipes: recipes)
         } else if sortedTime == .timeHigh {
             sortedTime = .none
             view?.timeButtonPressed(color: Constants.background06, image: Constants.filterIcon)
-            sortRecipes(category: category)
+            sortRecipes(recipes: recipes)
         }
+    }
+    func buttonTimeChange() {
+        guard case .data(let recipes) = state else { return }
+        switch sortedTime {
+        case .none:
+            sortedTime = .timeLow
+            view?.timeButtonPressed(color: Constants.background01, image: Constants.filterLow)
+        case .timeLow:
+            sortedTime = .timeHigh
+            view?.timeButtonPressed(color: Constants.background01, image: Constants.filterHigh)
+        case .timeHigh:
+            sortedTime = .none
+            view?.timeButtonPressed(color: Constants.background06, image: Constants.filterIcon)
+        }
+        sortRecipes(recipes: recipes)
     }
 }
 
@@ -121,7 +132,7 @@ extension AllRecipesPresenter: RecipeProtocol {
         recipesCoordinator?.pushReceiptDetails(with: recipe)
     }
 
-    func sortRecipes(category: [Recipe]) {
+    func sortRecipes(recipes: [Recipe]) {
         var sorted: [Recipe]
 
         if sortedCalories == .none, sortedTime == .none {
@@ -165,9 +176,7 @@ extension AllRecipesPresenter: RecipeProtocol {
             }
         }
 
-        view?.sortViewRecipes(recipes: sorted)
-        view?.reloadTableView()
-        self.recipes = sorted
+        state = .data(sorted)
     }
 
    

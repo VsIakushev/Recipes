@@ -138,11 +138,11 @@ final class RecipesListViewController: UIViewController {
     }
 
     @objc private func caloriesButtonTapped() {
-        presenter?.buttonCaloriesChange(category: recipesNetwork)
+        presenter?.buttonCaloriesChange()
     }
 
     @objc private func timeButtonTapped() {
-        presenter?.buttonTimeChange(category: recipesNetwork)
+        presenter?.buttonTimeChange()
     }
 
     @objc private func backButtonTapped() {
@@ -191,15 +191,11 @@ extension RecipesListViewController {
 extension RecipesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        // Проверяем, актуальный ли источник данных используется в таблице
         guard case .data(let recipes) = presenter?.state else { return }
-        // Проверяем, что индекс находится в пределах массива
         guard indexPath.row < recipes.count else { return }
-        // Получаем выбранный рецепт
         let selectedRecipe = recipes[indexPath.row]
-        // Переходим к деталям рецепта
+        //TODO: - закинуть рецепт в синглтон
         presenter?.goToRecipeDetails(with: selectedRecipe)
-
     }
 }
 
@@ -228,9 +224,6 @@ extension RecipesListViewController: UITableViewDataSource {
         switch presenter.state {
         case .loading:
             recipesTableView.reloadData()
-
-
-            
         case .data:
             recipesTableView.reloadData()
             recipesTableView.refreshControl?.endRefreshing()
@@ -246,7 +239,6 @@ extension RecipesListViewController: UITableViewDataSource {
 //        recipesTableView.reloadData()
     }
 
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch presenter?.state {
         
@@ -299,11 +291,6 @@ extension RecipesListViewController: RecipesViewProtocol {
         caloriesButton.setTitleColor(.black, for: .normal)
     }
 
-    func sortViewRecipes(recipes: [Recipe]) {
-        recipesNetwork = recipes
-        recipesTableView.reloadData()
-    }
-
     func reloadTableView() {
         recipesTableView.reloadData()
     }
@@ -312,14 +299,8 @@ extension RecipesListViewController: RecipesViewProtocol {
         navigationController?.popViewController(animated: true)
     }
 
-    func getRecipes(recipes: [Recipe]) {
-        recipesNetwork = recipes
-        recipesTableView.reloadData()
-    }
-
     @objc private func refreshData() {
-        getRecipes(recipes: recipesNetwork)
-        recipesTableView.refreshControl?.endRefreshing()
+        presenter?.getReceipts()
     }
 }
 
