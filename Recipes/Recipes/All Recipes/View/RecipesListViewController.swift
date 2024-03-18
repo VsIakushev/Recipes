@@ -314,10 +314,13 @@ extension RecipesListViewController: RecipesViewProtocol {
 
 extension RecipesListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        presenter?.searchRecipes(text: searchText)
+        if searchText.isEmpty {
+            recipesListMessagesView.switchState(.startTyping)
+                } else if searchText.count >= 3 {
+                    presenter?.searchRecipes(text: searchText)
+                }
     }
-    
+
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         presenter?.startSearch()
     }
