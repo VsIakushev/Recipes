@@ -71,9 +71,6 @@
 		DABB74812B9FE36B0046C7E1 /* FavoritesSingletone.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABB74802B9FE36B0046C7E1 /* FavoritesSingletone.swift */; };
 		DAE5BCC32BA74CFE0088E31B /* RecipesListMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE5BCC22BA74CFE0088E31B /* RecipesListMessagesView.swift */; };
 		DAE5BCC52BA7511F0088E31B /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE5BCC42BA7511F0088E31B /* Button.swift */; };
-		DAE5BCC82BA765C10088E31B /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE5BCC72BA765C10088E31B /* ImageCacheService.swift */; };
-		DAE5BCCA2BA766180088E31B /* ImageCacheServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE5BCC92BA766180088E31B /* ImageCacheServiceProtocol.swift */; };
-		DAE5BCCC2BA7663E0088E31B /* ImageCacheProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE5BCCB2BA7663E0088E31B /* ImageCacheProxy.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -143,9 +140,6 @@
 		DABB74802B9FE36B0046C7E1 /* FavoritesSingletone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesSingletone.swift; sourceTree = "<group>"; };
 		DAE5BCC22BA74CFE0088E31B /* RecipesListMessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesListMessagesView.swift; sourceTree = "<group>"; };
 		DAE5BCC42BA7511F0088E31B /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
-		DAE5BCC72BA765C10088E31B /* ImageCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
-		DAE5BCC92BA766180088E31B /* ImageCacheServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheServiceProtocol.swift; sourceTree = "<group>"; };
-		DAE5BCCB2BA7663E0088E31B /* ImageCacheProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheProxy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -443,9 +437,6 @@
 		DAE5BCC62BA765B00088E31B /* LoadImage Service */ = {
 			isa = PBXGroup;
 			children = (
-				DAE5BCC72BA765C10088E31B /* ImageCacheService.swift */,
-				DAE5BCC92BA766180088E31B /* ImageCacheServiceProtocol.swift */,
-				DAE5BCCB2BA7663E0088E31B /* ImageCacheProxy.swift */,
 			);
 			path = "LoadImage Service";
 			sourceTree = "<group>";
@@ -588,14 +579,12 @@
 				DA55B4122BA20E4700C73006 /* NutrientDTO.swift in Sources */,
 				DA55B4102BA20DA100C73006 /* HitDTO.swift in Sources */,
 				DABB74812B9FE36B0046C7E1 /* FavoritesSingletone.swift in Sources */,
-				DAE5BCCA2BA766180088E31B /* ImageCacheServiceProtocol.swift in Sources */,
 				57F4EBF52B902D1300ADA7AA /* RecipePresenter.swift in Sources */,
 				5744197F2B92754D00A8A41F /* CaloriesTableViewCell.swift in Sources */,
 				574419EF2B96AB8100A8A41F /* TermsAndPolicyView.swift in Sources */,
 				DA55B4182BA2134700C73006 /* Recipe.swift in Sources */,
 				DAAC3F872B8F183200D3B08D /* AuthPresenter.swift in Sources */,
 				DA55B41C2BA2188B00C73006 /* NetworkService.swift in Sources */,
-				DAE5BCC82BA765C10088E31B /* ImageCacheService.swift in Sources */,
 				57F4EBBD2B8F273500ADA7AA /* ProfileButton.swift in Sources */,
 				57F4EBED2B8FE18500ADA7AA /* AppBuilder.swift in Sources */,
 				5722C30C2B8DBE1B00ED2AD2 /* RecipeCoordinator.swift in Sources */,
@@ -605,7 +594,6 @@
 				574419712B91A95B00A8A41F /* CategotyCollectionViewCell.swift in Sources */,
 				5722C3082B8DBDEF00ED2AD2 /* AppCoordinator.swift in Sources */,
 				574419F12B96AD5000A8A41F /* TermsAndPolicyPresenter.swift in Sources */,
-				DAE5BCCC2BA7663E0088E31B /* ImageCacheProxy.swift in Sources */,
 				57F4EBF82B902DAA00ADA7AA /* FavoritesPresenter.swift in Sources */,
 				574419F42B97E46B00A8A41F /* Fonts.swift in Sources */,
 				57F4EBBF2B8F275500ADA7AA /* BottomSheetViewController.swift in Sources */,
