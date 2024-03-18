@@ -5,7 +5,6 @@ import UIKit
 
 /// Ячейка с рецептами
 final class RecipesCell: UITableViewCell {
-    
     // MARK: - Constants
 
     private enum Constants {
@@ -21,8 +20,6 @@ final class RecipesCell: UITableViewCell {
     private let imageCacheService = ImageCacheProxy()
     private var image = ""
 
-
-    
     // MARK: - VIsual Components
 
     private let backgroundCellView: UIView = {
@@ -106,7 +103,6 @@ final class RecipesCell: UITableViewCell {
         image = items.image
 
         if let imageURL = URL(string: image) {
-            
             imageCacheService.loadImage(from: imageURL) { [weak self] image in
                 DispatchQueue.main.async {
                     self?.recipeImageView.image = image
@@ -116,7 +112,7 @@ final class RecipesCell: UITableViewCell {
                 }
             }
         }
-        
+
 //        NetworkService.loadImage(from: items.image) { image in
 //            DispatchQueue.main.async {
 //                self.recipeImageView.image = image

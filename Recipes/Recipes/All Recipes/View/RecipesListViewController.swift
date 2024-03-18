@@ -25,11 +25,11 @@ final class RecipesListViewController: UIViewController {
     private let refreshControl = UIRefreshControl()
 
     private lazy var recipesListMessagesView = {
-            let view = RecipesListMessagesView()
-            view.addTarget(self, action: #selector(reloadButtonTapped))
-            return view
-        }()
-    
+        let view = RecipesListMessagesView()
+        view.addTarget(self, action: #selector(reloadButtonTapped))
+        return view
+    }()
+
     private lazy var recipesTableView: UITableView = {
         let table = UITableView()
         table.delegate = self
@@ -77,7 +77,6 @@ final class RecipesListViewController: UIViewController {
     var networkService = NetworkService()
 
     // MARK: - Private Properties
-
 
     // MARK: - Life Cycle
 
@@ -155,10 +154,10 @@ final class RecipesListViewController: UIViewController {
     @objc private func backButtonTapped() {
         presenter?.goToCategory()
     }
-    
+
     @objc private func reloadButtonTapped() {
-            presenter?.getReceipts()
-        }
+        presenter?.getReceipts()
+    }
 }
 
 // MARK: - Extension
@@ -195,11 +194,13 @@ extension RecipesListViewController {
         timeButton.widthAnchor.constraint(equalToConstant: 90).isActive = true
         timeButton.heightAnchor.constraint(equalToConstant: 36).isActive = true
     }
-    
+
     private func setupAnchorsRecipesListMessagesView() {
         recipesListMessagesView.translatesAutoresizingMaskIntoConstraints = false
-        recipesListMessagesView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        recipesListMessagesView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
+        recipesListMessagesView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
+            .isActive = true
+        recipesListMessagesView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
+            .isActive = true
     }
 }
 
@@ -208,7 +209,7 @@ extension RecipesListViewController {
 extension RecipesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard case .data(let recipes) = presenter?.state else { return }
+        guard case let .data(recipes) = presenter?.state else { return }
         guard indexPath.row < recipes.count else { return }
         let selectedRecipe = recipes[indexPath.row]
         favoritesSingletone.getRecipeFromList(selectedRecipe)
@@ -223,7 +224,7 @@ extension RecipesListViewController: UITableViewDataSource {
         switch presenter?.state {
         case .loading:
             return 7
-        case .data(let recipes):
+        case let .data(recipes):
             return recipes.count
         case .noData, .error, .none:
             return 0
@@ -251,28 +252,26 @@ extension RecipesListViewController: UITableViewDataSource {
 //            recipesTableView.isHidden = true
 
 //            recipesTableView.reloadData()
-
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch presenter?.state {
-            
         case .loading:
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: Constants.skeletonCellIdIdentifier,
                 for: indexPath
             ) as? ShimmerRecipesCell else { return UITableViewCell() }
             return cell
-            
-        case .data(let recipes):
+
+        case let .data(recipes):
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: Constants.cellIdendefire,
                 for: indexPath
             ) as? RecipesCell else { return UITableViewCell() }
             cell.configure(with: recipes[indexPath.row])
             return cell
-            
+
         case .noData, .error, .none:
             break
         }
@@ -302,7 +301,7 @@ extension RecipesListViewController: RecipesViewProtocol {
     func reloadTableView() {
         recipesTableView.reloadData()
     }
-    
+
     func goToTheCategory() {
         navigationController?.popViewController(animated: true)
     }
@@ -316,9 +315,9 @@ extension RecipesListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
             recipesListMessagesView.switchState(.startTyping)
-                } else if searchText.count >= 3 {
-                    presenter?.searchRecipes(text: searchText)
-                }
+        } else if searchText.count >= 3 {
+            presenter?.searchRecipes(text: searchText)
+        }
     }
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {

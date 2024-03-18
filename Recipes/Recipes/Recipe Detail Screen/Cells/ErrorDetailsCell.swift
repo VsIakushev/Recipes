@@ -35,7 +35,7 @@ class ErrorDetailsCell: UITableViewCell {
         label.textAlignment = .center
         return label
     }()
-    
+
     private let reloadButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "reload"), for: .normal)
@@ -46,7 +46,7 @@ class ErrorDetailsCell: UITableViewCell {
         button.layer.cornerRadius = 12
         return button
     }()
-    
+
     var reloadButtonAction: VoidHandler?
 
     // MARK: - Initializers
@@ -71,7 +71,7 @@ class ErrorDetailsCell: UITableViewCell {
         addSubview(failedLabel)
         lightningBackgroundView.addSubview(lightningImageView)
         addSubview(reloadButton)
-        
+
         reloadButton.addTarget(self, action: #selector(reloadButtonPressed), for: .touchUpInside)
     }
 
@@ -98,7 +98,7 @@ class ErrorDetailsCell: UITableViewCell {
             failedLabel.heightAnchor.constraint(equalToConstant: 16),
             failedLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             failedLabel.topAnchor.constraint(equalTo: lightningBackgroundView.bottomAnchor, constant: 17),
-            
+
             reloadButton.widthAnchor.constraint(equalToConstant: 150),
             reloadButton.heightAnchor.constraint(equalToConstant: 32),
             reloadButton.topAnchor.constraint(equalTo: failedLabel.bottomAnchor, constant: 25),
@@ -106,9 +106,8 @@ class ErrorDetailsCell: UITableViewCell {
 
         ])
     }
-    
+
     @objc private func reloadButtonPressed() {
-        
         reloadButtonAction?()
     }
 }

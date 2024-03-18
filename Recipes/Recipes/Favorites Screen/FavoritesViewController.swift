@@ -257,9 +257,9 @@ extension FavoritesViewController: FavoritesViewControllerProtocol {
 
 extension FavoritesViewController: RecipesViewProtocol {
     func hideSkeleton() {}
-    
+
     func updateState() {}
-    
+
     func timeButtonPressed(color: String, image: String) {}
 
     func caloriesButtonPressed(color: String, image: String) {}

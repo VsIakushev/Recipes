@@ -1,9 +1,5 @@
-//
-//  Button.swift
-//  Recipes
-//
-//  Created by Vermut xxx on 18.03.2024.
-//
+// Button.swift
+// Copyright © RoadMap. All rights reserved.
 
 import UIKit
 
@@ -82,7 +78,7 @@ final class Button: UIButton {
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
             stackView.centerXAnchor.constraint(equalTo: centerXAnchor)
         ]
-        
+
         constraints.forEach { $0.isActive = true }
     }
 }

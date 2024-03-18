@@ -15,6 +15,7 @@ class ImageTableViewCell: UITableViewCell {
     }
 
     // MARK: - Private Properties
+
     private let imageCacheService = ImageCacheProxy()
 
     private var title = ""
@@ -53,7 +54,6 @@ class ImageTableViewCell: UITableViewCell {
         contentView.addSubview(recipeImageView)
 
         if let imageURL = URL(string: image) {
-            
             imageCacheService.loadImage(from: imageURL) { [weak self] image in
                 DispatchQueue.main.async {
                     self?.recipeImageView.image = image
@@ -62,7 +62,7 @@ class ImageTableViewCell: UITableViewCell {
                 }
             }
         }
-        
+
 //        NetworkService.loadImage(from: image) { image in
 //            DispatchQueue.main.async {
 //                self.recipeImageView.image = image

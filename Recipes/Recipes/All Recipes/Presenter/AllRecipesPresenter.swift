@@ -48,15 +48,15 @@ final class AllRecipesPresenter {
         static let filterIcon = "filterIcon"
         static let vegetarianText = "vegetarian"
     }
-    
-//MARK: - Public Properties
-    
+
+    // MARK: - Public Properties
+
     var state: ViewState<[Recipe]> = .loading {
         didSet {
             view?.updateState()
         }
     }
-    
+
     private weak var view: RecipesViewProtocol?
     private weak var recipesCoordinator: RecipeCoordinator?
     private var isSearching = false
@@ -77,7 +77,7 @@ final class AllRecipesPresenter {
     }
 
     func buttonCaloriesChange() {
-        guard case .data(let recipes) = state else { return }
+        guard case let .data(recipes) = state else { return }
         switch sortedCalories {
         case .none:
             sortedCalories = .caloriesLow
@@ -108,8 +108,9 @@ final class AllRecipesPresenter {
             sortRecipes(recipes: recipes)
         }
     }
+
     func buttonTimeChange() {
-        guard case .data(let recipes) = state else { return }
+        guard case let .data(recipes) = state else { return }
         switch sortedTime {
         case .none:
             sortedTime = .timeLow
@@ -179,7 +180,6 @@ extension AllRecipesPresenter: RecipeProtocol {
         state = .data(sorted)
     }
 
-   
     func searchRecipes(text: String) {
         if text.isEmpty {
             isSearching = false
@@ -192,13 +192,12 @@ extension AllRecipesPresenter: RecipeProtocol {
     }
 
     func checkSearch() -> [Recipe] {
-        return isSearching ? recipes : originalRecipes
+        isSearching ? recipes : originalRecipes
     }
 
     func startSearch() {
         isSearching = true
     }
-
 
     func goToCategory() {
         view?.goToTheCategory()
