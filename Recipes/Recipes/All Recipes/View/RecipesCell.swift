@@ -5,6 +5,9 @@ import UIKit
 
 /// Ячейка с рецептами
 final class RecipesCell: UITableViewCell {
+    
+    // MARK: - Constants
+
     private enum Constants {
         static let timerImageViewName = "timer"
         static let pizzaImageViewName = "pizza"
@@ -13,9 +16,15 @@ final class RecipesCell: UITableViewCell {
         static let pizzaLabelText = " kkal"
     }
 
+    // MARK: - Private Properties
+
+    private let imageCacheService = ImageCacheProxy()
+    private var image = ""
+
+
+    
     // MARK: - VIsual Components
 
-//    private var image = ""
     private let backgroundCellView: UIView = {
         let uiView = UIView()
         uiView.backgroundColor = UIColor.background06()
@@ -94,18 +103,30 @@ final class RecipesCell: UITableViewCell {
     // MARK: - Public Methods
 
     func configure(with items: Recipe) {
-        NetworkService.loadImage(from: items.image) { image in
-            DispatchQueue.main.async {
-                self.recipeImageView.image = image
-                self.recipeImageView.clipsToBounds = true
-                self.recipeImageView.layer.cornerRadius = 12
-                self.recipeImageView.contentMode = .scaleAspectFill
+        image = items.image
+
+        if let imageURL = URL(string: image) {
+            
+            imageCacheService.loadImage(from: imageURL) { [weak self] image in
+                DispatchQueue.main.async {
+                    self?.recipeImageView.image = image
+                    self?.recipeImageView.clipsToBounds = true
+                    self?.recipeImageView.layer.cornerRadius = 12
+                    self?.recipeImageView.contentMode = .scaleAspectFill
+                }
             }
         }
-//        recipeImageView.image = UIImage(named: items.image)
+        
+//        NetworkService.loadImage(from: items.image) { image in
+//            DispatchQueue.main.async {
+//                self.recipeImageView.image = image
+//                self.recipeImageView.clipsToBounds = true
+//                self.recipeImageView.layer.cornerRadius = 12
+//                self.recipeImageView.contentMode = .scaleAspectFill
+//            }
+//        }
         titleRecipeLabel.text = items.name
         timeLabel.text = String(items.cookingTime) + Constants.timeLabelText
-//        pizzaLabel.text = String(items.calories) + Constants.pizzaLabelText
         if let calories = items.calories {
             pizzaLabel.text = "\(Int(calories))" + Constants.pizzaLabelText
         } else {
