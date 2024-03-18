@@ -101,6 +101,7 @@ final class RecipesListViewController: UIViewController {
         view.backgroundColor = .white
         view.addSubview(searchBar)
         view.addSubview(recipesTableView)
+        view.addSubview(recipesListMessagesView)
         makeFilterButton(button: caloriesButton, title: Constants.caloriesButtonTitle)
         makeFilterButton(button: timeButton, title: Constants.timeButtonTitle)
         makeAnchor()
@@ -140,6 +141,7 @@ final class RecipesListViewController: UIViewController {
         setupAnchorsCaloriesButton()
         setupAnchorsTimeButton()
         makeTableViewAnchor()
+        setupAnchorsRecipesListMessagesView()
     }
 
     @objc private func caloriesButtonTapped() {
@@ -193,6 +195,12 @@ extension RecipesListViewController {
         timeButton.widthAnchor.constraint(equalToConstant: 90).isActive = true
         timeButton.heightAnchor.constraint(equalToConstant: 36).isActive = true
     }
+    
+    private func setupAnchorsRecipesListMessagesView() {
+        recipesListMessagesView.translatesAutoresizingMaskIntoConstraints = false
+        recipesListMessagesView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        recipesListMessagesView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
+    }
 }
 
 // MARK: - UITableViewDelegate
@@ -226,7 +234,7 @@ extension RecipesListViewController: UITableViewDataSource {
         guard let presenter else { return }
         switch presenter.state {
         case .loading:
-            recipesTableView.reloadData()
+//            recipesTableView.reloadData()
             recipesListMessagesView.switchState(.hidden)
         case .data:
             recipesTableView.reloadData()
@@ -234,8 +242,16 @@ extension RecipesListViewController: UITableViewDataSource {
             recipesListMessagesView.switchState(.hidden)
         case .noData:
             recipesListMessagesView.switchState(.nothingFound)
+            recipesTableView.isHidden = true
+
+//            recipesTableView.reloadData()
+
         case .error:
             recipesListMessagesView.switchState(.error)
+//            recipesTableView.isHidden = true
+
+//            recipesTableView.reloadData()
+
         }
     }
 
@@ -259,11 +275,6 @@ extension RecipesListViewController: UITableViewDataSource {
             
         case .noData, .error, .none:
             break
-        
-
-//        case .none:
-//            fatalError("Unexpected state")
-       
         }
         return UITableViewCell()
     }
@@ -303,11 +314,10 @@ extension RecipesListViewController: RecipesViewProtocol {
 
 extension RecipesListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.count >= 3 {
-            presenter?.searchRecipes(text: searchText)
-        }
+        
+        presenter?.searchRecipes(text: searchText)
     }
-
+    
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         presenter?.startSearch()
     }

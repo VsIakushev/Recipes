@@ -76,6 +76,7 @@ final class Button: UIButton {
     }
 
     private func configureLayout() {
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         let constraints = [
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor),

@@ -121,6 +121,8 @@ class RecipesListMessagesView: UIView {
         }
 
         private func configureLayout() {
+            mainImageView.translatesAutoresizingMaskIntoConstraints = false
+            stackView.translatesAutoresizingMaskIntoConstraints = false
             let constraints = [
                 mainImageView.topAnchor.constraint(equalTo: topAnchor),
                 mainImageView.centerXAnchor.constraint(equalTo: centerXAnchor),

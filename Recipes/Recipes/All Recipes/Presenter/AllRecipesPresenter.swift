@@ -68,6 +68,7 @@ final class AllRecipesPresenter {
     var recipes: [Recipe] = []
     var categoryTitle: String = ""
     private var category: RecipeType
+    private let recipesListMessagesView = RecipesListMessagesView()
 
     init(view: RecipesViewProtocol, coordinator: RecipeCoordinator, categoryTitle: String, category: RecipeType) {
         self.view = view
@@ -182,14 +183,18 @@ extension AllRecipesPresenter: RecipeProtocol {
    
     func searchRecipes(text: String) {
         if text.isEmpty {
+            recipesListMessagesView.switchState(.startTyping)
+//            view?.reloadTableView()
+
             isSearching = false
             recipes = originalRecipes
-        } else {
+        } else if text.count >= 3{
             isSearching = true
             getReceipts(searchString: text)
         }
         view?.reloadTableView()
     }
+    
 
     func checkSearch() -> [Recipe] {
         return isSearching ? recipes : originalRecipes
