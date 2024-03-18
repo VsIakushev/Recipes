@@ -43,6 +43,9 @@
 		57441AA82B9BEF0400A8A41F /* ProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57441AA72B9BEF0400A8A41F /* ProfileDataManager.swift */; };
 		5770C47B2BA3E42E004C9B90 /* ShimmerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5770C47A2BA3E42E004C9B90 /* ShimmerCell.swift */; };
 		5770C47D2BA3FCAB004C9B90 /* ErrorDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5770C47C2BA3FCAB004C9B90 /* ErrorDetailsCell.swift */; };
+		5770C4AB2BA516F6004C9B90 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5770C4AA2BA516F6004C9B90 /* ImageCacheService.swift */; };
+		5770C4AD2BA51717004C9B90 /* ImageCacheProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5770C4AC2BA51717004C9B90 /* ImageCacheProxy.swift */; };
+		5770C4AF2BA74EF4004C9B90 /* ImageCacheServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5770C4AE2BA74EF4004C9B90 /* ImageCacheServiceProtocol.swift */; };
 		57F4EBB92B8F270B00ADA7AA /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBB82B8F270B00ADA7AA /* ProfileTableViewCell.swift */; };
 		57F4EBBB2B8F272100ADA7AA /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */; };
 		57F4EBBD2B8F273500ADA7AA /* ProfileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4EBBC2B8F273500ADA7AA /* ProfileButton.swift */; };
@@ -112,6 +115,9 @@
 		57441AA72B9BEF0400A8A41F /* ProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataManager.swift; sourceTree = "<group>"; };
 		5770C47A2BA3E42E004C9B90 /* ShimmerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerCell.swift; sourceTree = "<group>"; };
 		5770C47C2BA3FCAB004C9B90 /* ErrorDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDetailsCell.swift; sourceTree = "<group>"; };
+		5770C4AA2BA516F6004C9B90 /* ImageCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
+		5770C4AC2BA51717004C9B90 /* ImageCacheProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheProxy.swift; sourceTree = "<group>"; };
+		5770C4AE2BA74EF4004C9B90 /* ImageCacheServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheServiceProtocol.swift; sourceTree = "<group>"; };
 		57F4EBB82B8F270B00ADA7AA /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		57F4EBBA2B8F272100ADA7AA /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
 		57F4EBBC2B8F273500ADA7AA /* ProfileButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileButton.swift; sourceTree = "<group>"; };
@@ -306,6 +312,16 @@
 			path = UserDefaultsManager;
 			sourceTree = "<group>";
 		};
+		5770C4A72BA516B6004C9B90 /* LoadImage Service */ = {
+			isa = PBXGroup;
+			children = (
+				5770C4AA2BA516F6004C9B90 /* ImageCacheService.swift */,
+				5770C4AE2BA74EF4004C9B90 /* ImageCacheServiceProtocol.swift */,
+				5770C4AC2BA51717004C9B90 /* ImageCacheProxy.swift */,
+			);
+			path = "LoadImage Service";
+			sourceTree = "<group>";
+		};
 		57F4EBB72B8F26DD00ADA7AA /* Profile Screen */ = {
 			isa = PBXGroup;
 			children = (
@@ -396,7 +412,7 @@
 		DA55B4042BA2098B00C73006 /* Network Layer */ = {
 			isa = PBXGroup;
 			children = (
-				DAE5BCC62BA765B00088E31B /* LoadImage Service */,
+				5770C4A72BA516B6004C9B90 /* LoadImage Service */,
 				DA55B4082BA20A4700C73006 /* DTO */,
 				DA55B4172BA2134700C73006 /* Recipe.swift */,
 				DA55B4192BA214FC00C73006 /* RecipeType.swift */,
@@ -564,6 +580,7 @@
 				5722C30E2B8DBE8900ED2AD2 /* ProfileCoordinator.swift in Sources */,
 				5722C3122B8DBF0B00ED2AD2 /* AuthViewController.swift in Sources */,
 				574419742B92646500A8A41F /* RecipeDetailsViewController.swift in Sources */,
+				5770C4AD2BA51717004C9B90 /* ImageCacheProxy.swift in Sources */,
 				57441A262B98706000A8A41F /* StateShimmer.swift in Sources */,
 				5733135C2B73215B00092647 /* AppDelegate.swift in Sources */,
 				5722C3102B8DBED000ED2AD2 /* MainTabBarViewController.swift in Sources */,
@@ -597,7 +614,7 @@
 				57F4EBF82B902DAA00ADA7AA /* FavoritesPresenter.swift in Sources */,
 				574419F42B97E46B00A8A41F /* Fonts.swift in Sources */,
 				57F4EBBF2B8F275500ADA7AA /* BottomSheetViewController.swift in Sources */,
-				DAE5BCC52BA7511F0088E31B /* Button.swift in Sources */,
+				5770C4AB2BA516F6004C9B90 /* ImageCacheService.swift in Sources */,
 				5733135E2B73215B00092647 /* SceneDelegate.swift in Sources */,
 				574419F62B97E47300A8A41F /* Colors.swift in Sources */,
 				5722C30A2B8DBE0400ED2AD2 /* AuthCoordinator.swift in Sources */,
@@ -605,6 +622,7 @@
 				57441A822B9AE7EE00A8A41F /* ProfileMemento.swift in Sources */,
 				57071C762B90952F00425D68 /* BottomSheetPresenter.swift in Sources */,
 				DA7FF19C2B9AD85A006EE0A6 /* Command.swift in Sources */,
+				5770C4AF2BA74EF4004C9B90 /* ImageCacheServiceProtocol.swift in Sources */,
 				DA7FF1A62B9BEC49006EE0A6 /* UserDefaultsWrapper.swift in Sources */,
 				5770C47B2BA3E42E004C9B90 /* ShimmerCell.swift in Sources */,
 				5722C3182B8DD27100ED2AD2 /* FavoritesViewController.swift in Sources */,
