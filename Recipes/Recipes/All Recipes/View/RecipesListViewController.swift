@@ -22,11 +22,20 @@ final class RecipesListViewController: UIViewController {
 
     let caloriesButton = UIButton()
     let timeButton = UIButton()
+    private let refreshControl = UIRefreshControl()
 
+    private lazy var recipesListMessagesView = {
+            let view = RecipesListMessagesView()
+            view.addTarget(self, action: #selector(reloadButtonTapped))
+            return view
+        }()
+    
     private lazy var recipesTableView: UITableView = {
         let table = UITableView()
         table.delegate = self
         table.dataSource = self
+        table.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         table.separatorStyle = .none
         table.register(RecipesCell.self, forCellReuseIdentifier: Constants.cellIdendefire)
         table.register(ShimmerRecipesCell.self, forCellReuseIdentifier: Constants.skeletonCellIdIdentifier)
@@ -65,19 +74,16 @@ final class RecipesListViewController: UIViewController {
     var officiant: Invoker? = Invoker.shared
     var favoritesSingletone = FavoritesSingletone.shared
     var recipesNetwork: [Recipe] = []
-
     var networkService = NetworkService()
 
     // MARK: - Private Properties
 
-    private var stateShimer = StateShimer.loading
 
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        hideSkeleton()
         hidesBottomBarWhenPushed = true
     }
 
@@ -90,10 +96,12 @@ final class RecipesListViewController: UIViewController {
     // MARK: - Private Methods
 
     func setupUI() {
+        updateState()
         presenter?.getReceipts()
         view.backgroundColor = .white
         view.addSubview(searchBar)
         view.addSubview(recipesTableView)
+        view.addSubview(recipesListMessagesView)
         makeFilterButton(button: caloriesButton, title: Constants.caloriesButtonTitle)
         makeFilterButton(button: timeButton, title: Constants.timeButtonTitle)
         makeAnchor()
@@ -133,19 +141,24 @@ final class RecipesListViewController: UIViewController {
         setupAnchorsCaloriesButton()
         setupAnchorsTimeButton()
         makeTableViewAnchor()
+        setupAnchorsRecipesListMessagesView()
     }
 
     @objc private func caloriesButtonTapped() {
-        presenter?.buttonCaloriesChange(category: recipesNetwork)
+        presenter?.buttonCaloriesChange()
     }
 
     @objc private func timeButtonTapped() {
-        presenter?.buttonTimeChange(category: recipesNetwork)
+        presenter?.buttonTimeChange()
     }
 
     @objc private func backButtonTapped() {
         presenter?.goToCategory()
     }
+    
+    @objc private func reloadButtonTapped() {
+            presenter?.getReceipts()
+        }
 }
 
 // MARK: - Extension
@@ -182,12 +195,11 @@ extension RecipesListViewController {
         timeButton.widthAnchor.constraint(equalToConstant: 90).isActive = true
         timeButton.heightAnchor.constraint(equalToConstant: 36).isActive = true
     }
-
-    private func hideSkeleton() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.stateShimer = .done
-            self.recipesTableView.reloadData()
-        }
+    
+    private func setupAnchorsRecipesListMessagesView() {
+        recipesListMessagesView.translatesAutoresizingMaskIntoConstraints = false
+        recipesListMessagesView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        recipesListMessagesView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
     }
 }
 
@@ -196,7 +208,9 @@ extension RecipesListViewController {
 extension RecipesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let selectedRecipe = recipesNetwork[indexPath.row]
+        guard case .data(let recipes) = presenter?.state else { return }
+        guard indexPath.row < recipes.count else { return }
+        let selectedRecipe = recipes[indexPath.row]
         favoritesSingletone.getRecipeFromList(selectedRecipe)
         presenter?.goToRecipeDetails(with: selectedRecipe)
     }
@@ -206,23 +220,63 @@ extension RecipesListViewController: UITableViewDelegate {
 
 extension RecipesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let searchNames = presenter?.checkSearch() else { return 0 }
-        return searchNames.count
+        switch presenter?.state {
+        case .loading:
+            return 7
+        case .data(let recipes):
+            return recipes.count
+        case .noData, .error, .none:
+            return 0
+        }
+    }
+
+    func updateState() {
+        guard let presenter else { return }
+        switch presenter.state {
+        case .loading:
+//            recipesTableView.reloadData()
+            recipesListMessagesView.switchState(.hidden)
+        case .data:
+            recipesTableView.reloadData()
+            recipesTableView.refreshControl?.endRefreshing()
+            recipesListMessagesView.switchState(.hidden)
+        case .noData:
+            recipesListMessagesView.switchState(.nothingFound)
+            recipesTableView.isHidden = true
+
+//            recipesTableView.reloadData()
+
+        case .error:
+            recipesListMessagesView.switchState(.error)
+//            recipesTableView.isHidden = true
+
+//            recipesTableView.reloadData()
+
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch stateShimer {
+        switch presenter?.state {
+            
         case .loading:
-            return ShimmerRecipesCell()
-        case .done:
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: Constants.skeletonCellIdIdentifier,
+                for: indexPath
+            ) as? ShimmerRecipesCell else { return UITableViewCell() }
+            return cell
+            
+        case .data(let recipes):
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: Constants.cellIdendefire,
                 for: indexPath
-            ) as? RecipesCell
-            else { return UITableViewCell() }
-            cell.configure(with: recipesNetwork[indexPath.row])
+            ) as? RecipesCell else { return UITableViewCell() }
+            cell.configure(with: recipes[indexPath.row])
             return cell
+            
+        case .noData, .error, .none:
+            break
         }
+        return UITableViewCell()
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -245,34 +299,26 @@ extension RecipesListViewController: RecipesViewProtocol {
         caloriesButton.setTitleColor(.black, for: .normal)
     }
 
-    func sortViewRecipes(recipes: [Recipe]) {
-        recipesNetwork = recipes
-        recipesTableView.reloadData()
-    }
-
     func reloadTableView() {
         recipesTableView.reloadData()
     }
-
+    
     func goToTheCategory() {
         navigationController?.popViewController(animated: true)
     }
 
-    func getRecipes(recipes: [Recipe]) {
-        recipesNetwork = recipes
-        recipesTableView.reloadData()
+    @objc private func refreshData() {
+        presenter?.getReceipts()
     }
 }
 
 extension RecipesListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.count >= 3 {
-            presenter?.searchRecipes(text: searchText)
-            stateShimer = .loading
-            hideSkeleton()
-        } else {
-            presenter?.searchRecipes(text: "")
-        }
+        if searchText.isEmpty {
+            recipesListMessagesView.switchState(.startTyping)
+                } else if searchText.count >= 3 {
+                    presenter?.searchRecipes(text: searchText)
+                }
     }
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
