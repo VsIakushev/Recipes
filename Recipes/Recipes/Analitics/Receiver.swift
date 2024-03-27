@@ -1,34 +1,36 @@
-//
-//  Receiver.swift
-//  Recipes
-//
-//  Created by Vermut xxx on 08.03.2024.
-//
+// Receiver.swift
+// Copyright © RoadMap. All rights reserved.
 
 import Foundation
 
 class Receiver {
-        func openCategoryScreenCommand() {
-            print("открыл категории")
-        }
-    
+    func openCategoryScreenCommand() {
+        // TODO: Временно закоментил ллогер
+//        print("открыл категории")
+    }
+
     func openAllRecipesScreenCommand() {
-    print("открыл все рецепты")
+        // TODO: Временно закоментил ллогер
+//        print("открыл все рецепты")
     }
-    
+
     func openDetailedRecipeScreenCommand() {
-    print("открыл детальный рецепт")
+        // TODO: Временно закоментил ллогер
+//        print("открыл детальный рецепт")
     }
-    
+
     func openFavoritesRecipesScreenCommand() {
-    print("открыл избранные")
+        // TODO: Временно закоментил ллогер
+//        print("открыл избранные")
     }
-    
+
     func openProfileScreenCommand() {
-    print("открыл профиль")
+        // TODO: Временно закоментил ллогер
+//        print("открыл профиль")
     }
-    
+
     func openAuthScreenCommand() {
-    print("открыл авторизацию")
+        // TODO: Временно закоментил ллогер
+//        print("открыл авторизацию")
     }
-} 
+}

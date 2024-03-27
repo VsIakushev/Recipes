@@ -23,6 +23,7 @@ final class FavoritesViewController: UIViewController {
     var recipes: [Recipe] = []
     var presenter: FavoritesPresenterProtocol?
     var officiant: Invoker? = Invoker.shared
+
     // MARK: - Public Methods
 
     func setupUI() {
@@ -96,7 +97,7 @@ final class FavoritesViewController: UIViewController {
         setupUI()
         configureUI()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         order(command: OpenFavoritesRecipesScreenCommand())
         getFavRecipes()
@@ -112,7 +113,7 @@ final class FavoritesViewController: UIViewController {
         officiant.addCommand(OpenFavoritesRecipesScreenCommand())
         officiant.executeCommands()
     }
-    
+
     private func configureUI() {
         getFavRecipes()
         view.backgroundColor = .white
@@ -195,7 +196,6 @@ extension FavoritesViewController {
 // MARK: - UITableViewDelegate
 
 extension FavoritesViewController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -228,7 +228,6 @@ extension FavoritesViewController: UITableViewDataSource {
         ) as? RecipesCell,
             let favorites = presenter?.getFavourites()
         else { return UITableViewCell() }
-        print(favorites)
         cell.configure(with: favorites[indexPath.row])
         return cell
     }
@@ -257,6 +256,10 @@ extension FavoritesViewController: FavoritesViewControllerProtocol {
 }
 
 extension FavoritesViewController: RecipesViewProtocol {
+    func hideSkeleton() {}
+
+    func updateState() {}
+
     func timeButtonPressed(color: String, image: String) {}
 
     func caloriesButtonPressed(color: String, image: String) {}

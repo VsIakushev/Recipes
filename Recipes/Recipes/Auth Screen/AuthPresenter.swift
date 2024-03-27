@@ -47,7 +47,7 @@ final class AuthPresenter {
 
     weak var authCoordinator: AuthCoordinator?
     private weak var view: AuthorizationViewControllerProtocol?
-    
+
     private var user: ProfileInfo
     private let memento = ProfileMemento.shared
 
@@ -65,21 +65,19 @@ final class AuthPresenter {
     private var isLoginAndPasswordValid = false
     private var isLoginAndPasswordEmpty = false
     private var loginAllowed = false
-
 }
 
 // MARK: - AuthPresenter + AuthorizationProtocol
 
 extension AuthPresenter: AuthorizationProtocol {
-    
     private func createNewUserIfNeeded() {
-        if user.username.isEmpty && user.avatar.isEmpty {
+        if user.username.isEmpty, user.avatar.isEmpty {
             user = memento.createUser()
         }
     }
-   
+
     func loginAndPasswordIsEmpty() -> Bool {
-        if user.password.isEmpty && user.email.isEmpty {
+        if user.password.isEmpty, user.email.isEmpty {
             return true
         } else {
             return false
@@ -93,7 +91,7 @@ extension AuthPresenter: AuthorizationProtocol {
             return false
         }
     }
-    
+
     func login() {
         if loginAllowed {
             view?.startSpinner()
@@ -104,21 +102,21 @@ extension AuthPresenter: AuthorizationProtocol {
             view?.showErrorView()
         }
     }
-    
+
     func checkAuthorization(email: String, password: String) {
         createNewUserIfNeeded()
-        
+
         validateEmail(email: email)
         checkPassword(password: password)
-        
+
         isLoginAndPasswordEmpty = loginAndPasswordIsEmpty()
         isLoginAndPasswordValid = loginAndPasswordValid(enteredEmail: email, enteredPassword: password)
-        
-        if isLoginAndPasswordEmpty, isValidateMail, isValidatePassword  {
+
+        if isLoginAndPasswordEmpty, isValidateMail, isValidatePassword {
             user.email = email
             user.password = password
             loginAllowed = true
-            
+
         } else if !isLoginAndPasswordEmpty, isValidateMail, isValidatePassword, isLoginAndPasswordValid {
             loginAllowed = true
         } else {

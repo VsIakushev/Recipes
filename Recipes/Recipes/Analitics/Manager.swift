@@ -1,8 +1,4 @@
-//
-//  Manager.swift
-//  Recipes
-//
-//  Created by Vermut xxx on 08.03.2024.
-//
+// Manager.swift
+// Copyright © RoadMap. All rights reserved.
 
 import Foundation

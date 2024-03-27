@@ -5,6 +5,8 @@ import UIKit
 
 /// Ячейка с рецептами
 final class RecipesCell: UITableViewCell {
+    // MARK: - Constants
+
     private enum Constants {
         static let timerImageViewName = "timer"
         static let pizzaImageViewName = "pizza"
@@ -12,6 +14,11 @@ final class RecipesCell: UITableViewCell {
         static let timeLabelText = " min"
         static let pizzaLabelText = " kkal"
     }
+
+    // MARK: - Private Properties
+
+    private let imageCacheService = ImageCacheProxy()
+    private var image = ""
 
     // MARK: - VIsual Components
 
@@ -93,10 +100,34 @@ final class RecipesCell: UITableViewCell {
     // MARK: - Public Methods
 
     func configure(with items: Recipe) {
-        recipeImageView.image = UIImage(named: items.image)
-        titleRecipeLabel.text = items.title
+        image = items.image
+
+        if let imageURL = URL(string: image) {
+            imageCacheService.loadImage(from: imageURL) { [weak self] image in
+                DispatchQueue.main.async {
+                    self?.recipeImageView.image = image
+                    self?.recipeImageView.clipsToBounds = true
+                    self?.recipeImageView.layer.cornerRadius = 12
+                    self?.recipeImageView.contentMode = .scaleAspectFill
+                }
+            }
+        }
+
+//        NetworkService.loadImage(from: items.image) { image in
+//            DispatchQueue.main.async {
+//                self.recipeImageView.image = image
+//                self.recipeImageView.clipsToBounds = true
+//                self.recipeImageView.layer.cornerRadius = 12
+//                self.recipeImageView.contentMode = .scaleAspectFill
+//            }
+//        }
+        titleRecipeLabel.text = items.name
         timeLabel.text = String(items.cookingTime) + Constants.timeLabelText
-        pizzaLabel.text = String(items.energicKcal) + Constants.pizzaLabelText
+        if let calories = items.calories {
+            pizzaLabel.text = "\(Int(calories))" + Constants.pizzaLabelText
+        } else {
+            pizzaLabel.text = "Unknown" + Constants.pizzaLabelText
+        }
     }
 
     // MARK: - Private Methods
@@ -134,6 +165,8 @@ final class RecipesCell: UITableViewCell {
 
     private func setupAnchorsRecipeImageView() {
         recipeImageView.leadingAnchor.constraint(equalTo: backgroundCellView.leadingAnchor, constant: 10)
+            .isActive = true
+        recipeImageView.trailingAnchor.constraint(equalTo: backgroundCellView.trailingAnchor, constant: -230)
             .isActive = true
         recipeImageView.topAnchor.constraint(equalTo: backgroundCellView.topAnchor, constant: 10).isActive = true
         recipeImageView.bottomAnchor.constraint(equalTo: backgroundCellView.bottomAnchor, constant: -10).isActive = true

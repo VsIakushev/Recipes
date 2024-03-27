@@ -11,6 +11,8 @@ final class RecipeDetailsViewController: UIViewController {
         static let imageCellIdentifier = "ImageCell"
         static let caloriesCellIdentifier = "CaloriesCell"
         static let recipeCellIdentifier = "RecipeCell"
+        static let imageShimmerCellIdentifier = "imageShimmer"
+        static let errorDetailsCellIdentifier = "errorDetailsCellIdentifier"
         static let numberOfSections = 3
     }
 
@@ -20,19 +22,21 @@ final class RecipeDetailsViewController: UIViewController {
     var officiant: Invoker? = Invoker.shared
     let favoritesSingletone = FavoritesSingletone.shared
     var recipe: Recipe? {
-            didSet {
-                setupNavigation()
-            }
+        didSet {
+            setupNavigation()
         }
+    }
 
     // MARK: - Private Properties
 
     private lazy var tableView = UITableView()
+    private let refreshControl = UIRefreshControl()
 
     // MARK: - Life Cycles
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        getRecipe()
         setupUI()
         setupTableView()
         setupNavigation()
@@ -41,7 +45,7 @@ final class RecipeDetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         order(command: OpenDetailedRecipeScreenCommand())
     }
-    
+
     // MARK: - Public Methods
 
     func setupUI() {
@@ -49,7 +53,11 @@ final class RecipeDetailsViewController: UIViewController {
     }
 
     // MARK: - Private Methods
-    
+
+    private func getRecipe() {
+        presenter?.getRecipe()
+    }
+
     private func order(command: Command) {
         guard let officiant = officiant else {
             print("error")
@@ -95,10 +103,15 @@ final class RecipeDetailsViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.dataSource = self
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
 
         tableView.register(ImageTableViewCell.self, forCellReuseIdentifier: Constants.imageCellIdentifier)
         tableView.register(CaloriesTableViewCell.self, forCellReuseIdentifier: Constants.caloriesCellIdentifier)
         tableView.register(RecipeDescriptionTableViewCell.self, forCellReuseIdentifier: Constants.recipeCellIdentifier)
+        tableView.register(ErrorDetailsCell.self, forCellReuseIdentifier: Constants.errorDetailsCellIdentifier)
+        tableView.register(ShimmerCell.self, forCellReuseIdentifier: Constants.imageShimmerCellIdentifier)
+
         tableView.dataSource = self
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -109,9 +122,29 @@ final class RecipeDetailsViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
     }
+
+    @objc private func refreshData() {
+        getRecipe()
+    }
 }
 
 extension RecipeDetailsViewController: RecipeDetailsViewControllerProtocol {
+    func updateState() {
+        switch presenter?.state {
+        case .loading:
+            break
+        case .data:
+            tableView.reloadData()
+            tableView.refreshControl?.endRefreshing()
+        case .noData:
+            tableView.reloadData()
+        case .error:
+            tableView.reloadData()
+        case .none:
+            break
+        }
+    }
+
     func showAlert() {
         let alertController = UIAlertController(
             title: "Предупреждение!",
@@ -123,72 +156,94 @@ extension RecipeDetailsViewController: RecipeDetailsViewControllerProtocol {
         present(alertController, animated: true)
     }
 
+    func reloadData() {
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+        }
+    }
+
     @objc func backButtonTapped() {
-        print("go back")
         presenter?.closeDetailsScreen()
     }
 
     @objc func shareViaTelegramButtonTapped() {
-        /// для реализации в дальнейшем
+        presenter?.shareViaTelegram()
     }
 
     @objc func addToFavoritesTaped() {
         guard let recipe = favoritesSingletone.recipeFromList else {
             return
         }
-        print("After guard let: \(recipe)")
+        navigationItem.rightBarButtonItems?[0].image = UIImage(named: "favoritesred")
+        navigationItem.rightBarButtonItems?[0].tintColor = .background03()
         presenter?.addToFavorites()
     }
 }
 
 extension RecipeDetailsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        Constants.numberOfSections
+        switch presenter?.state {
+        case .data:
+            return Constants.numberOfSections
+        case .loading, .noData, .error, .none:
+            return 1
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            guard let cell = tableView
-                .dequeueReusableCell(
-                    withIdentifier: Constants.imageCellIdentifier, for: indexPath
-                ) as? ImageTableViewCell,
-                let presenter = presenter
-            else { return UITableViewCell() }
-            cell.configureCell(
-                title: presenter.recipe.title,
-                image: presenter.recipe.image,
-                weight: presenter.recipe.weight,
-                cookingTime: presenter.recipe.cookingTime
-            )
+        switch presenter?.state {
+        case let .data(recipe):
+            if indexPath.row == 0 {
+                guard let cell = tableView
+                    .dequeueReusableCell(
+                        withIdentifier: Constants.imageCellIdentifier, for: indexPath
+                    ) as? ImageTableViewCell,
+                    let presenter = presenter
+                else { return UITableViewCell() }
+
+                cell.configureCell(recipe: recipe)
+
+                return cell
+
+            } else if indexPath.row == 1 {
+                guard let cell = tableView
+                    .dequeueReusableCell(
+                        withIdentifier: Constants.caloriesCellIdentifier,
+                        for: indexPath
+                    ) as? CaloriesTableViewCell,
+                    let presenter = presenter
+                else { return UITableViewCell() }
+                cell.configureCell(recipe: recipe)
+                return cell
+
+            } else {
+                guard let cell = tableView
+                    .dequeueReusableCell(
+                        withIdentifier: Constants.recipeCellIdentifier,
+                        for: indexPath
+                    ) as? RecipeDescriptionTableViewCell,
+                    let presenter = presenter
+                else { return UITableViewCell() }
+                cell.configureCell(recipe: recipe)
+
+                return cell
+            }
+        case .loading:
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: Constants.imageShimmerCellIdentifier,
+                for: indexPath
+            ) as? ShimmerCell else { return UITableViewCell() }
 
             return cell
-
-        } else if indexPath.row == 1 {
-            guard let cell = tableView
-                .dequeueReusableCell(
-                    withIdentifier: Constants.caloriesCellIdentifier,
-                    for: indexPath
-                ) as? CaloriesTableViewCell,
-                let presenter = presenter
-            else { return UITableViewCell() }
-            cell.configureCell(
-                kcal: presenter.recipe.energicKcal,
-                carbohydrates: presenter.recipe.carbohydrates,
-                fats: presenter.recipe.fats,
-                proteins: presenter.recipe.proteins
-            )
-            return cell
-
-        } else {
-            guard let cell = tableView
-                .dequeueReusableCell(
-                    withIdentifier: Constants.recipeCellIdentifier,
-                    for: indexPath
-                ) as? RecipeDescriptionTableViewCell,
-                let presenter = presenter
-            else { return UITableViewCell() }
-            cell.configureCell(text: presenter.recipe.recipeDescription)
-
+        case .noData, .error, .none:
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: Constants.errorDetailsCellIdentifier,
+                for: indexPath
+            ) as? ErrorDetailsCell else { return UITableViewCell() }
+            cell.reloadButtonAction = { [weak self] in
+                self?.presenter?.getRecipe()
+                print("reload pressed")
+            }
             return cell
         }
     }

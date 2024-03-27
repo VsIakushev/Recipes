@@ -15,8 +15,8 @@ final class RecipeDescriptionTableViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func configureCell(text: String) {
-        recipeLabel.text = text
+    func configureCell(recipe: Recipe) {
+        recipeLabel.text = recipe.ingredientLines.joined(separator: "\n")
         setupUI()
     }
 

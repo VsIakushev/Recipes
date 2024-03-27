@@ -1,9 +1,5 @@
-//
-//  Command.swift
-//  Recipes
-//
-//  Created by Vermut xxx on 08.03.2024.
-//
+// Command.swift
+// Copyright © RoadMap. All rights reserved.
 
 import Foundation
 
@@ -16,7 +12,7 @@ class OpenCategoryScreenCommand: Command {
     func description() -> String {
         "открыл категории"
     }
-    
+
     var cooker = Receiver()
     func execute() {
         cooker.openCategoryScreenCommand()
@@ -27,7 +23,7 @@ class OpenAllRecipesScreenCommand: Command {
     func description() -> String {
         "открыл все рецепты"
     }
-    
+
     var cooker = Receiver()
     func execute() {
         cooker.openAllRecipesScreenCommand()
@@ -49,7 +45,7 @@ class OpenFavoritesRecipesScreenCommand: Command {
     func description() -> String {
         "открыл избранные"
     }
-    
+
     var cooker = Receiver()
     func execute() {
         cooker.openFavoritesRecipesScreenCommand()

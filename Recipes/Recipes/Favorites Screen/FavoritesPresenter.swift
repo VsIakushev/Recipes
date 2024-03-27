@@ -24,7 +24,7 @@ protocol FavoritesPresenterProtocol {
     /// удаление из избранных
     func removeFromFavourites(recipeIndex: Int)
     /// переход к экрану детального рецепта
-    func goToRecipeDetails()
+    func goToRecipeDetails(recipe: Recipe)
 }
 
 /// Презентер экрана Избранных рецептов
@@ -50,19 +50,18 @@ extension FavoritesPresenter: FavoritesPresenterProtocol {
         guard let removedRecipe = view?.recipes.remove(at: recipeIndex) else {
             return
         }
-        
+
         if let indexInFavoritesList = FavoritesSingletone.shared.favoritesList.firstIndex(of: removedRecipe) {
-                FavoritesSingletone.shared.favoritesList.remove(at: indexInFavoritesList)
-            }
-
-
-        for var item in Recipe.allRecipes where item == removedRecipe {
-            item.isFavorite = false
+            FavoritesSingletone.shared.favoritesList.remove(at: indexInFavoritesList)
         }
+
+//        for var item in Recipe.allRecipes where item == removedRecipe {
+//            item.isFavorite = false
+//        }
     }
 
     func getFavourites() -> [Recipe] {
-        return FavoritesSingletone.shared.favoritesList
+        FavoritesSingletone.shared.favoritesList
     }
 
     func checkIfFavouritesEmpty() {
@@ -77,7 +76,7 @@ extension FavoritesPresenter: FavoritesPresenterProtocol {
         view?.recipes.count ?? 0
     }
 
-    func goToRecipeDetails() {
-        favoritesCoordinator?.pushReceiptDetails()
+    func goToRecipeDetails(recipe: Recipe) {
+        favoritesCoordinator?.pushReceiptDetails(recipe: recipe)
     }
 }

@@ -36,6 +36,7 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     var profileInfo = ProfileInfo()
 
     // MARK: - Private Properties
+
     private let memento = ProfileMemento.shared
     private weak var profileCoordinator: ProfileCoordinator?
     private weak var view: ProfileViewProtocol?
@@ -69,12 +70,11 @@ final class ProfilePresenter: ProfilePresenterProtocol {
 
     func editTapped() {
         view?.showEditAlert()
-        
     }
-    
+
     // MARK: - Private Methods
 
     private func loadUserData() {
-        self.profileInfo = memento.restoreState()
+        profileInfo = memento.restoreState()
     }
 }

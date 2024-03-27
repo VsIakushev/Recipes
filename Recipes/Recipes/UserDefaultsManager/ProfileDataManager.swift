@@ -4,7 +4,6 @@
 import Foundation
 
 class ProfileDataManager {
-
     // MARK: - Constants
 
     private enum Constants {
@@ -16,14 +15,12 @@ class ProfileDataManager {
     }
 
     // MARK: - Private Properties
-    
+
     private let userDefaults = UserDefaults.standard
-    
+
     // MARK: - Public Methods
 
     func loadUser() -> ProfileInfo {
         ProfileInfo()
-
     }
-    
 }

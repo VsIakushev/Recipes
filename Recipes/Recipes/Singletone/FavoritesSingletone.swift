@@ -1,19 +1,16 @@
-//
-//  FavoritesSingletone.swift
-//  Recipes
-//
-//  Created by Vermut xxx on 10.03.2024.
-//
+// FavoritesSingletone.swift
+// Copyright © RoadMap. All rights reserved.
 
 import Foundation
+
 /// Синглтон
 final class FavoritesSingletone {
     static let shared = FavoritesSingletone()
-    
+
     // UserDefaultsWrapper для массива favoritesList
     @UserDefaultsWrapper(key: "FavoritesList", defaultValue: Data())
     private var favoritesListData: Data
-    
+
     // Массив рецептов
     var favoritesList: [Recipe] {
         get {
@@ -33,22 +30,19 @@ final class FavoritesSingletone {
             }
         }
     }
-    
-    
+
     var recipeFromList: Recipe?
-    
-    
+
     private init() {}
-    
-    
+
     func addRecipeToFavorites(_ recipe: Recipe) {
         guard !favoritesList.contains(recipe) else {
             return
         }
-        
+
         favoritesList.append(recipe)
     }
-    
+
     func getRecipeFromList(_ recipe: Recipe) {
         recipeFromList = recipe
     }
